@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1a5f7a">
+<meta name="description" content="سبورة المعرفة التفاعلية المطورة - تطبيق متكامل لإدارة الحصص الدراسية مع استطلاعات مباشرة، تذاكر خروج رقمية، وبث مباشر للطالبات">
+<meta name="keywords" content="سبورة تفاعلية, تعليم, استبيان, تذكرة خروج, بث مباشر, QR, نتيفي, مدرس">
+<meta name="author" content="مدرسة المعرفة الثانوية للبنات">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="سبورة المعرفة">
+<meta property="og:title" content="سبورة المعرفة التفاعلية المطورة">
+<meta property="og:description" content="أداة تعليمية تفاعلية متكاملة مع استطلاعات فورية، تذاكر خروج رقمية، ورموز QR للطالبات">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_SA">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- ⭐ تحسينات الأداء: preconnect + dns-prefetch -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://ntfy.sh">
+<link rel="dns-prefetch" href="https://api.allorigins.win">
+
+<!-- ⭐ Favicon (inline SVG بدون طلب خارجي) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a5f7a'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='white' font-family='Tajawal,sans-serif' font-weight='800'%3Eع%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a5f7a'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='white' font-family='Tajawal,sans-serif' font-weight='800'%3Eع%3C/text%3E%3C/svg%3E">
+
+<title>سبورة المعرفة التفاعلية المطورة | مدرسة المعرفة الثانوية للبنات</title>
+<link rel="preload" href="style.css" as="style">
+<link rel="preload" href="script.js" as="script">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" as="script" crossorigin>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" as="script" crossorigin>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" as="script" crossorigin>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" as="script" crossorigin>
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" as="script" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css' media='print' onload="this.media='all'">
+
+
+
+<!-- html2canvas لالتقاط عناصر HTML وتحويلها لصور (يُستخدم لالتقاط لقطات للمرجع/الخرائط/الجدول الدوري) -->
+
+
+<!-- Chart.js for statistics report -->
+
+
+<!-- YouTube: لا نحتاج IFrame API بعد الآن — نستخدم روابط مباشرة وصور مصغّرة من img.youtube.com
+     (أبسط، أسرع، بلا أخطاء 153/101/150، يعمل في كل البيئات حتى مع قيود التضمين) -->
+
+<base target="_blank">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ⭐ شاشة التحميل — تختفي بعد تحميل كامل -->
+<div class="app-loading" id="appLoading">
+  <div class="emoji">🌟</div>
+  <div class="spinner-wrap"><div class="spinner"></div><div class="spinner-inner"></div></div>
+  <div class="title">سبورة المعرفة التفاعلية</div>
+  <div class="subtitle">جاري التحميل...</div>
+</div>
+
+<!-- ⭐ حاوية الإشعارات المركزية -->
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar">
+  <div class="logo"><i class="fas fa-chalkboard-teacher"></i><div class="logo-text"><span>سبورة المعرفة التفاعلية</span><small>مدرسة المعرفة الثانوية للبنات</small></div></div>
+  <div class="staff-line">
+    <span id="teacherNameDisplay" style="cursor:pointer" onclick="openTeacherNameEdit()" title="انقريي لعدلي الاسم"><i class="fas fa-user-tie"></i> <span id="teacherNameText">—</span></span>
+    <span style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--primary),#1e3a8a);color:white;padding:4px 10px;border-radius:14px;font-size:.78rem;cursor:pointer" onclick="openModal('modalTeachers')" title="إدارة المعلمات"><i class="fas fa-users-cog"></i> <select id="activeTeacherSelect" onclick="event.stopPropagation()" onchange="switchActiveTeacher(parseInt(this.value))" style="background:transparent;color:white;border:0;font-weight:700;font-size:.8rem;cursor:pointer;outline:none"></select> <i class="fas fa-chevron-down" style="font-size:.6rem;opacity:.8"></i></span>
+    <span><i class="fas fa-clock"></i> <span id="liveClock">--:--</span></span>
+    <span><i class="fas fa-calendar-alt"></i> <span id="liveDate"></span></span>
+  </div>
+  <div class="top-actions">
+    <button class="top-btn" id="btnToggleBar" title="إخفاء"><i class="fas fa-chevron-up"></i><span class="tip">إخفاء الشريط</span></button>
+    <button class="top-btn" id="btnFullscreen" title="ملء الشاشة"><i class="fas fa-expand"></i><span class="tip">ملء الشاشة</span></button>
+    <button class="top-btn" id="btnUndo" title="تراجعي"><i class="fas fa-undo"></i><span class="tip">تراجعي</span></button>
+    <button class="top-btn" id="btnRedo" title="أعيدي"><i class="fas fa-redo"></i><span class="tip">أعيدي</span></button>
+    <button class="top-btn" id="btnClear" title="امسحي"><i class="fas fa-trash-alt"></i><span class="tip">امسحي السبورة</span></button>
+    <button class="top-btn" id="btnSettings" title="إعدادات"><i class="fas fa-cog"></i><span class="tip">إعدادات</span></button>
+  </div>
+</div>
+
+<!-- ⭐⭐⭐ CELEBRATION BAR - شريط الاحتفالات بأسلوب سبورة الصباح ⭐⭐⭐ -->
+<div class="celebrate-bar" id="celebrateBar">
+  <!-- فقاعات متحركة في الخلفية -->
+  <div class="cb-bubble" style="--dur:5s;--delay:0s;--dx:30px;left:8%"></div>
+  <div class="cb-bubble" style="--dur:7s;--delay:1s;--dx:-20px;left:18%"></div>
+  <div class="cb-bubble" style="--dur:6s;--delay:2s;--dx:25px;left:32%"></div>
+  <div class="cb-bubble" style="--dur:8s;--delay:0.5s;--dx:-30px;left:48%"></div>
+  <div class="cb-bubble" style="--dur:5.5s;--delay:1.5s;--dx:35px;left:62%"></div>
+  <div class="cb-bubble" style="--dur:6.5s;--delay:0.8s;--dx:-15px;left:76%"></div>
+  <div class="cb-bubble" style="--dur:7.5s;--delay:2.5s;--dx:20px;left:88%"></div>
+
+  <div class="cb-title"><i class="fas fa-party-horn"></i><span>أدوات الاحتفال</span></div>
+
+  <div class="cb-group">
+        <button class="cb-btn cb-stick" id="cbStick" title="عصا المعلم - تنبيه مرح">
+      <span class="cb-quick">1</span>
+      <span class="cb-emoji">🪄</span>
+      <span class="cb-label">عصا</span>
+      <span class="cb-tooltip">عصا المعلم 🪄 - نقرة سحرية مرحة</span>
+    </button>
+    <button class="cb-btn cb-balloons" id="cbBalloons" title="بالونات احتفالية">
+      <span class="cb-quick">2</span>
+      <span class="cb-emoji">🎈</span>
+      <span class="cb-label">بالونات</span>
+      <span class="cb-tooltip">بالونات 🎈 - 5 بالونات طايرة تنفجر بصوت</span>
+    </button>
+    <button class="cb-btn cb-fireworks" id="cbFireworks" title="ألعاب نارية">
+      <span class="cb-quick">3</span>
+      <span class="cb-emoji">🎆</span>
+      <span class="cb-label">ألعاب نارية</span>
+      <span class="cb-tooltip">ألعاب نارية 🎆 - احتفال ضوئي على الشاشة</span>
+    </button>
+    <button class="cb-btn cb-applause" id="cbApplause" title="تصفيق حار">
+      <span class="cb-quick">4</span>
+      <span class="cb-emoji">👏</span>
+      <span class="cb-label">تصفيق</span>
+      <span class="cb-tooltip">تصفيق 👏 - رموز تصفيق تملأ الشاشة</span>
+    </button>
+    <button class="cb-btn cb-confetti" id="cbConfetti" title="قصاصات احتفالية">
+      <span class="cb-quick">5</span>
+      <span class="cb-emoji">🎊</span>
+      <span class="cb-label">قصاصات</span>
+      <span class="cb-tooltip">قصاصات 🎊 - ورق ملون ينزل من السماء</span>
+    </button>
+    <button class="cb-btn cb-fanfare" id="cbFanfare" title="احتفال كامل">
+      <span class="cb-quick">6</span>
+      <span class="cb-emoji">🎉</span>
+      <span class="cb-label">احتفال!</span>
+      <span class="cb-tooltip">احتفال كامل 🎉 - كل التأثيرات معاً!</span>
+    </button>
+    <button class="cb-btn cb-games" id="cbGames" title="ألعاب تشجيعية تحفيزية">
+      <span class="cb-quick">7</span>
+      <span class="cb-emoji">🎮</span>
+      <span class="cb-label">ألعاب!</span>
+      <span class="cb-tooltip">ألعاب تشجيعية 🎮 - 6 ألعاب تحفز الطالبات على المنافسة!</span>
+    </button>
+    <button class="cb-btn cb-cup" id="cbCup" title="كأس التفوق على السبورة">
+      <span class="cb-quick">8</span>
+      <span class="cb-emoji">🏆</span>
+      <span class="cb-label">الكأس</span>
+      <span class="cb-tooltip">كأس التفوق 🏆 - لوحة أبطال على السبورة للتشجيع!</span>
+    </button>
+  </div>
+
+  <button class="cb-toggle" id="cbToggle" title="إخفاء شريط الاحتفالات"><i class="fas fa-chevron-up"></i></button>
+</div>
+
+<!-- حاوية الألعاب النارية -->
+<div class="fireworks-host" id="fireworksHost"></div>
+<!-- حاوية التصفيق -->
+<div class="applause-host" id="applauseHost"></div>
+<!-- حاوية القصاصات -->
+<div class="confetti-rain-host" id="confettiRainHost"></div>
+
+<!-- إشعار شريط الاحتفالات -->
+<div class="cb-toast" id="cbToast"><span class="ct-emoji">🎉</span><span id="cbToastText">—</span></div>
+
+<!-- ⭐ إشعار المعلمة بضغطات الطالبات عن بُعد في تحدي السرعة -->
+<div class="speed-remote-toast" id="speedRemoteToast"><span class="srt-emoji">📱</span><span id="speedRemoteToastText">—</span></div>
+
+<!-- ⭐⭐⭐ MOTIVATION BANNER - شريط العبارة التحفيزية في بداية الحصة ⭐⭐⭐ -->
+<div class="motivation-banner" id="motivationBanner">
+  <span class="mb-emoji-side right">✨</span>
+  <button class="mb-btn mb-close" id="mbClose" title="إخفاء الشريط التحفيزي">
+    <i class="fas fa-times"></i>
+    <span class="mb-tip">إخفاء</span>
+  </button>
+  <span class="mb-emoji">🌟</span>
+  <span class="mb-text" id="motivationText" contenteditable="true" spellcheck="false" title="انقري على النص لتعديل العبارة">كل يوم فرصة جديدة للتعلّم والإبداع — معاً نحو التميّز يا بطلات!</span>
+  <span class="mb-emoji mb-r">✨</span>
+  <span class="mb-emoji-side left">✨</span>
+  <button class="mb-btn mb-picker" id="mbPicker" title="اختيار عبارة تحفيزية">
+    <i class="fas fa-lightbulb"></i>
+    <span class="mb-tip">عبارات تحفيزية</span>
+  </button>
+  <button class="mb-btn mb-reset" id="mbReset" title="إعادة العبارة الافتراضية">
+    <i class="fas fa-undo"></i>
+    <span class="mb-tip">إعادة الافتراضي</span>
+  </button>
+</div>
+
+<!-- قائمة اختيار العبارات التحفيزية -->
+<div class="mb-phrase-panel" id="mbPhrasePanel">
+  <div class="mb-phrase-head">
+    <span>💡 اختاري عبارة تحفيزية</span>
+    <button id="mbPhraseClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="mb-phrase-list" id="mbPhraseList"></div>
+  <div class="mb-phrase-foot">
+    <button class="mb-phrase-random" id="mbPhraseRandom"><i class="fas fa-dice"></i> عبارة عشوائية</button>
+    <button class="mb-phrase-custom" id="mbPhraseCustom"><i class="fas fa-pen"></i> كتابة يدوية</button>
+  </div>
+</div>
+
+<!-- زر استعادة الشريط التحفيزي — يظهر لما يكون الشريط مخفي -->
+<button class="mb-show-fab" id="mbShowFab" title="إظهار الشريط التحفيزي">
+  <i class="fas fa-quote-right"></i>
+  <span>إظهار العبارة التحفيزية</span>
+</button>
+
+<!-- CANVAS WRAP -->
+<div class="canvas-wrap has-motivation" id="canvasWrap"><canvas id="mainCanvas"></canvas><svg class="map-svg-wrap" id="mindmapCanvas" style="pointer-events:none;z-index:50;display:none"></svg></div>
+
+<!-- زر الإضافة السريعة للملاحظات تم حذفه بناءً على طلب المستخدم -->
+
+<!-- TOOLBAR -->
+<div class="toolbar-dock" id="toolbar">
+  <div class="tg">
+    <button class="tb-btn active" data-tool="pen"><i class="fas fa-pen"></i><span>قلم</span><span class="hotkey">1</span></button>
+    <button class="tb-btn" data-tool="eraser"><i class="fas fa-eraser"></i><span>ممحاة</span><span class="hotkey">2</span></button>
+    <button class="tb-btn" data-tool="text"><i class="fas fa-font"></i><span>نص</span><span class="hotkey">3</span></button>
+    <button class="tb-btn" data-tool="pan"><i class="fas fa-hand-paper"></i><span>حرّكي</span><span class="hotkey">4</span></button>
+    <button class="tb-btn" data-tool="select"><i class="fas fa-object-ungroup"></i><span>حدّدي</span><span class="hotkey">5</span></button>
+  </div>
+  <div class="tg tg-colors" id="colorPalette">
+    <div class="c-dot active" style="background:#000" data-color="#000000"></div>
+    <div class="c-dot" style="background:#fff;border:1px solid #ddd" data-color="#ffffff"></div>
+    <div class="c-dot" style="background:#e74c3c" data-color="#e74c3c"></div>
+    <div class="c-dot" style="background:#f39c12" data-color="#f39c12"></div>
+    <div class="c-dot" style="background:#f9d423" data-color="#f9d423"></div>
+    <div class="c-dot" style="background:#27ae60" data-color="#27ae60"></div>
+    <div class="c-dot" style="background:#1a5f7a" data-color="#1a5f7a"></div>
+    <div class="c-dot" style="background:#8e44ad" data-color="#8e44ad"></div>
+    <div class="c-dot" style="background:linear-gradient(135deg,#ff0000,#00ff00,#0000ff)"><input type="color" id="customColor" value="#1a5f7a"></div>
+  </div>
+  <div class="tg tg-size">
+    <i class="fas fa-circle" style="font-size:8px;color:#888"></i>
+    <input type="range" id="brushSize" min="1" max="40" value="4">
+    <i class="fas fa-circle" style="font-size:18px;color:#888"></i>
+    <span id="sizeDisplay">4</span>
+  </div>
+  <div class="tg">
+    <button class="tb-btn" id="btnShapes"><i class="fas fa-shapes"></i><span>أشكال</span></button>
+    <button class="tb-btn" id="btnScience"><i class="fas fa-atom"></i><span>علمي</span></button>
+    <button class="tb-btn" id="btnStamps"><i class="fas fa-stamp"></i><span>أختام</span></button>
+    <button class="tb-btn" id="btnBackgrounds"><i class="fas fa-border-all"></i><span>خلفيات</span></button>
+    <button class="tb-btn" id="btnSticky"><i class="fas fa-sticky-note"></i><span>ملاحظة</span></button>
+  <button class="tb-btn" id="btnRuler"><i class="fas fa-ruler"></i><span>مسطرة</span></button>
+  <button class="tb-btn" id="btnProtractor"><i class="fas fa-circle-half-stroke"></i><span>منقلة</span></button>
+  <button class="tb-btn" id="btnCompass"><i class="fas fa-compass"></i><span>فرجار</span></button>
+  <button class="tb-btn" id="btnSetsquare"><i class="fas fa-draw-polygon"></i><span>مثلث</span></button>
+  <button class="tb-btn" id="btnBoardTimer" title="مؤقت على السبورة" style="background:linear-gradient(135deg,#e74c3c,#c0392b);color:white"><i class="fas fa-stopwatch-20"></i><span>مؤقت</span></button>
+  </div>
+  <div class="tg">
+    <button class="tb-btn" id="btnFill"><i class="fas fa-fill-drip"></i><span>تعبئة</span></button>
+    <button class="tb-btn" id="btnDashed"><i class="fas fa-grip-lines"></i><span>منقط</span></button>
+    <button class="tb-btn" id="btnHighlight"><i class="fas fa-highlighter"></i><span>تمييز</span></button>
+  </div>
+</div>
+
+<!-- PAGES SIDEBAR: شريط جانبي قابل للطي على اليسار لإدارة الشرائح -->
+<div class="pages-sidebar" id="pagesSidebar">
+  <!-- زر الطي/الفتح (الأيقونة العمودية) -->
+  <button class="pages-toggle" id="pagesToggle" title="إدارة الشرائح (اضغطي للطي/الفتح)">
+    <span class="pt-badge" id="ptBadge">1</span>
+    <i class="fas fa-layer-group pt-icon"></i>
+    <span class="pt-counter"><b id="ptCurrent">1</b>/<span id="ptTotal">1</span></span>
+    <span class="pt-label">الشرائح</span>
+    <span class="pt-arrow"><i class="fas fa-chevron-left"></i></span>
+  </button>
+
+  <!-- اللوحة الجانبية (تظهر عند الفتح) -->
+  <div class="pages-panel" id="pagesPanel">
+    <div class="pages-panel-head">
+      <i class="fas fa-layer-group ph-icon"></i>
+      <div class="ph-text">
+        <span>الشرائح</span>
+        <span class="ph-count" id="pageInfo">شريحة <b>1</b> / <b>1</b></span>
+      </div>
+      <button class="ph-close" id="pagesClose" title="طي"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="pages-panel-body" id="pagesList"></div>
+    <button class="page-add-card" id="pageAdd" title="شريحة جديدة (Ctrl + Shift + N)">
+      <i class="fas fa-plus pai-icon"></i>
+      <span>شريحة جديدة</span>
+    </button>
+    <div class="pages-panel-foot">
+      <button id="pagePrev" title="الشريحة السابقة (Ctrl + →)"><i class="fas fa-chevron-right pf-icon"></i> السابقة</button>
+      <button id="pageNext" title="الشريحة التالية (Ctrl + ←)">التالية <i class="fas fa-chevron-left pf-icon"></i></button>
+      <button id="pageDup" title="تكرار الشريحة الحالية"><i class="fas fa-copy pf-icon"></i> تكرار</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCIENCE PANEL -->
+<div class="popup-panel" id="sciencePanel" style="max-width:920px">
+  <div class="sc-group"><div class="sc-group-title">الرياضيات</div><div class="sc-grid" id="mathGrid"></div></div>
+  <div class="sc-group"><div class="sc-group-title">الفيزياء والكيمياء</div><div class="sc-grid" id="physGrid"></div></div>
+  <div class="sc-group"><div class="sc-group-title">الأحياء</div><div class="sc-grid" id="bioGrid"></div></div>
+  <div class="sc-group" style="min-width:100%">
+    <div class="sc-group-title" style="color:#0e6b5a;border-color:#16a085">🗺️ جغرافيا وعلوم الأرض</div>
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px;width:100%">
+      <div>
+        <div class="geo-sim-grid" id="geoSimGrid"></div>
+      </div>
+      <div>
+        <div class="geo-sub-title"><i class="fas fa-icons"></i> رموز وخرائط سريعة</div>
+        <div class="sc-grid" id="geoGrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SHAPES PANEL -->
+<div class="popup-panel" id="shapePanel">
+  <div class="sc-group"><div class="sc-group-title">الأشكال الهندسية</div><div class="shape-grid" id="shapesGrid">
+    <button class="shape-btn active" data-shape="free"><i class="fas fa-pen-fancy"></i></button>
+    <button class="shape-btn" data-shape="line"><svg viewBox="0 0 24 24"><line x1="4" y1="20" x2="20" y2="4"/></svg></button>
+    <button class="shape-btn" data-shape="arrow"><svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="18" y2="12"/><polyline points="12,6 18,12 12,18"/></svg></button>
+    <button class="shape-btn" data-shape="rect"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/></svg></button>
+    <button class="shape-btn" data-shape="rectR"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="4"/></svg></button>
+    <button class="shape-btn" data-shape="circle"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></button>
+    <button class="shape-btn" data-shape="ellipse"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="6"/></svg></button>
+    <button class="shape-btn" data-shape="triangle"><svg viewBox="0 0 24 24"><polygon points="12,3 22,21 2,21"/></svg></button>
+    <button class="shape-btn" data-shape="diamond"><svg viewBox="0 0 24 24"><polygon points="12,2 22,12 12,22 2,12"/></svg></button>
+    <button class="shape-btn" data-shape="star"><svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/></svg></button>
+    <button class="shape-btn" data-shape="hex"><svg viewBox="0 0 24 24"><polygon points="12,2 21,7 21,17 12,22 3,17 3,7"/></svg></button>
+    <button class="shape-btn" data-shape="pent"><svg viewBox="0 0 24 24"><polygon points="12,2 22,9 18,21 6,21 2,9"/></svg></button>
+    <button class="shape-btn" data-shape="cross"><svg viewBox="0 0 24 24"><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg></button>
+    <button class="shape-btn" data-shape="xmark"><svg viewBox="0 0 24 24"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg></button>
+    <button class="shape-btn" data-shape="check"><svg viewBox="0 0 24 24"><polyline points="3,12 9,18 21,6"/></svg></button>
+    <button class="shape-btn" data-shape="heart"><svg viewBox="0 0 24 24"><path d="M12,21 C12,21 4,15 4,9 C4,6 6,4 9,4 C10,4 11,5 12,6 C13,5 14,4 15,4 C18,4 20,6 20,9 C20,15 12,21 12,21 Z"/></svg></button>
+  </div></div>
+</div>
+
+<!-- STAMPS PANEL -->
+<div class="popup-panel" id="stampsPanel" style="max-width:520px">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid rgba(0,0,0,.08)">
+    <div style="display:flex;align-items:center;gap:8px;font-family:'Tajawal',sans-serif;font-size:.78rem;color:var(--dark);font-weight:800">
+      <i class="fas fa-music" style="color:var(--primary)"></i>
+      <span>أختام تفاعلية بصوت وحركة</span>
+    </div>
+    <button id="stampSoundToggle" onclick="__toggleStampSound()" title="تشغيل/كتم صوت الأختام" style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:none;border-radius:18px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.72rem;font-weight:800;background:linear-gradient(135deg,#27ae60,#16a085);color:#fff;transition:.2s;box-shadow:0 2px 8px rgba(39,174,96,.35)">
+      <i class="fas fa-volume-up" id="stampSoundIcon"></i>
+      <span id="stampSoundLabel">الصوت مُفعّل</span>
+    </button>
+  </div>
+  <div class="sc-group"><div class="sc-group-title">أختام التقييم</div><div class="stamp-grid" id="stampsGrid"></div></div>
+  <div class="sc-group"><div class="sc-group-title">رموز تعبيرية</div><div class="stamp-grid" id="emojisGrid"></div></div>
+</div>
+
+<!-- BACKGROUNDS PANEL -->
+<div class="popup-panel" id="bgPanel" style="max-width:560px">
+  <div class="sc-group" style="min-width:100%">
+    <div class="sc-group-title" style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+      <span>قوالب الخلفيات</span>
+      <button onclick="refreshBackground()" title="إزالة أي خطوط/رسم قديم على السبورة (للحصول على خلفية نظيفة بعد التحديث)" style="border:none;background:rgba(0,0,0,.06);color:var(--primary);padding:4px 10px;border-radius:8px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.7rem;font-weight:800;display:inline-flex;align-items:center;gap:4px">
+        <i class="fas fa-eraser"></i> تنظيف الخلفية
+      </button>
+    </div>
+    <div class="template-grid" id="templatesGrid">
+      <div class="template-card" onclick="applyBackground('grid')"><div class="t-preview template-preview-grid"></div><div class="t-name">شبكة</div></div>
+      <div class="template-card" onclick="applyBackground('graph')"><div class="t-preview template-preview-grid"></div><div class="t-name">رسم بياني</div></div>
+      <div class="template-card" onclick="applyBackground('largegrid')"><div class="t-preview template-preview-largegrid"></div><div class="t-name">شبكة كبيرة</div></div>
+      <div class="template-card" onclick="applyBackground('engineering')"><div class="t-preview template-preview-engineering"></div><div class="t-name">ورق هندسي</div></div>
+      <div class="template-card" onclick="applyBackground('lined')"><div class="t-preview template-preview-lined"></div><div class="t-name">ورق مسطر</div></div>
+      <div class="template-card" onclick="applyBackground('test')"><div class="t-preview template-preview-test"></div><div class="t-name">ورقة اختبار</div></div>
+      <div class="template-card" onclick="applyBackground('notebook')"><div class="t-preview template-preview-notebook"></div><div class="t-name">مذكرات</div></div>
+      <div class="template-card" onclick="applyBackground('dots')"><div class="t-preview template-preview-dots"></div><div class="t-name">نقاط</div></div>
+      <div class="template-card" onclick="applyBackground('hexagonal')"><div class="t-preview template-preview-hexagonal"></div><div class="t-name">سداسيات</div></div>
+      <div class="template-card" onclick="applyBackground('triangular')"><div class="t-preview template-preview-triangular"></div><div class="t-name">مثلثات</div></div>
+      <div class="template-card" onclick="applyBackground('isometric')"><div class="t-preview template-preview-isometric"></div><div class="t-name">أيزومتري</div></div>
+      <div class="template-card" onclick="applyBackground('sketch')"><div class="t-preview template-preview-sketch"></div><div class="t-name">كروكي</div></div>
+      <div class="template-card" onclick="applyBackground('music')"><div class="t-preview template-preview-music"></div><div class="t-name">ورق موسيقي</div></div>
+      <div class="template-card" onclick="applyBackground('coord')"><div class="t-preview template-preview-coord"></div><div class="t-name">مستوى إحداثي</div></div>
+      <div class="template-card" onclick="applyBackground('none')" style="grid-column:1/-1"><div class="t-preview" style="background:#fff"></div><div class="t-name">بدون (أبيض)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CASIO CALCULATOR (fx-991ES PLUS style) -->
+<div class="calc-panel" id="calcPanel">
+  <div class="calc-header">
+    <h3>
+      <span class="casio-logo"><i class="fas fa-calculator"></i> CASIO</span>
+      <span class="casio-model">fx-991ES PLUS</span>
+      <span style="font-size:.65rem;opacity:.85;margin-right:4px">العلمية</span>
+    </h3>
+    <button class="sp-close" id="calcClose" style="background:rgba(255,255,255,.2);color:white"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="calc-screen-wrap">
+    <div class="calc-mode-indicator">
+      <span id="calcModeM" onclick="toggleCalcMode('M')" title="وضع الذاكرة">M</span>
+      <span id="calcModeAngle" onclick="toggleCalcAngle()" title="وحدة الزوايا">DEG</span>
+      <span id="calcModeShift" style="opacity:.4">SHIFT</span>
+    </div>
+    <div class="calc-screen">
+      <div class="calc-history" id="calcHistory"></div>
+      <div id="calcDisplay">0</div>
+    </div>
+  </div>
+  <div class="calc-keys">
+    <!-- Row 1: SHIFT / ALPHA / MODE / SETUP / ON -->
+    <button class="calc-key top" data-act="shift" title="وظائف Shift"><span class="k-main">SHIFT</span></button>
+    <button class="calc-key top" data-act="alpha" title="حروف"><span class="k-main">ALPHA</span></button>
+    <button class="calc-key fn" data-act="mode" title="الوضع"><span class="k-sub">CLR</span><span class="k-main">MODE</span></button>
+    <button class="calc-key fn" data-act="setup" title="إعدادات"><span class="k-sub">SETUP</span><span class="k-main" style="font-size:.7rem">SETUP</span></button>
+    <button class="calc-key ac" data-act="ac" title="مسح الكل"><span class="k-sub">ON</span><span class="k-main">AC</span></button>
+
+    <!-- Row 2: x² / x^y / √ / x! / log -->
+    <button class="calc-key fn" data-fn="sq" title="مربع"><span class="k-sub">x²</span><span class="k-main">x²</span></button>
+    <button class="calc-key fn" data-fn="pow" title="أس"><span class="k-sub">x^y</span><span class="k-main">^</span></button>
+    <button class="calc-key fn" data-fn="sqrt" title="جذر"><span class="k-sub">²√x</span><span class="k-main">√</span></button>
+    <button class="calc-key fn" data-fn="fact" title="مضروب"><span class="k-sub">x!</span><span class="k-main">n!</span></button>
+    <button class="calc-key fn" data-fn="log" title="لوغاريتم"><span class="k-sub">10ˣ</span><span class="k-main">log</span></button>
+
+    <!-- Row 3: ln / sin / cos / tan / π -->
+    <button class="calc-key fn" data-fn="ln" title="لوغاريتم طبيعي"><span class="k-sub">eˣ</span><span class="k-main">ln</span></button>
+    <button class="calc-key fn angle" data-fn="sin" title="جيب"><span class="k-sub">sin⁻¹</span><span class="k-main">sin</span></button>
+    <button class="calc-key fn angle" data-fn="cos" title="جيب تمام"><span class="k-sub">cos⁻¹</span><span class="k-main">cos</span></button>
+    <button class="calc-key fn angle" data-fn="tan" title="ظل"><span class="k-sub">tan⁻¹</span><span class="k-main">tan</span></button>
+    <button class="calc-key fn" data-fn="pi" title="باي"><span class="k-sub">e</span><span class="k-main">π</span></button>
+
+    <!-- Row 4: ( / ) / 1/x / % / ÷ -->
+    <button class="calc-key op" data-val="("><span class="k-main">(</span></button>
+    <button class="calc-key op" data-val=")"><span class="k-main">)</span></button>
+    <button class="calc-key fn" data-fn="inv" title="مقلوب"><span class="k-sub">x!</span><span class="k-main">1/x</span></button>
+    <button class="calc-key op" data-val="%"><span class="k-main">%</span></button>
+    <button class="calc-key op" data-val="/"><span class="k-main">÷</span></button>
+
+    <!-- Row 5: 7 / 8 / 9 / × / DEL -->
+    <button class="calc-key num" data-val="7"><span class="k-main">7</span></button>
+    <button class="calc-key num" data-val="8"><span class="k-main">8</span></button>
+    <button class="calc-key num" data-val="9"><span class="k-main">9</span></button>
+    <button class="calc-key op" data-val="*"><span class="k-main">×</span></button>
+    <button class="calc-key clear" data-act="clear" title="مسح"><span class="k-sub">INS</span><span class="k-main">DEL</span></button>
+
+    <!-- Row 6: 4 / 5 / 6 / − / Ans -->
+    <button class="calc-key num" data-val="4"><span class="k-main">4</span></button>
+    <button class="calc-key num" data-val="5"><span class="k-main">5</span></button>
+    <button class="calc-key num" data-val="6"><span class="k-main">6</span></button>
+    <button class="calc-key op" data-val="-"><span class="k-main">−</span></button>
+    <button class="calc-key fn" data-fn="ans" title="آخر إجابة"><span class="k-sub">DRG</span><span class="k-main">Ans</span></button>
+
+    <!-- Row 7: 1 / 2 / 3 / + / EXP -->
+    <button class="calc-key num" data-val="1"><span class="k-main">1</span></button>
+    <button class="calc-key num" data-val="2"><span class="k-main">2</span></button>
+    <button class="calc-key num" data-val="3"><span class="k-main">3</span></button>
+    <button class="calc-key op" data-val="+"><span class="k-main">+</span></button>
+    <button class="calc-key fn" data-fn="exp" title="أسي"><span class="k-sub">π</span><span class="k-main" style="font-size:.7rem">EXP</span></button>
+
+    <!-- Row 8: 0 / . / ×10ˣ / = / M+ -->
+    <button class="calc-key num" data-val="0" style="grid-column:span 1"><span class="k-main">0</span></button>
+    <button class="calc-key num" data-val="."><span class="k-main">.</span></button>
+    <button class="calc-key op" data-fn="pow10" title="عشرة أُس"><span class="k-sub">e</span><span class="k-main" style="font-size:.7rem">×10ˣ</span></button>
+    <button class="calc-key eq" data-act="eq"><span class="k-main">=</span></button>
+    <button class="calc-key fn" data-fn="mplus" title="إضافة للذاكرة"><span class="k-sub">M−</span><span class="k-main">M+</span></button>
+
+    <!-- Row 9: random / sign / للسبورة (spans 3) -->
+    <button class="calc-key fn" data-fn="rand" title="عشوائي"><span class="k-sub">Ran#</span><span class="k-main" style="font-size:.68rem">RAND</span></button>
+    <button class="calc-key fn" data-act="sign" title="إشارة"><span class="k-sub">+/−</span><span class="k-main">(−)</span></button>
+    <button class="calc-key toboard-key" data-act="toboard" style="grid-column:span 3" title="إضافة النتيجة للسبورة"><i class="fas fa-chalkboard"></i> للسبورة</button>
+  </div>
+</div>
+
+<!-- TIMER -->
+<div class="timer-display" id="timerDisplay">
+  <i class="fas fa-stopwatch"></i><span class="timer-mode" id="timerMode">منبه</span>
+  <span class="time" id="timerTime">00:00</span>
+  <button class="timer-btn" id="timerToggle"><i class="fas fa-play"></i></button>
+  <button class="timer-btn" id="timerReset"><i class="fas fa-redo"></i></button>
+  <button class="timer-btn" id="timerClose"><i class="fas fa-times"></i></button>
+</div>
+
+<!-- SIDE FABS -->
+<div class="side-fab top">
+  <button class="fab students" id="fabStudents"><i class="fas fa-user-graduate"></i><span class="badge" id="studentsBadge">0</span><span class="tooltip">الطالبات</span></button>
+  <button class="fab answers" id="fabAnswers"><i class="fas fa-comments"></i><span class="badge" id="answersBadge">0</span><span class="tooltip">الإجابات</span></button>
+  <button class="fab quiz" id="fabQuiz"><i class="fas fa-question-circle"></i><span class="badge" id="quizBadge">0</span><span class="tooltip">الاختبارات</span></button>
+  <button class="fab behavior" id="fabBehavior"><i class="fas fa-star"></i><span class="tooltip">السلوك والمكافآت</span></button>
+  <button class="fab live-qr" onclick="showLiveQR()" title="رمز QR للبث المباشر">
+    <i class="fas fa-broadcast-tower"></i>
+    <span class="tooltip">QR البث المباشر</span>
+  </button>
+</div>
+<div class="side-fab bottom">
+  <button class="fab tools" id="fabTools"><i class="fas fa-toolbox"></i><span class="tooltip">الأدوات</span></button>
+  <button class="fab calc" id="fabCalc"><i class="fas fa-calculator"></i><span class="tooltip">الآلة الحاسبة</span></button>
+  <button class="fab save" id="fabSave"><i class="fas fa-save"></i><span class="tooltip">احفظي وصدّري</span></button>
+  <button class="fab present" id="fabPresent"><i class="fas fa-play"></i><span class="tooltip">ضعي الاعرضي</span></button>
+</div>
+
+<!-- زر FAB عائم لوضع PDF على السبورة (يظهر تلقائياً عند تحميل ملف PDF) -->
+<div class="fab-pdf-board" id="fabPdfBoard">
+  <button onclick="addPDFToBoardMovable()" title="ضعي صفحة PDF الحالية على السبورة كقطعة قابلة للسحب والتحجيم">
+    <span class="pdf-pulse"></span>
+    <i class="fas fa-file-pdf"></i>
+    <span>PDF على السبورة</span>
+  </button>
+  <button onclick="addAllPDFPagesToBoard()" title="ضعي كل صفحات PDF على السبورة دفعة واحدة">
+    <i class="fas fa-layer-group"></i>
+    <span>كل الصفحات</span>
+  </button>
+</div>
+
+<!-- SIDE PANEL -->
+<div class="side-panel" id="sidePanel">
+  <div class="sp-header"><h3 id="spTitle"><i class="fas fa-user-graduate"></i> الطالبات</h3><button class="sp-close" id="spClose"><i class="fas fa-times"></i></button></div>
+  <div class="sp-tabs">
+    <button class="sp-tab active" data-tab="students"><i class="fas fa-user-graduate"></i> الطالبات</button>
+    <button class="sp-tab" data-tab="answers"><i class="fas fa-comments"></i> الإجابات</button>
+    <button class="sp-tab" data-tab="quiz"><i class="fas fa-question-circle"></i> الاختبارات</button>
+    <button class="sp-tab" data-tab="behavior"><i class="fas fa-star"></i> السلوك</button>
+    <button class="sp-tab" data-tab="words"><i class="fas fa-font"></i> جدار المفردات</button>
+    <button class="sp-tab" data-tab="plan"><i class="fas fa-clipboard-list"></i> خطة الحصة</button>
+    <button class="sp-tab" data-tab="attendance"><i class="fas fa-user-check"></i> الحضور</button>
+    <button class="sp-tab" data-tab="analytics"><i class="fas fa-chart-line"></i> التحليلات</button>
+  </div>
+  <div class="sp-body">
+    <div class="sp-section active" id="sec-students">
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <button class="btn btn-primary" onclick="openStudentModal()" style="flex:1"><i class="fas fa-plus"></i> إضافة طالبة</button>
+        <button class="btn btn-success" onclick="openImportStudentsModal()" title="استيراد طالبات من إكسل"><i class="fas fa-file-excel"></i></button>
+        <button class="btn btn-secondary" onclick="openModal('modalTeachers')" title="إدارة المعلمات"><i class="fas fa-user-tie"></i></button>
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <select class="form-select" id="studentClassFilter" onchange="renderStudents(document.getElementById('studentSearch').value)" style="flex:1"></select>
+      </div>
+      <input type="text" class="form-input" id="studentSearch" placeholder="🔍 بحث بالاسم أو البريد..." style="margin-bottom:10px">
+      <div id="studentsList"></div>
+    </div>
+    <div class="sp-section" id="sec-answers">
+      <button class="btn btn-success btn-block" onclick="openAnswerModal()" style="margin-bottom:12px"><i class="fas fa-plus"></i> إضافة إجابتكِ</button>
+      <div id="answersList"></div>
+    </div>
+    <div class="sp-section" id="sec-quiz">
+      <button class="btn btn-warning btn-block" onclick="openQuizModal()" style="margin-bottom:12px"><i class="fas fa-plus"></i> إنشاء سؤالك</button>
+      <div id="quizList"></div>
+    </div>
+    <div class="sp-section" id="sec-behavior">
+      <div class="score-board"><div>إجمالي نقاط الفصل</div><div class="score-num" id="totalScore">0</div></div>
+      <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin-bottom:8px"><i class="fas fa-user-graduate"></i> الطالبة</h4>
+      <select class="form-select" id="behaviorStudent" style="margin-bottom:14px"></select>
+      <div id="behaviorCategories"></div>
+      <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:14px 0 8px"><i class="fas fa-trophy"></i> ترتيب الطالبات</h4>
+      <div id="behaviorList"></div>
+    </div>
+    <div class="sp-section" id="sec-words">
+      <button class="btn btn-warning btn-block" onclick="openWordModal()" style="margin-bottom:12px"><i class="fas fa-plus"></i> إضافة كلمة</button>
+      <input type="text" class="form-input" id="wordSearch" placeholder="🔍 بحث..." style="margin-bottom:10px">
+      <div class="word-grid" id="wordsList"></div>
+    </div>
+    <div class="sp-section" id="sec-plan">
+      <div class="form-group"><label class="form-label">عنوان الحصة</label><input type="text" class="form-input" id="lessonTitle" placeholder="مثال: قوانين نيوتن"></div>
+      <div class="form-group"><div style="display:flex;gap:6px"><input type="date" class="form-input" id="lessonDate" style="flex:1"><input type="text" class="form-input" id="lessonClass" placeholder="الفصل" style="flex:1"></div></div>
+      <div class="lesson-section"><h4><i class="fas fa-bullseye"></i> أهداف الحصة</h4><textarea class="lsec-input" id="lessonObjectives" placeholder="..."></textarea></div>
+      <div class="lesson-section"><h4><i class="fas fa-play-circle"></i> التمهيد (5 دقائق)</h4><textarea class="lsec-input" id="lessonIntro" placeholder="..."></textarea></div>
+      <div class="lesson-section"><h4><i class="fas fa-book-reader"></i> الشرح والأنشطة (30 دقيقة)</h4><textarea class="lsec-input" id="lessonMain" placeholder="..."></textarea></div>
+      <div class="lesson-section"><h4><i class="fas fa-tasks"></i> التقويم الختامي (10 دقائق)</h4><textarea class="lsec-input" id="lessonEval" placeholder="..."></textarea></div>
+      <div class="lesson-section"><h4><i class="fas fa-home"></i> الواجب</h4><textarea class="lsec-input" id="lessonHW" placeholder="..."></textarea></div>
+      <button class="btn btn-primary btn-block" onclick="saveLessonPlan()"><i class="fas fa-save"></i> احفظي الخطة</button>
+      <div id="lessonList" style="margin-top:14px"></div>
+    </div>
+    <div class="sp-section" id="sec-attendance">
+      <div class="att-live-badge" id="attLiveBadge" style="display:none">
+        <span class="att-live-dot"></span>
+        <span>جلسة نشطة الآن — يتم تسجيل الحضور تلقائياً</span>
+      </div>
+      <div class="att-stats" id="attStats">
+        <div class="att-stat att-stat-present"><i class="fas fa-user-check"></i><div class="att-stat-num" id="attNumPresent">0</div><div class="att-stat-lbl">حاضرة</div></div>
+        <div class="att-stat att-stat-absent"><i class="fas fa-user-times"></i><div class="att-stat-num" id="attNumAbsent">0</div><div class="att-stat-lbl">غائبة</div></div>
+        <div class="att-stat att-stat-rate"><i class="fas fa-percentage"></i><div class="att-stat-num" id="attNumRate">0%</div><div class="att-stat-lbl">نسبة الحضور</div></div>
+      </div>
+      <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:14px 0 8px"><i class="fas fa-history"></i> سجل الجلسات</h4>
+      <div class="att-sessions" id="attSessions"></div>
+      <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:14px 0 8px"><i class="fas fa-chart-bar"></i> رسم بياني للحضور</h4>
+      <div class="att-chart-wrap"><canvas id="attChart"></canvas></div>
+      <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:14px 0 8px"><i class="fas fa-download"></i> صدّري</h4>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">
+        <button class="btn btn-primary btn-sm" onclick="exportAttendanceCSV()"><i class="fas fa-file-csv"></i> CSV</button>
+        <button class="btn btn-success btn-sm" onclick="exportAttendanceXLSX()"><i class="fas fa-file-excel"></i> Excel</button>
+        <button class="btn btn-warning btn-sm" onclick="printAttendance()"><i class="fas fa-print"></i> طباعة</button>
+      </div>
+    </div>
+    <div class="sp-section" id="sec-analytics">
+      <div class="an-row">
+        <div class="an-card"><h4><i class="fas fa-users"></i> الطالبات</h4><div class="an-num" id="anStudents">0</div></div>
+        <div class="an-card an-card-2"><h4><i class="fas fa-comments"></i> الإجابات</h4><div class="an-num" id="anAnswers">0</div></div>
+        <div class="an-card an-card-3"><h4><i class="fas fa-question-circle"></i> الأسئلة</h4><div class="an-num" id="anQuizzes">0</div></div>
+        <div class="an-card an-card-4"><h4><i class="fas fa-star"></i> النقاط</h4><div class="an-num" id="anPoints">0</div></div>
+        <div class="an-card an-card-5"><h4><i class="fas fa-fire"></i> الأعلى</h4><div class="an-num" id="anStreak">0</div></div>
+      </div>
+      <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:14px 0 8px"><i class="fas fa-chart-bar"></i> النشاط الأسبوعي</h4>
+      <div class="an-chart" id="weeklyChart"></div>
+      <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:20px 0 8px"><i class="fas fa-trophy"></i> الأكثر تفاعلاً</h4>
+      <div class="top-list" id="topStudents"></div>
+      <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:20px 0 8px"><i class="fas fa-download"></i> صدّري</h4>
+      <div style="display:flex;gap:5px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="exportXLSX('students')"><i class="fas fa-file-excel"></i> الطالبات</button>
+        <button class="btn btn-success btn-sm" onclick="exportXLSX('answers')"><i class="fas fa-file-excel"></i> الإجابات</button>
+        <button class="btn btn-warning btn-sm" onclick="exportXLSX('quizzes')"><i class="fas fa-file-excel"></i> الأسئلة</button>
+        <button class="btn btn-purple btn-sm" onclick="exportXLSX('behavior')"><i class="fas fa-file-excel"></i> السلوك</button>
+        <button class="btn btn-secondary btn-sm" onclick="exportXLSX('all')"><i class="fas fa-file-archive"></i> الكل</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- نافذة التحفيز للسلوكيات الإيجابية (منبثقة كبيرة في النص) -->
+<div class="motiv-overlay" id="motivOverlay" onclick="if(event.target===this)closeMotivationPopup()">
+  <div class="motiv-card" id="motivCard">
+    <div class="motiv-stars">
+      <span class="motiv-star">✦</span>
+      <span class="motiv-star">✦</span>
+      <span class="motiv-star">✦</span>
+      <span class="motiv-star">✦</span>
+      <span class="motiv-star">✦</span>
+    </div>
+    <button class="motiv-close" onclick="closeMotivationPopup()" aria-label="إغلاق"><i class="fas fa-times"></i></button>
+    <div class="motiv-icon" id="motivIcon">⭐</div>
+    <div class="motiv-name" id="motivName">—</div>
+    <div class="motiv-label" id="motivLabel">—</div>
+    <div class="motiv-phrase" id="motivPhrase">—</div>
+    <div class="motiv-points" id="motivPoints">+1</div>
+    <div class="motiv-hint"><i class="fas fa-hand-pointer"></i> اضغطي في أي مكان للإغلاق</div>
+  </div>
+</div>
+
+<!-- بطاقة التصحيح للسلوكيات السلبية (نفس البروز، بأسلوب تعديل وتغيير) -->
+<div class="correction-overlay" id="correctionOverlay" onclick="if(event.target===this)closeCorrectionPopup()">
+  <div class="correction-card" id="correctionCard">
+    <div class="correction-leaves">
+      <span class="correction-leaf">🍂</span>
+      <span class="correction-leaf">🍃</span>
+      <span class="correction-leaf">🌿</span>
+      <span class="correction-leaf">🍂</span>
+      <span class="correction-leaf">🍃</span>
+    </div>
+    <button class="correction-close" onclick="closeCorrectionPopup()" aria-label="إغلاق"><i class="fas fa-times"></i></button>
+    <div class="correction-icon" id="correctionIcon">💡</div>
+    <div class="correction-name" id="correctionName">—</div>
+    <div class="correction-label" id="correctionLabel">—</div>
+    <div class="correction-phrase" id="correctionPhrase">—</div>
+    <div class="correction-points" id="correctionPoints">-1</div>
+    <div class="correction-hint"><i class="fas fa-lightbulb"></i> فرصة للتعديل والتغيير للأفضل</div>
+    <div class="correction-action">
+      <button class="correction-btn correction-btn-done" onclick="closeCorrectionPopup()"><i class="fas fa-check"></i> فهمت، سأتحسن</button>
+      <button class="correction-btn correction-btn-next" onclick="closeCorrectionPopup()"><i class="fas fa-redo"></i> أكملي الحصة</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE ACTIVITY FLOATING PANEL — يظهر على السبورة الرئيسية أثناء البث المباشر
+     يحل مشكلة: المعلمة ما تشوف الطالبات اللي جاوبوا إلا إذا كانت داخل نافذة البث.
+     الآن تشوف عدّاد الإجابات + آخر الإجابات + إشعار عند كل إجابتكِ جديدة حتى لو نافذة البث مغلقة -->
+<div class="live-activity-fab" id="liveActivityFab">
+  <div class="live-activity-panel" id="liveActivityPanel">
+    <div class="lap-head">
+      <div class="lap-head-info">
+        <i class="fas fa-broadcast-tower"></i>
+        <div style="flex:1;min-width:0">
+          <div class="lap-title">جلسة مباشرة</div>
+          <div class="lap-code" id="lapCodeLabel">كود: —</div>
+        </div>
+      </div>
+      <button class="lap-close" onclick="toggleLiveActivityPanel()" title="أغلقي"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="lap-stats">
+      <div class="lap-stat">
+        <div class="lap-stat-num" id="lapStatCount">0</div>
+        <div class="lap-stat-lbl">إجابتكِ</div>
+      </div>
+      <div class="lap-stat">
+        <div class="lap-stat-num" id="lapStatUnique">0</div>
+        <div class="lap-stat-lbl">طالبة</div>
+      </div>
+      <div class="lap-stat">
+        <div class="lap-stat-num" id="lapStatCorrect">0</div>
+        <div class="lap-stat-lbl">صحيحة</div>
+      </div>
+    </div>
+    <div class="lap-list" id="lapList">
+      <div class="lap-empty">
+        <i class="fas fa-hourglass-half"></i>
+        في انتظار إجابات الطالبات...
+      </div>
+    </div>
+    <div class="lap-foot">
+      <div class="lap-foot-info">
+        <div class="lap-conn-dot" id="lapConnDot"></div>
+        <span id="lapConnText">متصل</span>
+      </div>
+      <div class="lap-foot-actions">
+        <button class="lap-foot-btn lap-foot-secondary" onclick="toggleLiveActivityPanel()" title="طي اللوحة"><i class="fas fa-chevron-down"></i></button>
+        <button class="lap-foot-btn" onclick="openModal('modalLiveSession')" title="افتحي نافذة البث"><i class="fas fa-expand"></i> افتحي</button>
+      </div>
+    </div>
+  </div>
+  <button class="live-activity-btn" id="liveActivityBtn" onclick="toggleLiveActivityPanel()" title="اضغطي لاعرضي إجابات الطالبات">
+    <span class="la-pulse-ring"></span>
+    <i class="fas fa-users la-icon"></i>
+    <span id="laBtnLabel">إجابات</span>
+    <span class="la-count" id="laCount">0</span>
+  </button>
+</div>
+
+<!-- LIVE NOTIF — إشعار طافٍ يظهر عند ورود كل إجابتكِ جديدة -->
+<div class="live-notif" id="liveNotif">
+  <div class="ln-icon"><i class="fas fa-comment-dots"></i></div>
+  <div class="ln-text">
+    <strong id="liveNotifTitle">إجابتكِ جديدة</strong>
+    <span id="liveNotifBody">—</span>
+  </div>
+</div>
+
+<!-- EFFECTS -->
+<div class="laser-dot" id="laserDot"></div>
+<div class="spotlight" id="spotlight"><div class="hole" id="spotHole"></div></div>
+<div class="magnifier" id="magnifier"><canvas id="magCanvas" width="340" height="340"></canvas></div>
+<div class="curtain curtain-top" id="curtainTop"></div>
+<div class="curtain curtain-bottom" id="curtainBottom"></div>
+
+<!-- STUDENT MODE UI -->
+<div class="top-bar-student" id="topBarStudent">
+  <div class="ts-info"><span class="ts-pulse"></span><span>ضعي الطالبة</span></div>
+  <div id="studentSessionLabel" style="font-size:.82rem;opacity:.9">الجلسة: —</div>
+  <div id="stuConnBadge" class="stu-conn-badge stu-conn-pending"><i class="fas fa-circle-notch fa-spin"></i> <span>جاري الاتصال...</span></div>
+</div>
+<div class="student-content" id="studentContent"><div class="student-card" id="studentCard"></div></div>
+
+<!-- MODAL: STUDENT -->
+<div class="modal-overlay" id="modalStudent"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-user-graduate"></i> <span id="studentModalTitle">إضافة طالبة</span></h2><button class="modal-close" onclick="closeModal('modalStudent')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div class="form-group"><label class="form-label">اسم الطالبة</label><input type="text" class="form-input" id="stuName" placeholder="مثال: نورة"></div>
+  <div class="form-group"><label class="form-label">البريد الإلكتروني للطالبة</label><input type="email" class="form-input" id="stuEmail" placeholder="student@school.edu.sa" dir="ltr"></div>
+  <div class="form-group"><label class="form-label">رقم الجلوس</label><input type="text" class="form-input" id="stuSeat" placeholder="12"></div>
+  <div class="form-group"><label class="form-label">الفصل</label><select class="form-select" id="stuClass"></select></div>
+  <div class="form-group"><label class="form-label">الحالة</label><select class="form-select" id="stuStatus"><option value="on">حاضرة</option><option value="away">متغيبة</option><option value="off">غائبة</option></select></div>
+</div><div class="modal-foot"><button class="btn btn-secondary" onclick="closeModal('modalStudent')">إلغاء</button><button class="btn btn-primary" id="stuSaveBtn"><i class="fas fa-save"></i> احفظي</button></div></div></div>
+
+<!-- MODAL: IMPORT STUDENTS (EXCEL) -->
+<div class="modal-overlay" id="modalImportStudents"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-file-excel"></i> استيراد طالبات من إكسل</h2><button class="modal-close" onclick="closeModal('modalImportStudents')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div id="importInfo" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-radius:10px;padding:12px;margin-bottom:14px;font-size:.82rem;line-height:1.7">
+    <b><i class="fas fa-info-circle"></i> طريقة الاستخدام:</b><br>
+    ارفعي ملف إكسل (.xlsx أو .xls) يحوي عمودين على الأقل:<br>
+    • <b>الاسم</b> (مطلوب) — اسم الطالبة الكامل<br>
+    • <b>البريد الإلكتروني</b> (اختياري) — بريد الطالبة المخصص<br>
+    • <b>الفصل</b> (اختياري) — إن لم يحدد، يضاف لجميع فصول المعلمة<br>
+    <span style="color:#2e7d32">📌 الأعمدة المقبولة: "الاسم"/"name"/"اسم"، "البريد"/"email"/"إيميل"، "الفصل"/"class".</span>
+  </div>
+  <div class="form-group"><label class="form-label">اختاري ملف الإكسل</label>
+    <input type="file" id="importStudentFile" accept=".xlsx,.xls,.csv" class="form-input">
+  </div>
+  <div class="form-group"><label class="form-label">أضيفي لفصل محدد (اختياري)</label>
+    <select class="form-select" id="importTargetClass"><option value="">جميع فصولي</option></select>
+  </div>
+  <div id="importPreview" style="max-height:260px;overflow:auto;background:#f8f9fa;border-radius:10px;padding:10px;font-size:.82rem"></div>
+</div><div class="modal-foot"><button class="btn btn-secondary" onclick="closeModal('modalImportStudents')">إلغاء</button><button class="btn btn-success" id="importStudentBtn" onclick="confirmImportStudents()" disabled><i class="fas fa-file-import"></i> استوردي (<span id="importCount">0</span> طالبة)</button></div></div></div>
+
+<!-- MODAL: TEACHERS MANAGEMENT -->
+<div class="modal-overlay" id="modalTeachers"><div class="modal-box modal-box-lg"><div class="modal-head"><h2><i class="fas fa-user-tie"></i> إدارة المعلمات والفصول</h2><button class="modal-close" onclick="closeModal('modalTeachers')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);border-radius:10px;padding:12px;margin-bottom:14px;font-size:.8rem;line-height:1.7">
+    <b>كيف يعمل النظام؟</b><br>
+    • كل معلمة تدرّس <b>فصلاً واحداً</b> أو <b>جميع الفصول</b><br>
+    • عند اختيار المعلمة النشطة، تظهر فقط طالباتها وفصولها<br>
+    • يمكنكِ التبديل بين المعلمات من الشريط العلوي
+  </div>
+  <button class="btn btn-primary btn-block" onclick="openTeacherForm()" style="margin-bottom:12px"><i class="fas fa-plus"></i> أضيفي معلمة جديدة</button>
+  <div id="teachersList"></div>
+  <div id="teacherFormArea" style="display:none;background:#f8f9fa;border-radius:10px;padding:14px;margin-top:12px">
+    <h4 style="margin:0 0 10px;font-size:.9rem"><i class="fas fa-user-plus"></i> <span id="teacherFormTitle">معلمة جديدة</span></h4>
+    <div class="form-group"><label class="form-label">اسم المعلمة</label><input type="text" class="form-input" id="tchName" placeholder="مثال: أ. سارة"></div>
+    <div class="form-group"><label class="form-label">الفصول التي تدرّسها</label>
+      <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="setTeacherClassesPreset('one')"><i class="fas fa-book-open"></i> فصل واحد</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="setTeacherClassesPreset('all')"><i class="fas fa-layer-group"></i> جميع الفصول</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="setTeacherClassesPreset('none')"><i class="fas fa-times"></i> لا شيء</button>
+      </div>
+      <div id="tchClassesBox" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn btn-success" onclick="saveTeacher()"><i class="fas fa-save"></i> احفظي</button>
+      <button class="btn btn-secondary" onclick="cancelTeacherForm()">إلغاء</button>
+    </div>
+  </div>
+</div></div></div>
+
+<!-- MODAL: ANSWER -->
+<div class="modal-overlay" id="modalAnswer"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-comment-dots"></i> <span id="answerModalTitle">إضافة إجابتكِ</span></h2><button class="modal-close" onclick="closeModal('modalAnswer')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div class="form-group"><label class="form-label">الطالبة</label><select class="form-select" id="ansStudent"></select></div>
+  <div class="form-group"><label class="form-label">نص الإجابة</label><textarea class="form-textarea" id="ansText" rows="4" placeholder="..."></textarea></div>
+  <div class="form-group"><label class="form-label">التقييم</label><div class="chip-grid" id="ratingChips">
+    <div class="chip" data-rating="1">⭐</div><div class="chip" data-rating="2">⭐⭐</div>
+    <div class="chip selected" data-rating="3">⭐⭐⭐</div><div class="chip" data-rating="4">⭐⭐⭐⭐</div>
+    <div class="chip" data-rating="5" style="grid-column:span 2">⭐⭐⭐⭐⭐</div>
+  </div></div>
+</div><div class="modal-foot"><button class="btn btn-secondary" onclick="closeModal('modalAnswer')">إلغاء</button><button class="btn btn-success" id="ansSaveBtn"><i class="fas fa-save"></i> احفظي</button></div></div></div>
+
+<!-- MODAL: QUIZ -->
+<div class="modal-overlay" id="modalQuiz"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-question-circle"></i> <span id="quizModalTitle">إنشاء سؤالك</span></h2><button class="modal-close" onclick="closeModal('modalQuiz')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div class="form-group"><label class="form-label">عنوان السؤال</label><input type="text" class="form-input" id="qTitle" placeholder="..."></div>
+  <div class="form-group"><label class="form-label">الخيارات</label>
+    <input type="text" class="form-input" id="qOpt0" placeholder="(أ)" style="margin-bottom:5px">
+    <input type="text" class="form-input" id="qOpt1" placeholder="(ب)" style="margin-bottom:5px">
+    <input type="text" class="form-input" id="qOpt2" placeholder="(ج)" style="margin-bottom:5px">
+    <input type="text" class="form-input" id="qOpt3" placeholder="(د)">
+  </div>
+  <div class="form-group"><label class="form-label">الإجابة الصحيحة</label><div class="chip-grid" id="qCorrectChips">
+    <div class="chip" data-correct="0">أ</div><div class="chip" data-correct="1">ب</div>
+    <div class="chip" data-correct="2">ج</div><div class="chip" data-correct="3">د</div>
+  </div></div>
+  <div class="form-group"><label class="form-label">التصنيف</label><select class="form-select" id="qSubject">
+    <option value="math">رياضيات</option><option value="physics">فيزياء</option><option value="chem">كيمياء</option>
+    <option value="bio">أحياء</option><option value="arabic">عربي</option><option value="english">إنجليزي</option>
+    <option value="islamic">إسلامية</option><option value="social">اجتماعيات</option><option value="other">أخرى</option>
+  </select></div>
+</div><div class="modal-foot"><button class="btn btn-secondary" onclick="closeModal('modalQuiz')">إلغاء</button><button class="btn btn-warning" id="qSaveBtn"><i class="fas fa-save"></i> احفظي</button></div></div></div>
+
+<!-- MODAL: WORD -->
+<div class="modal-overlay" id="modalWord"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-font"></i> <span id="wordModalTitle">إضافة كلمة</span></h2><button class="modal-close" onclick="closeModal('modalWord')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div class="form-group"><label class="form-label">الكلمة</label><input type="text" class="form-input" id="wWord"></div>
+  <div class="form-group"><label class="form-label">التعريف</label><textarea class="form-textarea" id="wDef"></textarea></div>
+  <div class="form-group"><label class="form-label">اللون</label><select class="form-select" id="wColor">
+    <option value="yellow">أصفر</option><option value="pink">وردي</option><option value="blue">أزرق</option><option value="green">أخضر</option><option value="purple">بنفسجي</option>
+  </select></div>
+</div><div class="modal-foot"><button class="btn btn-secondary" onclick="closeModal('modalWord')">إلغاء</button><button class="btn btn-warning" id="wSaveBtn"><i class="fas fa-save"></i> احفظي</button></div></div></div>
+
+<!-- MODAL: RANDOM -->
+<div class="modal-overlay" id="modalRandom"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-random"></i> اختاري عشوائي</h2><button class="modal-close" onclick="closeModal('modalRandom')"><i class="fas fa-times"></i></button></div><div class="modal-body" style="text-align:center">
+  <div class="wheel-container"><div class="wheel" id="wheel"></div><div class="wheel-pointer"></div><div class="wheel-center" id="wheelSpin"><i class="fas fa-play"></i></div></div>
+  <div class="wheel-result" id="wheelResult">اضغطي للتدوير</div>
+  <div style="display:flex;gap:8px;justify-content:center">
+    <button class="btn btn-primary" onclick="resetWheel()"><i class="fas fa-redo"></i> أعيدي</button>
+    <button class="btn btn-success" onclick="pickAgain()"><i class="fas fa-forward"></i> طالبة أخرى</button>
+  </div>
+</div></div></div>
+
+<!-- MODAL: GROUPS -->
+<div class="modal-overlay" id="modalGroups"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-users"></i> توزيع المجموعات</h2><button class="modal-close" onclick="closeModal('modalGroups')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div class="form-group"><label class="form-label">عدد المجموعات</label><input type="number" class="form-input" id="groupCount" value="4" min="2" max="10"></div>
+  <button class="btn btn-primary btn-block" onclick="makeGroups()"><i class="fas fa-magic"></i> وزعي تلقائياً</button>
+  <div class="group-display" id="groupDisplay"></div>
+</div></div></div>
+
+<!-- MODAL: TOOLS -->
+<div class="modal-overlay" id="modalTools"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-toolbox"></i> مركز الأدوات</h2><button class="modal-close" onclick="closeModal('modalTools')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <button class="btn btn-primary" onclick="openRandomPicker()" style="flex-direction:column;padding:18px 10px"><i class="fas fa-random" style="font-size:1.5rem"></i><br><span>اختاري عشوائي</span></button>
+    <button class="btn btn-success" onclick="openGroupMaker()" style="flex-direction:column;padding:18px 10px"><i class="fas fa-users" style="font-size:1.5rem"></i><br><span>توزيع مجموعات</span></button>
+    <button class="btn btn-purple" onclick="openPollModal()" style="flex-direction:column;padding:18px 10px"><i class="fas fa-vote-yea" style="font-size:1.5rem"></i><br><span>تصويت سريع</span></button>
+    <button class="btn" onclick="openPDFViewer()" style="flex-direction:column;padding:18px 10px;background:#c0392b;color:white"><i class="fas fa-file-pdf" style="font-size:1.5rem"></i><br><span>عارض PDF</span></button>
+    <button class="btn" onclick="openVideoPlayer()" style="flex-direction:column;padding:18px 10px;background:#e67e22;color:white"><i class="fas fa-video" style="font-size:1.5rem"></i><br><span>مشغل فيديو</span></button>
+    <button class="btn" onclick="openMapModal()" style="flex-direction:column;padding:18px 10px;background:#16a085;color:white"><i class="fas fa-globe-africa" style="font-size:1.5rem"></i><br><span>خرائط العالم</span></button>
+    <button class="btn" onclick="openReference()" style="flex-direction:column;padding:18px 10px;background:#34495e;color:white"><i class="fas fa-book" style="font-size:1.5rem"></i><br><span>مرجع القوانين</span></button>
+    <button class="btn" onclick="openPeriodicTable()" style="flex-direction:column;padding:18px 10px;background:#9b59b6;color:white"><i class="fas fa-table" style="font-size:1.5rem"></i><br><span>الجدول الدوري</span></button>
+    <button class="btn" onclick="openMindMap()" style="flex-direction:column;padding:18px 10px;background:#2980b9;color:white"><i class="fas fa-project-diagram" style="font-size:1.5rem"></i><br><span>خرائط ذهنية</span></button>
+    <button class="btn" onclick="openExitTicket()" style="flex-direction:column;padding:18px 10px;background:#e67e22;color:white"><i class="fas fa-ticket-alt" style="font-size:1.5rem"></i><br><span>تذكرة الخروج</span></button>
+    <button class="btn" onclick="openLiveSession()" style="flex-direction:column;padding:18px 10px;background:linear-gradient(135deg,#e74c3c,#c0392b);color:white"><i class="fas fa-broadcast-tower" style="font-size:1.5rem"></i><br><span>جلسة مباشرة</span></button>
+    <button class="btn" onclick="openVirtualTours()" style="flex-direction:column;padding:18px 10px;background:linear-gradient(135deg,#16a085,#0e6655);color:white;position:relative;overflow:hidden"><i class="fas fa-globe-americas" style="font-size:1.5rem"></i><br><span>رحلات افتراضية</span><span style="position:absolute;top:4px;left:4px;background:#e74c3c;color:white;font-size:.5rem;padding:2px 6px;border-radius:6px;font-weight:900">جديد 360°</span></button>
+    <button class="btn" onclick="openPhetPanel()" style="flex-direction:column;padding:18px 10px;background:linear-gradient(135deg,#8e44ad,#6c3483);color:white;position:relative;overflow:hidden"><i class="fas fa-flask" style="font-size:1.5rem"></i><br><span>محاكيات فيت (PhET)</span><span style="position:absolute;top:4px;left:4px;background:#ffd700;color:#6c3483;font-size:.5rem;padding:2px 6px;border-radius:6px;font-weight:900">محاكاة</span></button>
+  </div>
+</div></div></div>
+
+<!-- MODAL: VIRTUAL TOURS - رحلات افتراضية -->
+<div class="modal-overlay" id="modalVirtualTours"><div class="modal-box" style="max-width:96vw;width:1100px;max-height:94vh"><div class="modal-head"><h2><i class="fas fa-globe-americas"></i> <span>رحلات افتراضية تفاعلية</span> <small style="opacity:.85;font-weight:500;font-size:.7rem;margin-right:6px">| 360° Virtual Tours</small></h2><div style="display:flex;gap:6px;margin-right:auto"><button class="btn btn-sm" onclick="vtOpenRandom()" style="background:linear-gradient(135deg,#f9d423,#c84b31);color:white"><i class="fas fa-dice"></i> عشوائي</button></div><button class="modal-close" onclick="closeModal('modalVirtualTours')"><i class="fas fa-times"></i></button></div><div class="modal-body" style="padding:14px">
+  <div class="vt-classroom-tip"><i class="fas fa-lightbulb"></i><div class="vt-tip-text">أداة <b>الرحلات الافتراضية</b> تأخذ طالباتكِ في جولة حية داخل أي موقع أثري في العالم. اضغطي على أي موقع لفتح جولة 360° تفاعلية، ويمكنكِ مشاركة الشاشة مع الطالبات عبر <b>العرض التقديمي</b>، أو التقاط صورة للجولة وإرسالها للسبورة للكتابة عليها.</div></div>
+  <div class="vt-tabs" id="vtTabs">
+    <button class="vt-tab active" data-tab="bahrain" onclick="switchVtTab('bahrain',this)">🇧🇭 مملكة البحرين <span class="vt-count" id="vt-count-bahrain">8</span></button>
+    <button class="vt-tab" data-tab="world" onclick="switchVtTab('world',this)">🌍 حول العالم <span class="vt-count" id="vt-count-world">10</span></button>
+    <button class="vt-tab" data-tab="video" onclick="switchVtTab('video',this)">🎬 فيديوهات 360° <span class="vt-count">+</span></button>
+  </div>
+  <div class="vt-search"><i class="fas fa-search"></i><input type="text" id="vtSearch" placeholder="ابحثي عن موقع أثري (مثال: قلعة البحرين، الأهرامات، البتراء...)" oninput="filterVtSites()"></div>
+  <div id="vtTabBahrain" class="vt-tab-content">
+    <div class="vt-section-title"><span class="vt-st-emoji">🏛️</span> كنوز مملكة البحرين الأثرية <span class="vt-st-sub">اضغطي على أي موقع لبدء الجولة الافتراضية</span></div>
+    <div class="vt-grid" id="vtGridBahrain"></div>
+  </div>
+  <div id="vtTabWorld" class="vt-tab-content" style="display:none">
+    <div class="vt-section-title"><span class="vt-st-emoji">🌍</span> أعظم المواقع الأثرية في العالم <span class="vt-st-sub">من الأهرامات إلى البتراء</span></div>
+    <div class="vt-grid" id="vtGridWorld"></div>
+  </div>
+  <div id="vtTabVideo" class="vt-tab-content" style="display:none">
+    <div class="vt-section-title"><span class="vt-st-emoji">🎬</span> جولات 360° على يوتيوب <span class="vt-st-sub">يمكن للطالبات التدوير والرؤية من كل الزوايا</span></div>
+    <div class="vt-yt-grid" id="vtGridVideo"></div>
+  </div>
+</div></div></div>
+
+<!-- MODAL: TOUR VIEWER - عارض الجولة -->
+<div class="modal-overlay" id="modalTourViewer"><div class="modal-box" style="max-width:98vw;width:1280px;max-height:96vh"><div class="modal-head"><h2 id="vtViewerTitle"><i class="fas fa-vr-cardboard"></i> <span>جولة افتراضية</span></h2><div style="display:flex;gap:6px;margin-right:auto"><button class="btn btn-success btn-sm" id="vtViewerCaptureBtn" onclick="vtCaptureToBoard()" title="التقطي صورة للجولة وأرسليها للسبورة"><i class="fas fa-camera"></i> للسبورة</button><a class="btn btn-warning btn-sm" id="vtViewerExternalBtn" href="#" target="_blank" rel="noopener noreferrer" title="افتحي في تبويب جديد" onclick="vtOpenExternal(event)"><i class="fas fa-external-link-alt"></i> فتح كامل</a></div><button class="modal-close" onclick="closeTourViewer()"><i class="fas fa-times"></i></button></div><div class="modal-body" style="padding:14px">
+  <div class="vt-info-bar" id="vtViewerInfoBar"></div>
+  <div class="vt-viewer-wrap" id="vtViewerWrap">
+    <div class="vt-viewer-loading" id="vtViewerLoading"><div class="spinner-vt"></div><div style="font-weight:800">جاري تحميل الجولة الافتراضية...</div><div style="font-size:.75rem;opacity:.8" id="vtViewerLoadingTip">استمتعي بالتجربة، يمكنكِ التكبير والتحريك</div></div>
+    <iframe id="vtViewerFrame" src="about:blank" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; xr-spatial-tracking; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+  <div class="vt-tabs-mini" id="vtInfoTabs">
+    <button class="vt-tab-mini active" data-pane="overview" onclick="switchVtInfoTab('overview',this)"><i class="fas fa-info-circle"></i> نظرة عامة <span class="vt-num">1</span></button>
+    <button class="vt-tab-mini" data-pane="history" onclick="switchVtInfoTab('history',this)"><i class="fas fa-scroll"></i> التاريخ <span class="vt-num">2</span></button>
+    <button class="vt-tab-mini" data-pane="stops" onclick="switchVtInfoTab('stops',this)"><i class="fas fa-map-marker-alt"></i> محطات الجولة <span class="vt-num">3</span></button>
+    <button class="vt-tab-mini" data-pane="classroom" onclick="switchVtInfoTab('classroom',this)"><i class="fas fa-chalkboard-teacher"></i> أنشطة صفية <span class="vt-num">4</span></button>
+  </div>
+  <div id="vtPaneOverview" class="vt-content-pane active"></div>
+  <div id="vtPaneHistory" class="vt-content-pane"></div>
+  <div id="vtPaneStops" class="vt-content-pane"></div>
+  <div id="vtPaneClassroom" class="vt-content-pane"></div>
+  <div class="vt-tour-actions">
+    <div class="vt-action-info"><i class="fas fa-graduation-cap"></i> <b>نصيحة:</b> أثناء الجولة يمكنكِ الكتابة على السبورة لشرح ما تراه الطالبات، أو التقاط صورة للجولة للرجوع إليها لاحقاً.</div>
+    <button class="btn btn-sm" onclick="vtShareTour()" style="background:var(--info);color:white"><i class="fas fa-qrcode"></i> رمز QR</button>
+    <button class="btn btn-sm" onclick="vtFullscreen()" style="background:var(--dark);color:white"><i class="fas fa-expand"></i> ملء الشاشة</button>
+  </div>
+</div></div></div>
+
+<!-- MODAL: TIMER -->
+<div class="modal-overlay" id="modalTimer"><div class="modal-box" style="max-width:520px"><div class="modal-head"><h2><i class="fas fa-stopwatch"></i> المؤقت الذكي</h2><button class="modal-close" onclick="closeModal('modalTimer')"><i class="fas fa-times"></i></button></div><div class="modal-body" style="text-align:center">
+  <div style="font-size:4rem;font-weight:900;color:var(--primary);font-family:'Amiri',monospace;margin:20px 0" id="bigTimerDisplay">00:00</div>
+  <div style="display:flex;gap:8px;justify-content:center;margin-bottom:14px">
+    <button class="chip" onclick="setTimerMode('stopwatch')" id="modeStopwatch">إيقاف</button>
+    <button class="chip" onclick="setTimerMode('countdown')" id="modeCountdown">تنازلي</button>
+    <button class="chip" onclick="setTimerMode('pomodoro')" id="modePomodoro">بومودورو</button>
+  </div>
+  <div id="countdownInputs" style="display:none;margin-bottom:14px">
+    <input type="number" class="form-input" id="countdownMin" value="5" min="1" max="120" style="text-align:center;width:100px;display:inline-block"> <span>دقيقة</span>
+  </div>
+  <!-- إعدادات الصوت: مستوى الصوت + نغمة مميزة عند الانتهاء -->
+  <div style="background:var(--gray);border-radius:10px;padding:10px 14px;margin:0 0 14px;text-align:right">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <i class="fas fa-volume-up" style="color:var(--primary);width:18px"></i>
+      <span style="font-size:.78rem;font-weight:700;color:var(--dark);min-width:50px">مستوى الصوت</span>
+      <input type="range" id="timerVolume" min="0" max="100" value="85" style="flex:1;cursor:pointer;accent-color:var(--primary)" oninput="updateTimerVolume(this.value)">
+      <span id="timerVolumeLabel" style="font-size:.78rem;font-weight:800;color:var(--primary);min-width:38px;text-align:left">85%</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <i class="fas fa-music" style="color:var(--secondary);width:18px"></i>
+      <span style="font-size:.78rem;font-weight:700;color:var(--dark);min-width:50px">صوت الانتهاء</span>
+      <select id="timerSoundType" style="flex:1;font-family:'Tajawal';font-size:.78rem;padding:5px 8px;border:1px solid #d0d0d0;border-radius:6px;background:white;font-weight:700;color:var(--primary);cursor:pointer" onchange="onTimerSoundChange(this.value)">
+        <optgroup label="💎 الأصوات الاحترافية الفاخرة">
+          <option value="elegant" selected>💎 نغمة احترافية فاخرة</option>
+          <option value="crystal">💠 كريستال فاخر</option>
+        </optgroup>
+        <optgroup label="🌸 الأصوات اللطيفة والحالمة">
+          <option value="sweet_bell">🌸 جرس لطيف دافئ</option>
+          <option value="lullaby">🌙 تهويدة هادئة</option>
+          <option value="zen">🪷 وعاء زن تأملي</option>
+          <option value="gentle_wake">🌅 استيقاظ لطيف</option>
+          <option value="water">💧 قطرات ماء هادئة</option>
+        </optgroup>
+        <optgroup label="🎵 الألحان الموسيقية">
+          <option value="twinkle">✨ تويـنكل توينكل</option>
+          <option value="mary">🎵 Mary Had a Little Lamb</option>
+          <option value="piano">🎹 وتر بيانو كبير</option>
+          <option value="arpeggio">🌈 أربيجيو صاعد (C major)</option>
+          <option value="arabic">🕌 لمسة عربية (مقام حجاز)</option>
+        </optgroup>
+        <optgroup label="🎉 الأصوات الاحتفالية والمميزة">
+          <option value="chime">🔔 نغمة تصاعدية كلاسيكية</option>
+          <option value="school">🏫 جرس المدرسة</option>
+          <option value="victory">🎉 موسيقى انتصار</option>
+          <option value="buzzer">📯 صفير تنبيه قوي</option>
+        </optgroup>
+        <optgroup label="🐦 أصوات الطبيعة">
+          <option value="birds">🐦 صفير عصافير صباحي</option>
+        </optgroup>
+      </select>
+      <button type="button" onclick="previewTimerSound()" title="استمع للنغمة" style="background:var(--accent);color:var(--dark);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-play" style="font-size:.7rem"></i></button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+      <i class="fas fa-stopwatch" style="color:var(--primary);width:18px"></i>
+      <span style="font-size:.78rem;font-weight:700;color:var(--dark);min-width:50px">صوت الدقات</span>
+      <select id="timerTickType" style="flex:1;font-family:'Tajawal';font-size:.78rem;padding:5px 8px;border:1px solid #d0d0d0;border-radius:6px;background:white;font-weight:700;color:var(--primary);cursor:pointer" onchange="onTimerTickChange(this.value)">
+        <option value="classic_clock" selected>🕰 ساعة كلاسيكية قديمة (tick-tock)</option>
+        <option value="pendulum">⏱ بندول أنيق</option>
+        <option value="wooden">🪵 خشبي دافئ</option>
+        <option value="crystal">💎 كريستال ناعم</option>
+        <option value="pulse">💓 نبضة عميقة</option>
+        <option value="beep">📟 بيب إلكتروني</option>
+        <option value="silent">🔇 صامت (بدون دقات)</option>
+      </select>
+      <button type="button" onclick="previewTimerTick()" title="استمع للدقات" style="background:var(--accent);color:var(--dark);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-play" style="font-size:.7rem"></i></button>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:center">
+    <button class="btn btn-primary btn-lg" id="bigTimerStart" onclick="bigTimerToggle()"><i class="fas fa-play"></i> ابدئي</button>
+    <button class="btn btn-secondary btn-lg" onclick="bigTimerReset()"><i class="fas fa-redo"></i></button>
+  </div>
+</div></div></div>
+
+<!-- MODAL: POLL -->
+<div class="modal-overlay" id="modalPoll"><div class="modal-box" style="max-width:720px"><div class="modal-head"><h2><i class="fas fa-vote-yea"></i> تصويت / استطلاع تفاعلي</h2><div style="display:flex;gap:6px;margin-right:auto"><button class="btn btn-warning btn-sm" onclick="showPollQR()" title="اعرضي رمز QR للطالبات"><i class="fas fa-qrcode"></i> QR</button><button class="btn btn-success btn-sm" onclick="openStatsReport('poll')" title="التقرير الإحصائي"><i class="fas fa-chart-pie"></i> تقرير</button></div><button class="modal-close" onclick="closeModal('modalPoll')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div id="pollCurrentQPreview" class="q-preview-box poll" style="display:none"><div class="q-label"><i class="fas fa-question-circle"></i> السؤال المعروض للطالبات</div><div class="q-text" id="pollCurrentQText">—</div></div>
+  <div style="display:flex;gap:14px;flex-wrap:wrap">
+    <div style="flex:1;min-width:280px">
+      <div class="form-group"><label class="form-label">سؤالك الاستطلاع</label><input type="text" class="form-input" id="pollQ" placeholder="..."></div>
+      <div class="form-group"><label class="form-label">الخيارات (سطر لكل خيار)</label><textarea class="form-textarea" id="pollOpts" rows="4" placeholder="نعم&#10;لا&#10;جزئياً"></textarea></div>
+      <button class="btn btn-primary btn-block" onclick="createPoll()"><i class="fas fa-play"></i> ابدئي التصويت</button>
+      <div id="pollDisplay" style="margin-top:14px"></div>
+    </div>
+    <div style="flex:1;min-width:240px">
+      <h4 style="color:var(--dark);font-weight:800;margin-bottom:8px"><i class="fas fa-qrcode"></i> رمز QR للتصويت</h4>
+      <div class="poll-qr-wrap">
+        <div id="pollQRImg" class="poll-qr-box"></div>
+        <div class="poll-qr-hint"><i class="fas fa-mobile-alt"></i> الطالبات يمسحن ويصوّتن من جوالاتهن</div>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="showPollQR()"><i class="fas fa-qrcode"></i> تحديث</button>
+        <button class="btn btn-secondary btn-sm" onclick="copyPollLink()"><i class="fas fa-copy"></i> انسخي الرابط</button>
+        <button class="btn btn-warning btn-sm" onclick="addPollQRToBoard()"><i class="fas fa-chalkboard"></i> للسبورة</button>
+      </div>
+      <div id="pollLiveResponses" style="margin-top:14px;display:none">
+        <h4 style="color:var(--success);font-weight:800;margin-bottom:8px"><i class="fas fa-stream"></i> أصوات الطالبات المباشرة</h4>
+        <div id="pollLiveList" class="live-responses-stream" style="max-height:240px"></div>
+      </div>
+    </div>
+  </div>
+</div></div></div>
+
+<!-- MODAL: PERIODIC -->
+<div class="modal-overlay" id="modalPeriodic">
+  <div class="modal-box pt-modal-box">
+    <div class="modal-head">
+      <h2><i class="fas fa-atom"></i> الجدول الدوري التفاعلي — جميع العناصر الـ 118</h2>
+      <div style="display:flex;gap:6px;margin-right:auto">
+        <button class="modal-close" onclick="ptPrintTable()" title="طباعة"><i class="fas fa-print"></i></button>
+        <button class="modal-close" onclick="ptSendToCanvas()" title="إرسال للسبورة"><i class="fas fa-chalkboard"></i></button>
+        <button class="modal-close" onclick="closeModal('modalPeriodic')"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div class="modal-body pt-modal-body">
+      <!-- Toolbar -->
+      <div class="pt-toolbar">
+        <div class="pt-search" id="ptSearchWrap">
+          <i class="fas fa-search"></i>
+          <input type="text" id="ptSearch" placeholder="ابحثيي برمز أو اسم العنصر (مثال: Fe أو حديد)..." oninput="ptFilterSearch(this.value)">
+          <button class="pt-search-clear" onclick="ptFilterSearch('')"><i class="fas fa-times-circle"></i></button>
+        </div>
+        <button class="pt-toggle on" id="ptLoupeBtn" onclick="ptToggleLoupe()" title="عدسة مكبرة"><i class="fas fa-search-plus"></i> العدسة</button>
+        <div class="pt-zoom">
+          <button onclick="ptZoom(-10)" title="صغّري"><i class="fas fa-minus"></i></button>
+          <span class="pt-zoom-val" id="ptZoomVal">100%</span>
+          <button onclick="ptZoom(10)" title="كبّري"><i class="fas fa-plus"></i></button>
+          <button onclick="ptZoomReset()" title="أعيدي"><i class="fas fa-redo"></i></button>
+        </div>
+        <button class="pt-toggle" id="ptFullscreenBtn" onclick="ptToggleFullscreen()" title="ملء الشاشة"><i class="fas fa-expand"></i></button>
+      </div>
+
+      <!-- Legend (clickable filters) -->
+      <div class="pt-legend" id="ptLegend"></div>
+
+      <!-- The grid -->
+      <div class="pt-wrap" id="ptWrap">
+        <div id="periodicTable"></div>
+      </div>
+
+      <!-- Detail panel -->
+      <div class="pt-detail" id="ptDetail" style="display:none">
+        <div class="pt-detail-card" id="ptDetailCard">
+          <div class="pt-send">
+            <button class="pt-icon-btn" onclick="ptSendElementToCanvas()" title="إرسال للسبورة"><i class="fas fa-chalkboard-teacher"></i></button>
+            <button class="pt-icon-btn" onclick="ptPrintElement()" title="طباعة"><i class="fas fa-print"></i></button>
+          </div>
+          <div class="pt-detail-head">
+            <div class="pt-detail-symbol" id="ptDetailSym">—</div>
+            <div>
+              <div class="pt-detail-name" id="ptDetailName">—</div>
+              <div class="pt-detail-sub" id="ptDetailCat">—</div>
+              <div class="pt-detail-en" id="ptDetailEn">—</div>
+              <div class="pt-period-group" id="ptDetailPG"></div>
+            </div>
+          </div>
+          <div class="pt-detail-grid" id="ptDetailGrid"></div>
+          <div class="pt-detail-section">
+            <h4><i class="fas fa-cogs"></i> التوزيع الإلكتروني</h4>
+            <div class="pt-config" id="ptConfig">—</div>
+          </div>
+          <div class="pt-detail-section">
+            <h4><i class="fas fa-info-circle"></i> نبذة</h4>
+            <div class="pt-detail-desc" id="ptDesc">—</div>
+          </div>
+        </div>
+        <div class="pt-detail-card" id="ptDetailExtra">
+          <div class="pt-detail-section" style="margin-top:0">
+            <h4><i class="fas fa-flask"></i> الخصائص الفيزيائية</h4>
+            <div id="ptPhysProps"></div>
+          </div>
+          <div class="pt-detail-section">
+            <h4><i class="fas fa-atom"></i> الخصائص الذرية</h4>
+            <div id="ptAtomProps"></div>
+          </div>
+          <div class="pt-detail-section">
+            <h4><i class="fas fa-history"></i> الاستخدامات والمعلومات</h4>
+            <div class="pt-detail-desc" id="ptUses">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loupe overlay -->
+<div class="pt-loupe" id="ptLoupe">
+  <div class="pt-loupe-inner" id="ptLoupeInner"></div>
+</div>
+
+<!-- MODAL: REFERENCE -->
+<div class="modal-overlay" id="modalReference"><div class="modal-box" style="max-width:720px"><div class="modal-head"><h2><i class="fas fa-book"></i> مرجع القوانين</h2><button class="modal-close" onclick="closeModal('modalReference')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+    <button class="chip selected" data-ref="math">رياضيات</button>
+    <button class="chip" data-ref="physics">فيزياء</button>
+    <button class="chip" data-ref="chem">كيمياء</button>
+  </div>
+  <div id="referenceList"></div>
+</div></div></div>
+
+<!-- MODAL: MINDMAP -->
+<div class="modal-overlay" id="modalMindMap"><div class="modal-box" style="max-width:560px"><div class="modal-head"><h2><i class="fas fa-project-diagram"></i> خريطة ذهنية</h2><button class="modal-close" onclick="closeModal('modalMindMap')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div class="form-group"><label class="form-label">العنوان الرئيسي</label><input type="text" class="form-input" id="mmRoot" placeholder="مثال: الطاقة"></div>
+  <div class="form-group"><label class="form-label">الفروع (سطر لكل فرع)</label><textarea class="form-textarea" id="mmBranches" rows="5" placeholder="حركية&#10;ضوئية&#10;حرارية"></textarea></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <button class="btn btn-primary" onclick="generateMindMap()"><i class="fas fa-magic"></i> أنشئي</button>
+    <button class="btn btn-warning" onclick="saveMindMapToCanvas()" title="ارسلي الخريطة إلى السبورة كصورة دائمة"><i class="fas fa-chalkboard"></i> للسبورة</button>
+    <button class="btn btn-success" onclick="saveMindMapToCanvas();setTimeout(()=>closeModal('modalMindMap'),100)" title="ارسلي للسبورة ثم أغلقي النافذة"><i class="fas fa-chalkboard-teacher"></i> للسبورة وإغلاق</button>
+    <button class="btn btn-danger" onclick="clearMindMap()"><i class="fas fa-trash"></i> امسحي</button>
+  </div>
+  <div style="margin-top:10px;padding:10px;background:#f0f7fa;border-radius:8px;font-size:.78rem;color:#1a5f7a"><i class="fas fa-info-circle"></i> <b>أنشئي</b> = معاينة الخريطة فوق السبورة. <b>للسبورة</b> = ارسمها كجزء دائم على السبورة (يمكن الكتابة فوقها).</div>
+</div></div></div>
+
+<!-- MODAL: STATS REPORT -->
+<div class="modal-overlay" id="modalStatsReport"><div class="modal-box" style="max-width:96vw;width:960px;max-height:92vh"><div class="modal-head"><h2><i class="fas fa-chart-pie"></i> التقرير الإحصائي الشامل</h2><div style="display:flex;gap:6px;margin-right:auto"><button class="btn btn-success btn-sm" onclick="exportStatsAsPNG()"><i class="fas fa-image"></i> صورة</button><button class="btn btn-primary btn-sm" onclick="printStatsReport()"><i class="fas fa-print"></i> طباعة</button></div><button class="modal-close" onclick="closeModal('modalStatsReport')"><i class="fas fa-times"></i></button></div><div class="modal-body" id="statsReportBody" style="overflow-y:auto;max-height:calc(92vh - 60px)">
+  <div class="stats-tabs" id="statsTabs">
+    <button class="chip active" data-stab="exit" onclick="switchStatsTab('exit')"><i class="fas fa-ticket-alt"></i> تذكرة الخروج</button>
+    <button class="chip" data-stab="poll" onclick="switchStatsTab('poll')"><i class="fas fa-vote-yea"></i> الاستطلاع</button>
+    <button class="chip" data-stab="live" onclick="switchStatsTab('live')"><i class="fas fa-broadcast-tower"></i> الجلسة المباشرة</button>
+  </div>
+  <div id="statsTabContent"></div>
+</div></div></div>
+
+<!-- MODAL: EXIT -->
+<div class="modal-overlay" id="modalExit"><div class="modal-box" style="max-width:640px"><div class="modal-head"><h2><i class="fas fa-ticket-alt"></i> تذكرة الخروج</h2><div style="display:flex;gap:6px;margin-right:auto"><button class="btn btn-warning btn-sm" onclick="showExitQR()" title="اعرضي رمز QR للطالبات"><i class="fas fa-qrcode"></i> اعرضي QR</button><button class="btn btn-success btn-sm" onclick="openStatsReport('exit')" title="التقرير الإحصائي"><i class="fas fa-chart-pie"></i> تقرير</button></div><button class="modal-close" onclick="closeModal('modalExit')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <p style="margin-bottom:14px;color:#666">تقييم سريع لنهاية الحصة</p>
+  <div id="exitCurrentQPreview" class="q-preview-box exit" style="display:none"><div class="q-label"><i class="fas fa-question-circle"></i> السؤال المعروض للطالبات</div><div class="q-text" id="exitCurrentQText">—</div></div>
+  <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+    <div style="flex:1;min-width:280px">
+      <div class="form-group"><label class="form-label">السؤال</label><select class="form-select" id="exitQ">
+        <option value="understood">هل فهمتِ الدرس؟</option>
+        <option value="loved">أكثر شيء أعجبك؟</option>
+        <option value="confused">ما الذي ما زلتِ محتارة فيه؟</option>
+        <option value="apply">كيف ستطبقيين ما تعلميتيه؟</option>
+      </select></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+        <button class="btn btn-success" onclick="recordExit('كلياً')">😊 كلياً</button>
+        <button class="btn btn-warning" onclick="recordExit('جزئياً')">😐 جزئياً</button>
+        <button class="btn btn-danger" onclick="recordExit('لا')">😕 لا</button>
+      </div>
+      <div class="form-group"><label class="form-label"><i class="fas fa-qrcode"></i> أو اسمحي للطالبات لتُجبن من جوالاتهن</label></label>
+        <div id="exitQRBox" style="background:#fafafa;padding:14px;border-radius:10px;text-align:center;border:2px dashed #1a5f7a">
+          <div id="exitQRImg" style="display:inline-block;background:white;padding:10px;border-radius:8px"></div>
+          <div style="font-size:.78rem;color:#666;margin-top:8px">📱 الطالبات يتفاعلن ويجبن من جوالهن</div>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button class="btn btn-primary btn-sm" onclick="showExitQR()"><i class="fas fa-qrcode"></i> تحديث الرمز</button>
+          <button class="btn btn-secondary btn-sm" onclick="copyExitLink()"><i class="fas fa-copy"></i> انسخي الرابط</button>
+          <button class="btn btn-warning btn-sm" onclick="addExitQRToBoard()"><i class="fas fa-chalkboard"></i> للسبورة</button>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:260px">
+      <h4 style="color:var(--dark);font-weight:800;margin-bottom:8px"><i class="fas fa-chart-bar"></i> النتائج</h4>
+      <div id="exitResults"></div>
+      <div id="exitLiveResponses" style="margin-top:14px;display:none">
+        <h4 style="color:var(--success);font-weight:800;margin-bottom:8px"><i class="fas fa-stream"></i> إجابات الطالبات المباشرة</h4>
+        <div id="exitLiveList" class="live-responses-stream" style="max-height:240px"></div>
+      </div>
+    </div>
+  </div>
+</div></div></div>
+
+<!-- MODAL: PDF -->
+<div class="modal-overlay" id="modalPDF"><div class="modal-box" style="max-width:96vw;width:96vw;max-height:95vh"><div class="modal-head">
+  <h2><i class="fas fa-file-pdf"></i> عارض PDF</h2>
+  <div style="display:flex;gap:6px;margin-right:auto;flex-wrap:wrap;align-items:center">
+    <button class="btn btn-sm" onclick="addPDFToBoardMovable()" title="إضافة الصفحة الحالية كقطعة على السبورة — قابلة للسحب والتحجيم، ثم اضغطي 'تثبيت' لتسجيلها في الرسم" style="background:linear-gradient(135deg,#f9d423,#ffd700);color:#0f3460;font-weight:900;border:2px solid #fff;box-shadow:0 4px 14px rgba(249,212,35,.45);padding:8px 14px;font-size:.85rem"><i class="fas fa-up-right-and-down-left-from-center"></i> على السبورة (قابل للتحريك والتحجيم)</button>
+    <button class="btn btn-sm" onclick="addAllPDFPagesToBoard()" title="إضافة كل صفحات الملف دفعة واحدة كقطع قابلة للتحريك والتحجيم" style="background:linear-gradient(135deg,#1a5f7a,#0f3460);color:#fff;font-weight:800;border:1px solid rgba(255,255,255,.2)"><i class="fas fa-layer-group"></i> كل الصفحات دفعة</button>
+    <button class="btn btn-success btn-sm" onclick="addPDFToCanvas()" title="رسم الصفحة الحالية مباشرة في منتصف السبورة"><i class="fas fa-download"></i> للسبورة</button>
+    <button class="btn btn-sm" onclick="commitAllBoardItemsToCanvas()" title="تثبيت كل العناصر المؤقتة على السبورة" style="background:rgba(39,174,96,.92);color:#fff"><i class="fas fa-check-double"></i> تثبيت الكل</button>
+  </div>
+  <button class="modal-close" onclick="closePDFViewer()"><i class="fas fa-times"></i></button>
+</div><div class="modal-body">
+  <div class="drop-zone" id="pdfDropZone" style="margin-bottom:14px"><i class="fas fa-file-pdf"></i><div>اسحبيي ملف PDF هنا أو انقريي للاختاري</div></div>
+  <input type="file" id="pdfFileInput" accept="application/pdf" style="display:none">
+  <div id="pdfViewerContainer" style="display:none">
+    <div class="pdf-controls">
+      <button onclick="pdfPrevPage()" title="الصفحة السابقة"><i class="fas fa-chevron-right"></i></button>
+      <span class="pdf-page-info">صفحة <input type="number" id="pdfPageInput" value="1" min="1" onchange="pdfGoToPage(this.value)"> / <span id="pdfTotalPages">0</span></span>
+      <button onclick="pdfNextPage()" title="الصفحة التالية"><i class="fas fa-chevron-left"></i></button>
+      <button onclick="pdfZoomOut()" title="تصغير"><i class="fas fa-search-minus"></i></button>
+      <span class="pdf-page-info" id="pdfZoomLevel">100%</span>
+      <button onclick="pdfZoomIn()" title="تكبير"><i class="fas fa-search-plus"></i></button>
+      <button onclick="pdfZoomReset()" title="إعادة الضبط 100%"><i class="fas fa-redo"></i> 100%</button>
+      <button onclick="pdfFitWidth()" title="ملاءمة عرض الصفحة للنافذة"><i class="fas fa-arrows-alt-h"></i> ملاءمة</button>
+      <select id="pdfZoomPreset" class="pdf-zoom-preset-select" onchange="pdfSetZoomPreset(this.value)" title="اختاري مستوى التكبير">
+        <option value="">مستوى...</option>
+        <option value="0.5">50%</option>
+        <option value="0.75">75%</option>
+        <option value="1">100%</option>
+        <option value="1.25">125%</option>
+        <option value="1.5">150%</option>
+        <option value="2">200%</option>
+        <option value="2.5">250%</option>
+        <option value="3">300%</option>
+        <option value="4">400%</option>
+        <option value="5">500%</option>
+      </select>
+      <button id="pdfDrawBtn" onclick="togglePDFDraw()"><i class="fas fa-pen"></i> رسم</button>
+      <button onclick="clearPDFAnnotations()"><i class="fas fa-eraser"></i></button>
+      <button id="pdfTextToggle" onclick="togglePDFTextMode()" title="استخراج النص من كل الصفحات (للقراءة والنسخ)"><i class="fas fa-font"></i> استخراج النص</button>
+      <button onclick="pdfCloseFile()" title="إغلاق وحذف ملف PDF الحالي" style="background:rgba(231,76,60,.15);color:var(--danger);border:1px solid rgba(231,76,60,.3)"><i class="fas fa-trash-alt"></i> حذف الملف</button>
+      <span style="font-size:.62rem;color:#999;padding:0 6px" title="اضغطي Ctrl مع عجلة الماوس للتكبير">💡 Ctrl+عجلة = تكبير</span>
+    </div>
+    <div class="pdf-viewer-wrap" id="pdfViewerWrap"><div class="pdf-canvas-wrap" id="pdfCanvasWrap">
+      <canvas id="pdfCanvas"></canvas>
+      <div id="pdfTextLayer" class="pdf-text-layer" dir="rtl" lang="ar"></div>
+      <canvas id="pdfDrawCanvas" class="pdf-draw-canvas" style="display:none"></canvas>
+    </div></div>
+  </div>
+</div></div></div>
+
+<!-- MODAL: PDF EXTRACT PANEL — لوحة استخراج النص (خارج مودال PDF الرئيسي) -->
+<div class="pdf-extract-panel" id="pdfExtractPanel">
+  <div class="pdf-extract-head">
+    <h3><i class="fas fa-font"></i> النص المستخرج من ملف PDF — قابل للنسخ</h3>
+    <button class="pdf-extract-close" onclick="pdfCloseExtractPanel()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="pdf-extract-body" id="pdfExtractBody">
+    <div style="text-align:center;padding:30px;color:#999">
+      <i class="fas fa-hand-pointer" style="font-size:1.5rem"></i>
+      <div style="margin-top:10px;font-weight:700">اضغطي على "استخراج النص" لعرض محتوى الصفحات</div>
+    </div>
+  </div>
+  <div class="pdf-extract-foot">
+    <div><i class="fas fa-info-circle"></i> النص معروض بشكل نظيف — يمكن تحديده ونسخه بدون تشابك</div>
+    <button class="pdf-extract-copy-all" onclick="pdfCopyAllText()"><i class="fas fa-copy"></i> انسخي نص كل الصفحات</button>
+  </div>
+</div>
+
+<!-- MODAL: VIDEO -->
+<div class="modal-overlay" id="modalVideo"><div class="modal-box" style="max-width:90vw;width:820px"><div class="modal-head"><h2><i class="fas fa-video"></i> مشغل الفيديو</h2><button class="modal-close" onclick="closeModal('modalVideo')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div class="video-tabs"><button class="active" data-vtab="local" onclick="switchVideoTab('local')"><i class="fas fa-upload"></i> ملف محلي</button><button data-vtab="youtube" onclick="switchVideoTab('youtube')"><i class="fab fa-youtube"></i> يوتيوب</button></div>
+  <div id="videoTabLocal" style="padding:14px 0">
+    <div class="drop-zone" id="videoDropZone"><i class="fas fa-video"></i><div>اسحبيي فيديو أو انقريي للاختاري</div><small style="color:#aaa">MP4, WebM حتى 500MB</small></div>
+    <input type="file" id="videoFileInput" accept="video/*" style="display:none">
+  </div>
+  <div id="videoTabYoutube" style="padding:14px 0;display:none">
+    <div class="form-group"><label class="form-label">رابط يوتيوب</label><input type="url" class="form-input" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=..." oninput="updateYoutubeEmbed()"></div>
+  </div>
+  <div id="videoContainer" class="video-container" style="display:none;position:relative">
+    <video id="localVideo" controls style="width:100%;max-height:55vh;display:none"></video>
+    <iframe id="youtubePlayer" style="width:100%;height:400px;border:none;display:none" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <canvas id="videoDrawCanvas" class="video-overlay-canvas" width="800" height="450"></canvas>
+  </div>
+  <div id="videoControlsBar" class="video-controls" style="display:none">
+    <button onclick="toggleVideoPlay()" title="تشغيل/إيقاف"><i class="fas fa-play"></i></button>
+    <button onclick="toggleVideoDraw()" id="vidDrawBtn" title="رسم على الفيديو"><i class="fas fa-pen"></i> رسم</button>
+    <button onclick="clearVideoDrawing()" title="مسح الرسوم"><i class="fas fa-eraser"></i></button>
+    <button onclick="captureVideoFrame()" title="التقاط الإطار الحالي وإضافته على السبورة كقطعة قابلة للسحب والتحجيم"><i class="fas fa-camera"></i> لقطة على السبورة</button>
+    <button onclick="openVideoOnBoard()" title="عرض الفيديو على السبورة مع لقطات مستمرة" style="background:var(--success);color:#fff"><i class="fas fa-chalkboard"></i> عرض على السبورة</button>
+  </div>
+</div></div></div>
+
+<!-- MODAL: GOOGLE MAPS (interactive) -->
+<div class="modal-overlay" id="modalMap"><div class="modal-box" style="max-width:94vw;width:980px"><div class="modal-head">
+  <h2><i class="fas fa-globe-americas"></i> خرائط جوجل التفاعلية</h2>
+  <div style="display:flex;gap:6px;margin-right:auto"><button class="btn btn-success btn-sm" onclick="captureMap()"><i class="fas fa-camera"></i> للسبورة</button></div>
+  <button class="modal-close" onclick="closeModal('modalMap')"><i class="fas fa-times"></i></button>
+</div><div class="modal-body" style="padding:0">
+  <div class="gmap-container">
+    <div class="gmap-search-bar">
+      <button class="gmap-my-loc" onclick="gmapMyLocation()" title="موقعي"><i class="fas fa-location-crosshairs"></i></button>
+      <input type="text" id="gmapSearchInput" placeholder="ابحثي عن مكان، عنوان، إحداثيات..." onkeydown="if(event.key==='Enter')gmapSearch()">
+      <button onclick="gmapSearch()" title="بحث"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="gmap-presets" id="gmapPresets">
+      <button class="gmap-preset-btn active" data-q="مدرسة المعرفة الثانوية" onclick="gmapPreset(this,'مدرسة المعرفة الثانوية')"><i class="fas fa-school"></i> المدرسة</button>
+      <button class="gmap-preset-btn" data-q="البحرين" onclick="gmapPreset(this,'البحرين')">🇧🇭 البحرين</button>
+      <button class="gmap-preset-btn" data-q="السعودية" onclick="gmapPreset(this,'السعودية')">🇸🇦 السعودية</button>
+      <button class="gmap-preset-btn" data-q="دول الخليج العربي" onclick="gmapPreset(this,'دول الخليج العربي')">🌍 الخليج</button>
+      <button class="gmap-preset-btn" data-q="العالم العربي" onclick="gmapPreset(this,'العالم العربي')">🌍 العالم العربي</button>
+      <button class="gmap-preset-btn" data-q="مكة المكرمة" onclick="gmapPreset(this,'مكة المكرمة')">🕋 مكة</button>
+      <button class="gmap-preset-btn" data-q="المدينة المنورة" onclick="gmapPreset(this,'المدينة المنورة')">🕌 المدينة</button>
+      <button class="gmap-preset-btn" data-q="القدس" onclick="gmapPreset(this,'القدس')">⛰️ القدس</button>
+      <button class="gmap-preset-btn" data-q="القاهرة" onclick="gmapPreset(this,'القاهرة')">🏛️ القاهرة</button>
+      <button class="gmap-preset-btn" data-q="بغداد" onclick="gmapPreset(this,'بغداد')">🏛️ بغداد</button>
+      <button class="gmap-preset-btn" data-q="دمشق" onclick="gmapPreset(this,'دمشق')">🏛️ دمشق</button>
+      <button class="gmap-preset-btn" data-q="الكعبة المشرفة" onclick="gmapPreset(this,'الكعبة المشرفة')">🕋 الكعبة</button>
+      <button class="gmap-preset-btn" data-q="جبل عرفات" onclick="gmapPreset(this,'جبل عرفات')">⛰️ عرفات</button>
+    </div>
+    <div class="gmap-frame-wrap">
+      <div class="gmap-loading" id="gmapLoading"><div class="spinner"></div><span>جاري تحميل خرائط جوجل...</span></div>
+      <div class="gmap-tools-float">
+        <button onclick="gmapZoomIn()" title="تكبير"><i class="fas fa-plus"></i></button>
+        <button onclick="gmapZoomOut()" title="تصغير"><i class="fas fa-minus"></i></button>
+        <button onclick="gmapResetView()" title="إعادة ضبط"><i class="fas fa-compass"></i></button>
+        <button onclick="gmapToggleType()" id="gmapTypeBtn" title="القمر الصناعي"><i class="fas fa-layer-group"></i></button>
+        <button onclick="gmapOpenNewTab()" title="فتح في تبويب جديد"><i class="fas fa-external-link-alt"></i></button>
+      </div>
+      <iframe id="gmapFrame" src="" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="gmap-info-panel">
+      <i class="fas fa-info-circle"></i>
+      <span>الموقع الحالي: <b id="gmapCurrentLabel">مدرسة المعرفة الثانوية</b> — يمكنكِ التحريك والتكبير مباشرة، أو البحث عن أي مكان.</span>
+    </div>
+  </div>
+</div></div></div>
+
+<!-- MODAL: LIVE SESSION -->
+<div class="modal-overlay" id="modalLiveSession"><div class="modal-box" style="max-width:720px"><div class="modal-head"><h2><i class="fas fa-broadcast-tower"></i> جلسة أسئلة مباشرة</h2><div style="display:flex;gap:6px;margin-right:auto"><button class="btn btn-success btn-sm" onclick="openStatsReport('live')" title="التقرير الإحصائي"><i class="fas fa-chart-pie"></i> تقرير</button></div><button class="modal-close" onclick="closeModal('modalLiveSession')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div id="liveCurrentQPreview" class="q-preview-box live" style="display:none"><div class="q-label"><i class="fas fa-question-circle"></i> السؤال المعروض للطالبات</div><div class="q-text" id="liveCurrentQText">—</div></div>
+  <div id="liveSessionSetup">
+    <div class="form-group"><label class="form-label" style="font-size:.95rem"><i class="fas fa-pen-fancy" style="color:var(--primary)"></i> <b>نص السؤال</b> <span style="color:var(--danger)">*</span> <small style="color:#888;font-weight:500">(يظهر للطالبات مباشرة في الـ QR والرابط)</small></label><textarea class="form-textarea" id="liveQText" rows="2" placeholder="مثال: ما هي عاصمة المملكة العربية السعودية؟" style="font-size:1rem;line-height:1.6"></textarea></div>
+    <div class="form-group"><label class="form-label"><i class="fas fa-list" style="color:var(--primary)"></i> اختاري</label><div style="font-size:.72rem;color:#888;margin:4px 0 2px;font-weight:700">حددي</div><div style="display:flex;gap:6px"><button type="button" class="chip selected" id="liveTypeMCQ" onclick="setLiveQType('mcq')"><i class="fas fa-list-ol"></i> اختاري</button><button type="button" class="chip" id="liveTypeFree" onclick="setLiveQType('free')"><i class="fas fa-keyboard"></i> نص حر</button><button type="button" class="chip" id="liveTypeBank" onclick="setLiveQType('bank')"><i class="fas fa-database"></i> من بنك الأسئلة</button></div></div>
+    <div id="liveChoicesArea"><label class="form-label"><i class="fas fa-check-double" style="color:var(--success)"></i> الخيارات (اضغطي ✓ حدّدي الإجابة الصحيحة)</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="live-opt-row"><span class="q-letter" style="background:var(--primary);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">أ</span><input type="text" class="form-input" id="liveOpt0" placeholder="الخيار الأول" style="flex:1"><button type="button" class="live-correct-btn" id="liveCorrect0" onclick="setLiveCorrect(0)" title="إجابتكِ صحيحة"><i class="fas fa-check"></i></button></div><div class="live-opt-row"><span class="q-letter" style="background:var(--primary);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">ب</span><input type="text" class="form-input" id="liveOpt1" placeholder="الخيار الثاني" style="flex:1"><button type="button" class="live-correct-btn" id="liveCorrect1" onclick="setLiveCorrect(1)" title="إجابتكِ صحيحة"><i class="fas fa-check"></i></button></div><div class="live-opt-row"><span class="q-letter" style="background:var(--primary);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">ج</span><input type="text" class="form-input" id="liveOpt2" placeholder="الخيار الثالث" style="flex:1"><button type="button" class="live-correct-btn" id="liveCorrect2" onclick="setLiveCorrect(2)" title="إجابتكِ صحيحة"><i class="fas fa-check"></i></button></div><div class="live-opt-row"><span class="q-letter" style="background:var(--primary);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">د</span><input type="text" class="form-input" id="liveOpt3" placeholder="الخيار الرابع" style="flex:1"><button type="button" class="live-correct-btn" id="liveCorrect3" onclick="setLiveCorrect(3)" title="إجابتكِ صحيحة"><i class="fas fa-check"></i></button></div></div></div>
+    <div id="liveBankArea" style="display:none"><label class="form-label">اختاري من بنك الأسئلة</label><select class="form-select" id="liveQuizSelect"><option value="">— من بنك الأسئلة —</option></select></div>
+    <div class="form-group" style="display:flex;gap:14px;margin-top:10px;flex-wrap:wrap"><label class="form-label" style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="liveAllowText" checked style="width:18px;height:18px;accent-color:var(--primary)"> قبول إجابات نصية إضافية</label><label class="form-label" style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="liveShowResults" checked style="width:18px;height:18px;accent-color:var(--primary)"> اعرضي النتائج</label></div>
+    <div class="queue-form-actions">
+      <button class="btn btn-success" onclick="addCurrentToQueue()"><i class="fas fa-layer-group"></i> إضافة إلى القائمة</button>
+      <button class="btn btn-primary" onclick="startLiveSession()" style="font-size:1.05rem;padding:12px"><i class="fas fa-broadcast-tower"></i> ابدئي البث واعرضي السؤال للطالبات</button>
+    </div>
+    <div class="session-mode-box">
+      <div class="sm-title"><i class="fas fa-sliders" style="color:var(--primary)"></i> نوع الجلسة — حددي كيف تعرضين الأسئلة</div>
+      <div class="session-mode-grid session-mode-grid-4" id="sessionModeGrid">
+        <div class="sm-card" data-mode="single" onclick="setSessionMode('single')">
+          <i class="fas fa-circle-dot sm-icon"></i>
+          <span class="sm-label">سؤالك واحد</span>
+          <span class="sm-desc">سؤالك واحد فقط من النموذج</span>
+        </div>
+        <div class="sm-card active" data-mode="all" onclick="setSessionMode('all')">
+          <i class="fas fa-layer-group sm-icon"></i>
+          <span class="sm-label">كل الأسئلة</span>
+          <span class="sm-desc">القائمة كاملة بالتتابع</span>
+        </div>
+        <div class="sm-card" data-mode="subset" onclick="setSessionMode('subset')">
+          <i class="fas fa-list-check sm-icon"></i>
+          <span class="sm-label">بعض الأسئلة</span>
+          <span class="sm-desc">اختاري بعلامة ✓</span>
+        </div>
+        <div class="sm-card" data-mode="all-at-once" onclick="setSessionMode('all-at-once')">
+          <i class="fas fa-bars-staggered sm-icon"></i>
+          <span class="sm-label">الكل معاً</span>
+          <span class="sm-desc">قائمة على جوال الطالبة</span>
+        </div>
+      </div>
+      <div class="session-mode-hint" id="sessionModeHint"><i class="fas fa-info-circle" style="color:var(--accent)"></i> <span id="sessionModeHintText">سيتم بث كل الأسئلة في القائمة بالتتابع. استخدمي ◀ ▶ في الجلسة للتنقل.</span></div>
+    </div>
+    <div class="queue-panel">
+      <div class="queue-panel-head">
+        <h4><i class="fas fa-list-ol" style="color:var(--primary)"></i> قائمة الأسئلة <span class="qp-count" id="queueSetupCount">0</span> <span id="queueSetupSubsetInfo" style="font-size:.7rem;color:#666;font-weight:500;display:none">— <b id="queueSubsetSelected">0</b> مختارة</span></h4>
+        <div class="qp-actions">
+          <button class="btn btn-secondary btn-sm" onclick="loadQueueFromBank()"><i class="fas fa-database"></i> من البنك</button>
+          <button class="btn btn-danger btn-sm" onclick="clearQueue(false)" id="queueClearBtn" style="display:none"><i class="fas fa-trash"></i> امسحي</button>
+        </div>
+      </div>
+      <div class="subset-bulk-actions" id="subsetBulkActions" style="display:none">
+        <button class="btn btn-secondary" onclick="subsetSelectAll()"><i class="fas fa-check-double"></i> حدّدي الكل</button>
+        <button class="btn btn-secondary" onclick="subsetSelectNone()"><i class="fas fa-square"></i> إلغاء احدّدي</button>
+        <button class="btn btn-secondary" onclick="subsetInvert()"><i class="fas fa-shuffle"></i> عكس احدّدي</button>
+      </div>
+      <div id="queueSetupList" class="queue-list"></div>
+    </div>
+  </div>
+  <div id="liveSessionActive" style="display:none">
+    <!-- رابط الصفحة للطالبات -->
+<div class="form-group" style="margin-bottom:14px;background:linear-gradient(135deg,#fff8e1,#fff3cd);border:2px solid #f9d423;border-radius:12px;padding:12px;">
+  <label class="form-label" style="color:#5d2f0d;"><i class="fas fa-link" style="color:#f39c12;"></i> رابط الصفحة للطالبات <span style="color:#e74c3c;font-size:.7rem;">(مطلوب لعمل QR)</span></label>
+  <input type="text" id="teacherBaseUrl" class="form-input" placeholder="مثال: https://yourdomain.com/index.html" dir="ltr" style="background:#fff;border-color:#f9d423;">
+  <small style="color:#a07c00;font-size:.72rem;display:block;margin-top:4px;"><i class="fas fa-info-circle"></i> ضعي هنا الرابط الكامل للصفحة المرفوعة على الإنترنت. بدونه لن يعمل QR للطالبات.</small>
+  <div id="qrUrlWarning" style="display:none;margin-top:6px;padding:6px 10px;background:#fee;border:1px solid #e74c3c;border-radius:6px;color:#c0392b;font-size:.75rem;font-weight:700;"><i class="fas fa-exclamation-triangle"></i> الرابط غير صالح! اضبطي الرابط أولاً.</div>
+</div>
+
+<div class="live-session-box">
+      <div style="font-size:.85rem;opacity:.9">كود الجلسة</div>
+      <div class="live-session-code" id="liveCodeDisplay">————</div>
+      <div style="font-size:.85rem;margin-top:8px">اسمحي الـ QR أو شاركي الرابط — السؤال يظهر فوراً</div>
+      <div class="live-qr-box" id="liveQRCode"></div>
+      <div class="live-session-url" id="liveSessionUrl">...</div>
+      <div style="display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap">
+        <button class="btn btn-success btn-sm" onclick="copyJoinLink()"><i class="fas fa-copy"></i> انسخي الرابط</button>
+        <button class="btn btn-warning btn-sm" onclick="addLiveQRToBoard()"><i class="fas fa-chalkboard"></i> للسبورة</button>
+        <button class="btn btn-primary btn-sm" onclick="showLiveEditPanel()"><i class="fas fa-edit"></i> عدلي السؤال</button>
+        <button class="btn btn-secondary btn-sm" onclick="rebroadcastCurrent()"><i class="fas fa-satellite-dish"></i> أعيدي بث</button>
+        <button class="btn btn-purple btn-sm" id="btnRevealSolution" onclick="revealSolutionToStudents()" title="بث الحل الصحيح للطالبات"><i class="fas fa-lightbulb"></i> كشف الحل للطالبات</button>
+        <button class="btn btn-danger btn-sm" onclick="endLiveSession()"><i class="fas fa-stop"></i> إنهاء</button>
+      </div>
+    </div>
+    <div class="queue-nav-bar" id="queueNavBar" style="display:none">
+      <button class="qnav-btn" id="qnavPrev" onclick="prevQueueItem()" disabled title="السؤال السابق"><i class="fas fa-chevron-right"></i> السابق</button>
+      <div class="qnav-info">
+        <div class="qnav-count" id="qnavCount">— / —</div>
+        <div class="qnav-title" id="qnavTitle">—</div>
+      </div>
+      <button class="qnav-btn primary" id="qnavNext" onclick="nextQueueItem()" disabled title="السؤال التالي">التالي <i class="fas fa-chevron-left"></i></button>
+      <button class="qnav-btn danger qnav-end" onclick="endLiveSession()" title="إنهاء الجلسة"><i class="fas fa-stop"></i> إنهاء</button>
+    </div>
+    <div id="liveEditPanel" style="display:none;background:linear-gradient(135deg,#fff8e1,#fff3cd);border:2px solid #f39c12;border-radius:12px;padding:14px;margin-top:14px"><h4 style="color:var(--dark);margin-bottom:10px"><i class="fas fa-edit" style="color:#f39c12"></i> عدلي / بث سؤالك جديد</h4><div class="form-group"><label class="form-label">نص السؤال الجديد</label><textarea class="form-textarea" id="liveQText2" rows="2" placeholder="اكتبي السؤال الجديد..."></textarea></div><div class="form-group"><label class="form-label">الخيارات (سطر لكل خيار — اتركيه فارغاً لنص حر)</label><textarea class="form-textarea" id="liveOpts2" rows="3" placeholder="الخيار أ&#10;الخيار ب&#10;الخيار ج&#10;الخيار د"></textarea></div><div style="display:flex;gap:6px"><button class="btn btn-primary" onclick="broadcastNewQuestion()"><i class="fas fa-paper-plane"></i> بث السؤال الجديد</button><button class="btn btn-secondary" onclick="document.getElementById('liveEditPanel').style.display='none'">إلغاء</button></div></div>
+    <h4 style="margin:14px 0 8px;color:var(--dark)"><i class="fas fa-stream"></i> الإجابات المباشرة <span id="liveRespCount" style="background:var(--primary);color:white;padding:3px 10px;border-radius:10px;font-size:.78rem">0</span></h4>
+    <div class="live-responses-stream" id="liveResponsesStream"><div style="text-align:center;padding:20px;color:#888">في انتظار إجابات الطالبات...</div></div>
+    <div class="queue-compact" id="liveQueueCompact" style="display:none">
+      <div class="queue-compact-head" onclick="toggleLiveQueue()">
+        <div class="qch-title"><i class="fas fa-list-ol" style="color:var(--primary)"></i> قائمة الأسئلة <span class="qch-count" id="queueActiveCount">0</span> <span style="font-size:.7rem;color:#888;font-weight:500">— اضغطي لاعرضي الكل والتبديل بينهم</span></div>
+        <i class="fas fa-chevron-down qch-toggle" id="liveQueueToggle"></i>
+      </div>
+      <div class="queue-compact-body" id="liveQueueCompactBody">
+        <div class="queue-add-row">
+          <input type="text" class="form-input" id="liveQuickAddTitle" placeholder="سؤالك جديد سريع لإضافته للقائمة">
+          <button class="btn btn-success" onclick="quickAddToQueue()"><i class="fas fa-plus"></i></button>
+        </div>
+        <div id="queueActiveList" class="queue-list" style="margin-top:6px"></div>
+      </div>
+    </div>
+  </div>
+</div></div></div>
+
+<!-- MODAL: SETTINGS -->
+<div class="modal-overlay" id="modalSettings"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-cog"></i> الإعدادات</h2><button class="modal-close" onclick="closeModal('modalSettings')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div class="form-group"><label class="form-label">اسم المعلمة (اتركيه فارغاً لإخفائه)</label><input type="text" class="form-input" id="setTeacherName" placeholder="اتركيه فارغاً"></div>
+  <div class="form-group"><label class="form-label">اسم السبورة</label><input type="text" class="form-input" id="setBoardName"></div>
+  <div class="form-group"><label class="form-label">شبكة الرسم</label><select class="form-select" id="setGrid"><option value="on">مفعلة</option><option value="off">معطلة</option></select></div>
+  <div class="form-group"><label class="form-label">حجم الخط الافتراضي</label><input type="range" class="form-input" id="setFontSize" min="14" max="48" value="20" style="padding:0"></div>
+  <hr style="margin:14px 0;border:none;border-top:1px solid #eee">
+  <h4 style="font-size:.9rem;font-weight:800;color:var(--dark);margin-bottom:10px">إدارة البيانات</h4>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+    <button class="btn btn-primary btn-sm" onclick="exportData()"><i class="fas fa-download"></i> صدّري انسخية</button>
+    <button class="btn btn-success btn-sm" onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> استوردي</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+  </div>
+  <button class="btn btn-danger btn-sm btn-block" onclick="clearAllData()"><i class="fas fa-exclamation-triangle"></i> امسحي كل البيانات</button>
+</div><div class="modal-foot"><button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> احفظي الإعدادات</button></div></div></div>
+
+<!-- MODAL: SAVE -->
+<div class="modal-overlay" id="modalSave"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-save"></i> احفظي وصدّري</h2><button class="modal-close" onclick="closeModal('modalSave')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin-bottom:8px"><i class="fas fa-image"></i> الشريحة الحالية فقط</h4>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+    <button class="btn btn-primary btn-block" onclick="exportPNG()" style="flex-direction:column;padding:14px 8px"><i class="fas fa-image" style="font-size:1.4rem;margin-bottom:4px"></i><span style="font-size:.78rem">PNG</span></button>
+    <button class="btn btn-success btn-block" onclick="exportJPG()" style="flex-direction:column;padding:14px 8px"><i class="fas fa-file-image" style="font-size:1.4rem;margin-bottom:4px"></i><span style="font-size:.78rem">JPG</span></button>
+    <button class="btn btn-warning btn-block" onclick="exportSVG()" style="flex-direction:column;padding:14px 8px"><i class="fas fa-vector-square" style="font-size:1.4rem;margin-bottom:4px"></i><span style="font-size:.78rem">SVG</span></button>
+    <button class="btn btn-danger btn-block" onclick="window.print()" style="flex-direction:column;padding:14px 8px"><i class="fas fa-print" style="font-size:1.4rem;margin-bottom:4px"></i><span style="font-size:.78rem">PDF طباعة</span></button>
+  </div>
+  <hr style="margin:14px 0;border:none;border-top:1px dashed #ccc">
+  <h4 style="font-size:.85rem;font-weight:800;color:var(--primary);margin-bottom:6px"><i class="fas fa-layer-group"></i> تصدير كل الشرائح <span id="allPagesCount" style="font-size:.7rem;background:var(--primary);color:white;padding:2px 8px;border-radius:10px;margin-right:6px;font-weight:800"></span></h4>
+  <p style="font-size:.72rem;color:#666;margin-bottom:10px">سيتم تصدير كل شريحة على حدة (فقط الشرائح التي تحتوي على محتوى).</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+    <button class="btn btn-primary btn-block" onclick="_exportAllSlides('png')" style="flex-direction:column;padding:14px 6px"><i class="fas fa-images" style="font-size:1.3rem;margin-bottom:4px"></i><span style="font-size:.75rem;font-weight:800">PNG</span><span style="font-size:.6rem;opacity:.85">كل الشرائح</span></button>
+    <button class="btn btn-success btn-block" onclick="_exportAllSlides('jpg')" style="flex-direction:column;padding:14px 6px"><i class="fas fa-file-image" style="font-size:1.3rem;margin-bottom:4px"></i><span style="font-size:.75rem;font-weight:800">JPG</span><span style="font-size:.6rem;opacity:.85">كل الشرائح</span></button>
+    <button class="btn btn-danger btn-block" onclick="_exportAllSlides('pdf')" style="flex-direction:column;padding:14px 6px"><i class="fas fa-file-pdf" style="font-size:1.3rem;margin-bottom:4px"></i><span style="font-size:.75rem;font-weight:800">PDF</span><span style="font-size:.6rem;opacity:.85">كل الشرائح</span></button>
+  </div>
+  <hr style="margin:14px 0;border:none;border-top:1px solid #eee">
+  <h4 style="font-size:.9rem;font-weight:800;color:var(--dark);margin-bottom:10px"><i class="fas fa-qrcode"></i> رمز QR</h4>
+  <div class="form-group"><label class="form-label">رابط</label><input type="text" class="form-input" id="qrLink" placeholder="https://..."></div>
+  <div class="qr-container" id="qrcode"></div>
+  <button class="btn btn-primary btn-block" onclick="generateQR()"><i class="fas fa-qrcode"></i> توليد رمز QR</button>
+</div></div></div>
+
+
+
+<!-- CUSTOM DIALOGS (replacement for prompt/confirm) -->
+<div class="cust-overlay" id="custPrompt" role="dialog" aria-modal="true"><div class="cust-box">
+  <div class="cust-head"><i class="fas fa-keyboard"></i><span id="custPromptTitle">إدخال نص</span></div>
+  <div class="cust-body">
+    <div class="cust-msg" id="custPromptMsg">أدخلي النص:</div>
+    <input type="text" class="cust-input" id="custPromptInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  </div>
+  <div class="cust-foot">
+    <button class="btn btn-secondary" id="custPromptCancel"><i class="fas fa-times"></i> إلغاء</button>
+    <button class="btn btn-primary" id="custPromptOk"><i class="fas fa-check"></i> موافق</button>
+  </div>
+</div></div>
+
+<div class="cust-overlay" id="custConfirm" role="dialog" aria-modal="true"><div class="cust-box">
+  <div class="cust-head" id="custConfirmHead"><i class="fas fa-question-circle"></i><span id="custConfirmTitle">تأكيد</span></div>
+  <div class="cust-body">
+    <div class="cust-msg" id="custConfirmMsg">هل أنتِ متأكدة؟</div>
+  </div>
+  <div class="cust-foot">
+    <button class="btn btn-secondary" id="custConfirmCancel"><i class="fas fa-times"></i> إلغاء</button>
+    <button class="btn" id="custConfirmOk"><i class="fas fa-check"></i> موافق</button>
+  </div>
+</div></div>
+
+<!-- ============================================================
+   PhET MODAL — محاكيات PhET التفاعلية (مدمج بالكامل)
+   ============================================================ -->
+<div class="phet-overlay" id="phetOverlay" role="dialog" aria-modal="true" aria-label="محاكيات PhET التفاعلية">
+  <div class="phet-modal">
+    <div class="phet-head">
+      <div class="ph-title"><i class="fas fa-flask"></i> محاكيات PhET التفاعلية — مناهج البحرين</div>
+      <div class="ph-tools">
+        <button class="ph-refresh" id="phetRefresh" title="إعادة تحميل"><i class="fas fa-redo"></i> تحديث</button>
+        <button class="ph-fs" id="phetFs" title="ملء الشاشة"><i class="fas fa-expand"></i> ملء</button>
+        <button class="ph-board" id="phetCaptureBtn" title="أرسلي المحاكية للسبورة كعنصر قابل للتكبير ثم ارجعي للسبورة"><i class="fas fa-chalkboard"></i> للسبورة</button>
+        <button class="ph-close" id="phetClose" title="إغلاق (Esc)"><i class="fas fa-times"></i> إغلاق</button>
+      </div>
+    </div>
+    <div class="phet-body">
+      <div class="ph-loader" id="phetLoader"><div class="spinner"></div><div>جاري تحميل لوحة المحاكيات...</div></div>
+      <iframe id="phetFrame" title="PhET Simulations" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+   ⭐⭐⭐ GAMES HUB - ألعاب تشجيعية تحفيزية للطالبات ⭐⭐⭐
+   ============================================================ -->
+<div class="games-overlay" id="gamesOverlay" role="dialog" aria-modal="true" aria-label="مركز الألعاب التحفيزية">
+  <div class="games-modal">
+    <div class="games-head">
+      <div class="games-title">
+        <span class="gt-emoji">🎮</span>
+        <span>مركز الألعاب التحفيزية للطالبات</span>
+        <span class="games-live-badge" id="gamesLiveBadge" style="display:none" title="الألعاب مفعّلة عن بُعد للطالبات عبر الـ QR"><i class="fas fa-broadcast-tower"></i> مباشر للطالبات</span>
+      </div>
+      <button class="games-close" id="gamesClose" title="إغلاق (Esc)"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="games-tabs">
+      <button class="games-tab active" data-tab="hub"><i class="fas fa-home"></i> الرئيسية</button>
+      <button class="games-tab" data-tab="wheel"><i class="fas fa-dharmachakra"></i> عجلة الحظ</button>
+      <button class="games-tab" data-tab="speed"><i class="fas fa-bolt"></i> تحدي السرعة</button>
+      <button class="games-tab" data-tab="heroes"><i class="fas fa-trophy"></i> لوحة الأبطال</button>
+      <button class="games-tab" data-tab="treasure"><i class="fas fa-gem"></i> كنز المعرفة</button>
+      <button class="games-tab" data-tab="team"><i class="fas fa-users"></i> حرب الفرق</button>
+      <button class="games-tab" data-tab="star"><i class="fas fa-star"></i> نجمة الحل</button>
+      <button class="games-tab" data-tab="baamboozle"><i class="fas fa-th-large"></i> بامبوزل <span class="gt-count" id="gtBamCount" style="display:none">0</span></button>
+      <button class="games-tab" data-tab="battleship"><i class="fas fa-ship"></i> البارجة <span class="gt-count" id="gtBsCount" style="display:none">0</span></button>
+      <button class="games-tab" data-tab="ladders"><i class="fas fa-dice"></i> سلّم الأبطال <span class="gt-count" id="gtLadCount" style="display:none">0</span></button>
+      <button class="games-tab" data-tab="questions"><i class="fas fa-book"></i> مكتبة الأسئلة <span class="gt-count" id="gtQuestionsCount">0</span></button>
+    </div>
+
+    <div class="games-body" id="gamesBody">
+
+      <!-- ===== HUB HOME ===== -->
+      <div class="game-panel active" id="panel-hub">
+        <div class="game-panel-title"><span class="gpt-emoji">🌟</span> مرحباً بكِ في عالم المنافسة والتشجيع!</div>
+        <div class="game-panel-subtitle">اختاري لعبة من الألعاب التالية لتحفيز طالباتك على المشاركة والمنافسة أثناء الحل 👇</div>
+
+        <div class="games-grid">
+          <div class="game-tile" style="--tile-c1:#ff6b9d;--tile-c2:#c44569" data-goto="wheel">
+            <span class="gt-badge">🎡 عشوائي</span>
+            <div class="gt-icon">🎡</div>
+            <div class="gt-name">عجلة الحظ</div>
+            <div class="gt-desc">اختاري طالبة بشكل عشوائي لتجيب على السؤال التالي</div>
+          </div>
+
+          <div class="game-tile" style="--tile-c1:#feca57;--tile-c2:#ff9f43" data-goto="speed">
+            <span class="gt-badge">⚡ سرعة</span>
+            <div class="gt-icon">⚡</div>
+            <div class="gt-name">تحدي السرعة</div>
+            <div class="gt-desc">من ستجيب أولاً خلال 30 ثانية؟ المنافسة تشتعل!</div>
+          </div>
+
+          <div class="game-tile" style="--tile-c1:#48dbfb;--tile-c2:#0abde3" data-goto="heroes">
+            <span class="gt-badge">🏆 ترتيب</span>
+            <div class="gt-icon">🏆</div>
+            <div class="gt-name">لوحة الأبطال</div>
+            <div class="gt-desc">تابعي ترتيب الطالبات حسب النقاط والميداليات</div>
+          </div>
+
+          <div class="game-tile" style="--tile-c1:#786fa6;--tile-c2:#5f27cd" data-goto="treasure">
+            <span class="gt-badge">💎 كنز</span>
+            <div class="gt-icon">💎</div>
+            <div class="gt-name">كنز المعرفة</div>
+            <div class="gt-desc">افتحي الصناديق لتكتشف مهام ومكافآت مخفية</div>
+          </div>
+
+          <div class="game-tile" style="--tile-c1:#1dd1a1;--tile-c2:#10ac84" data-goto="team">
+            <span class="gt-badge">👯 فرق</span>
+            <div class="gt-icon">👯</div>
+            <div class="gt-name">حرب الفرق</div>
+            <div class="gt-desc">قسمي الطالبات إلى فرق وتنافسوا في الإجابات</div>
+          </div>
+
+          <div class="game-tile" style="--tile-c1:#ff9ff3;--tile-c2:#f368e0" data-goto="star">
+            <span class="gt-badge">⭐ نجوم</span>
+            <div class="gt-icon">⭐</div>
+            <div class="gt-name">نجمة الحل</div>
+            <div class="gt-desc">امنحي نجوماً للإجابات الصحيحة وشجعي الطالبات</div>
+          </div>
+
+          <div class="game-tile" style="--tile-c1:#f368e0;--tile-c2:#5f27cd" data-goto="baamboozle">
+            <span class="gt-badge">🎲 مربعات مفاجئة</span>
+            <div class="gt-icon">🎯</div>
+            <div class="gt-name">بامبوزل</div>
+            <div class="gt-desc">افتحي المربعات وأجيبي عن الأسئلة — مربعات "بَـمْ!" تحمل مفاجآت مدهشة!</div>
+          </div>
+
+          <div class="game-tile" style="--tile-c1:#0a3d62;--tile-c2:#1a5f7a" data-goto="battleship">
+            <span class="gt-badge">🚢 أسطول الأسئلة</span>
+            <div class="gt-icon">🚢</div>
+            <div class="gt-name">البارجة التعليمية</div>
+            <div class="gt-desc">اضربي الأهداف بالإجابة الصحيحة! أسطول من الأسئلة ينتظركِ في البحر 🔥</div>
+          </div>
+
+          <div class="game-tile" style="--tile-c1:#27ae60;--tile-c2:#feca57" data-goto="ladders">
+            <span class="gt-badge">🪜 تحدّي الأبطال</span>
+            <div class="gt-icon">🪜</div>
+            <div class="gt-name">سلّم الأبطال</div>
+            <div class="gt-desc">ارمي النرد، تسلّقي السلم وتجنّبي الثعابين! أول من يصل 100 يفوز 🏆</div>
+          </div>
+
+          <div class="game-tile" style="--tile-c1:#00d2d3;--tile-c2:#0a3d62" data-goto="questions">
+            <span class="gt-badge">📚 بنك</span>
+            <div class="gt-icon">📚</div>
+            <div class="gt-name">مكتبة الأسئلة</div>
+            <div class="gt-desc">حضّري 20 سؤالاً للحصة واختاري منها وقت التحدي بسرعة</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== WHEEL OF FORTUNE ===== -->
+      <div class="game-panel" id="panel-wheel">
+        <div class="game-panel-title"><span class="gpt-emoji">🎡</span> عجلة الحظ - من ستجيب التالية؟</div>
+        <div class="game-panel-subtitle">اضغطي على العجلة لتدور وتختاري طالبة بشكل عشوائي 🎯</div>
+
+        <div class="wheel-stage">
+          <div class="wheel-pointer"></div>
+          <div class="wheel-wrap">
+            <div class="wheel" id="gameWheel"></div>
+            <div class="wheel-center" id="gameWheelBtn">🎯</div>
+          </div>
+          <div class="wheel-result" id="gameWheelResult">🎯 اضغطي لتدوير العجلة!</div>
+          <div class="wheel-controls">
+            <button class="gbtn gbtn-primary" id="gameWheelSpin"><i class="fas fa-sync"></i> إدارة العجلة</button>
+            <button class="gbtn gbtn-warning" id="gameWheelReward"><i class="fas fa-gift"></i> منح مكافأة (+10)</button>
+            <button class="gbtn gbtn-ghost" id="gameWheelReset"><i class="fas fa-undo"></i> إعادة</button>
+          </div>
+          <div class="game-info-box">
+            <span class="gi-emoji">💡</span>
+            <span>العجلة تختار من قائمة الطالبات المسجلات. كل دورة = طالبة جديدة تشارك!</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SPEED CHALLENGE ===== -->
+      <div class="game-panel" id="panel-speed">
+        <div class="game-panel-title"><span class="gpt-emoji">⚡</span> تحدي السرعة - من الأسرع في الحل؟</div>
+        <div class="game-panel-subtitle">شغلي المؤقت، وأي طالبة تضغط أولاً ستحصل على النقاط! ⚡</div>
+
+        <div class="speed-stage">
+          <div>
+            <div class="speed-timer-box">
+              <div style="font-size:.85rem;opacity:.9;position:relative;z-index:1"><i class="fas fa-stopwatch"></i> المؤقت</div>
+              <div class="speed-timer" id="gameSpeedTimer">30</div>
+              <input type="text" class="game-input" id="gameSpeedQuestion" placeholder="اكتبي السؤال هنا أو اختاري من المكتبة" style="margin-top:8px;background:rgba(255,255,255,.9)">
+              <!-- ⭐ محدد أسئلة المكتبة -->
+              <div class="speed-q-picker">
+                <select id="gameSpeedQPick" class="speed-q-select">
+                  <option value="">📚 اختاري سؤالاً من المكتبة (اختياري)...</option>
+                </select>
+                <button class="speed-q-btn" id="gameSpeedQRandom" title="سؤال عشوائي من المكتبة" type="button"><i class="fas fa-random"></i></button>
+                <button class="speed-q-btn" id="gameSpeedQOpen" title="افتحي مكتبة الأسئلة" type="button"><i class="fas fa-external-link-alt"></i></button>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1">
+                <button class="gbtn gbtn-warning" id="gameSpeedStart"><i class="fas fa-play"></i> ابدأ</button>
+                <button class="gbtn gbtn-danger" id="gameSpeedStop"><i class="fas fa-stop"></i> إيقاف</button>
+                <button class="gbtn gbtn-ghost" id="gameSpeedReset" style="background:rgba(255,255,255,.3);color:white;border-color:white"><i class="fas fa-undo"></i> صفر</button>
+              </div>
+            </div>
+          </div>
+          <div class="speed-students-list">
+            <h4><i class="fas fa-hand-pointer"></i> الطالبات - اضغطي على اسمكِ أولاً!</h4>
+            <div id="gameSpeedList"></div>
+          </div>
+        </div>
+        <div class="game-info-box">
+          <span class="gi-emoji">⏱️</span>
+          <span>اختاري سؤالاً من المكتبة أو اكتبي واحداً، ثم ابدئي. السؤال يصل للطالبات على جوالاتهن تلقائياً.</span>
+        </div>
+      </div>
+
+      <!-- ===== HEROES BOARD ===== -->
+      <div class="game-panel" id="panel-heroes">
+        <div class="game-panel-title"><span class="gpt-emoji">🏆</span> لوحة الأبطال - صاحبات أعلى النقاط</div>
+        <div class="game-panel-subtitle">اضغطي على أي طالبة لإضافة نقاط أو مشاهدة إنجازاتها 🌟</div>
+
+        <div id="gameHeroesList" class="heroes-list"></div>
+
+        <div class="game-info-box" style="margin-top:14px">
+          <span class="gi-emoji">🎖️</span>
+          <span>المركز الأول 👑 يُتوج تلقائياً! النقاط تُحفظ تلقائياً في المتصفح.</span>
+        </div>
+      </div>
+
+      <!-- ===== TREASURE HUNT ===== -->
+      <div class="game-panel" id="panel-treasure">
+        <div class="game-panel-title"><span class="gpt-emoji">💎</span> كنز المعرفة - افتحي الصناديق!</div>
+        <div class="game-panel-subtitle">اختاري صندوقاً لتكشفي المهمة أو المكافأة المخفية فيه 🎁</div>
+
+        <div class="treasure-stage">
+          <div class="treasure-display" id="gameTreasureDisplay">🎁 اختاري صندوقاً لتبدأ المغامرة!</div>
+          <div class="treasure-grid" id="gameTreasureGrid"></div>
+          <div style="margin-top:14px">
+            <button class="gbtn gbtn-success" id="gameTreasureReset"><i class="fas fa-redo"></i> إعادة ملء الصناديق</button>
+            <button class="gbtn gbtn-primary" id="gameTreasureAward"><i class="fas fa-trophy"></i> منح نقاط للحاضرة (15)</button>
+          </div>
+          <div class="game-info-box">
+            <span class="gi-emoji">💡</span>
+            <span>كل صندوق يحتوي على مهمة، تحدي، أو نقاط! استخدميها لكسر الجمود أثناء الحل.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TEAM BATTLE ===== -->
+      <div class="game-panel" id="panel-team">
+        <div class="game-panel-title"><span class="gpt-emoji">👯</span> حرب الفرق - من سيفوز بالمعركة؟</div>
+        <div class="game-panel-subtitle">قسمي الطالبات إلى فرق، وسجلي النقاط لكل فريق حسب الإجابات الصحيحة 🎯</div>
+
+        <div class="team-stage">
+          <div class="team-setup">
+            <label><i class="fas fa-users"></i> عدد الفرق:</label>
+            <input type="number" id="gameTeamCount" min="2" max="6" value="2">
+            <button class="gbtn gbtn-primary" id="gameTeamSetup"><i class="fas fa-magic"></i> توزيع تلقائي</button>
+            <button class="gbtn gbtn-ghost" id="gameTeamClear"><i class="fas fa-trash"></i> مسح</button>
+          </div>
+          <div class="team-arena" id="gameTeamArena"></div>
+          <div class="game-info-box">
+            <span class="gi-emoji">🎖️</span>
+            <span>كل إجابة صحيحة = 10 نقاط للفريق! عندما يصل فريق إلى 100 نقطة، يحتفل تلقائياً 🎉</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== STAR REWARD ===== -->
+      <div class="game-panel" id="panel-star">
+        <div class="game-panel-title"><span class="gpt-emoji">⭐</span> نجمة الحل - كافئي الإجابات الصحيحة</div>
+        <div class="game-panel-subtitle">اختاري الطالبة، ثم اضغطي على النجوم لمنحها تقييماً ⭐⭐⭐</div>
+
+        <div class="star-stage">
+          <div class="star-rating-row" id="gameStarRating">
+            <span class="star-icon" data-star="1">⭐</span>
+            <span class="star-icon" data-star="2">⭐</span>
+            <span class="star-icon" data-star="3">⭐</span>
+            <span class="star-icon" data-star="4">⭐</span>
+            <span class="star-icon" data-star="5">⭐</span>
+          </div>
+          <div class="star-student-pick" id="gameStarStudentPick">
+            <span style="font-weight:900;color:#5f27cd"><i class="fas fa-user-graduate"></i> اختاري الطالبة:</span>
+          </div>
+          <div style="margin:14px 0;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+            <button class="gbtn gbtn-warning" id="gameStarAward"><i class="fas fa-paper-plane"></i> منح النجوم</button>
+            <button class="gbtn gbtn-ghost" id="gameStarReset"><i class="fas fa-eraser"></i> مسح التحديد</button>
+          </div>
+          <div class="star-history" id="gameStarHistory">
+            <h4><i class="fas fa-history"></i> سجل النجوم الأخير</h4>
+            <div id="gameStarHistoryList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== BAAMBOOZLE ===== -->
+      <div class="game-panel" id="panel-baamboozle">
+        <div class="game-panel-title"><span class="gpt-emoji">🎯</span> بامبوزل - افتحي المربعات واشبكي الأسئلة!</div>
+        <div class="game-panel-subtitle">انقري على أي مربع لتفتحي سؤالاً أو مفاجأة. كل مربع = سؤال بنقاط مختلفة 🎲</div>
+
+        <div class="bam-toolbar">
+          <div class="bam-source"><i class="fas fa-database"></i> <span>المصدر: <b id="bamSourceLabel">مكتبة الأسئلة</b></span></div>
+          <div class="bam-stat">📦 مربعات: <b id="bamTotalCells">20</b></div>
+          <div class="bam-stat">✅ مفتوح: <b id="bamOpenedCells">0</b></div>
+          <div class="bam-stat">💰 مجموع النقاط: <b id="bamTotalPoints">0</b></div>
+          <div class="bam-stat">🏆 جولات: <b id="bamRoundCount">0</b></div>
+        </div>
+
+        <div id="bamBoard" class="bam-board">
+          <!-- يتم ملؤه ديناميكياً عبر JavaScript -->
+        </div>
+
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap">
+          <button class="gbtn gbtn-success" id="bamStartBtn"><i class="fas fa-play"></i> ابدأ جولة جديدة</button>
+          <button class="gbtn gbtn-warning" id="bamShuffleBtn" title="أعدي ترتيب المربعات"><i class="fas fa-shuffle"></i> إعادة ترتيب</button>
+          <button class="gbtn gbtn-primary" id="bamGoQBank" title="اذهبي لمكتبة الأسئلة لإضافة أسئلة"><i class="fas fa-book"></i> أضيفي أسئلة</button>
+          <button class="gbtn gbtn-ghost" id="bamResetBtn" title="إعادة تعيين الإحصائيات فقط"><i class="fas fa-eraser"></i> تصفير الإحصائيات</button>
+        </div>
+
+        <div class="game-info-box" style="margin-top:14px">
+          <span class="gi-emoji">💡</span>
+          <span>المربعات الزرقاء/الخضراء/الصفراء/البنفسجية أسئلة بنقاط (5/10/15/20). المربعات الوردية المتوهجة = "بَـمْ!" 🎲 تحمل مفاجآت (مكافآت أو عقبات)!</span>
+        </div>
+      </div>
+
+      <!-- ===== BATTLESHIP - البارجة التعليمية ===== -->
+      <div class="game-panel" id="panel-battleship">
+        <div class="game-panel-title"><span class="gpt-emoji">🚢</span> البارجة التعليمية</div>
+        <div class="game-panel-subtitle">اضربي خلايا البحر بالإجابات الصحيحة! كل سفينة تخبئ أسئلة من مكتبتكِ 🎯</div>
+
+        <div class="bs-toolbar">
+          <div class="bs-stat"><i class="fas fa-crosshairs"></i> إطلاقات: <b id="bsShotsFired">0</b></div>
+          <div class="bs-stat"><i class="fas fa-fire"></i> إصابات: <b id="bsHits">0</b></div>
+          <div class="bs-stat"><i class="fas fa-skull-crossbones"></i> غرقت: <b id="bsShipsSunk">0</b>/<b id="bsShipsTotal">5</b></div>
+          <div class="bs-stat"><i class="fas fa-star"></i> نقاط: <b id="bsTotalPoints">0</b></div>
+          <div class="bs-stat"><i class="fas fa-question-circle"></i> المصدر: <span class="bs-source-label" id="bsSourceLabel">مكتبة الأسئلة</span></div>
+        </div>
+
+        <div class="bs-setup" id="bsSetup">
+          <select class="form-select" id="bsCategoryFilter">
+            <option value="">📚 كل الفئات</option>
+            <option value="عام">📚 عام</option>
+            <option value="رياضيات">🔢 رياضيات</option>
+            <option value="علوم">🧪 علوم</option>
+            <option value="لغة عربية">📖 لغة عربية</option>
+            <option value="لغة إنجليزية">🔤 لغة إنجليزية</option>
+            <option value="إسلامية">🕌 إسلامية</option>
+            <option value="اجتماعيات">🌍 اجتماعيات</option>
+          </select>
+          <select class="form-select" id="bsDifficultyFilter">
+            <option value="">🎯 كل المستويات</option>
+            <option value="easy">🟢 سهل</option>
+            <option value="medium">🟡 متوسط</option>
+            <option value="hard">🔴 صعب</option>
+          </select>
+        </div>
+
+        <div class="bs-main">
+          <div class="bs-board-wrap">
+            <div class="bs-grid" id="bsGrid"></div>
+            <div class="bs-legend">
+              <span><span class="dot"></span> ماء</span>
+              <span><span class="dot miss"></span> أخطأتِ</span>
+              <span><span class="dot hit"></span> إصابة</span>
+              <span><span class="dot sunk"></span> غرقت!</span>
+            </div>
+          </div>
+          <div class="bs-side">
+            <div class="bs-fleet-title"><i class="fas fa-ship"></i> أسطول العدو</div>
+            <div class="bs-fleet" id="bsFleet"></div>
+            <div id="bsStatusArea" style="margin-top:10px;font-size:.85rem;color:#0a3d62;font-weight:700;text-align:center;min-height:24px"></div>
+            <div class="bs-empty-qbank" id="bsEmptyQbank" style="display:none">
+              <i class="fas fa-book-open"></i>
+              <b>لا توجد أسئلة في المكتبة!</b>
+              <p>أضيفي أسئلة أولاً من تبويب 📚 مكتبة الأسئلة</p>
+              <button class="gbtn gbtn-primary" id="bsGoQBankEmpty"><i class="fas fa-plus"></i> اذهبي للمكتبة</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+          <button class="gbtn gbtn-primary" id="bsStartBtn"><i class="fas fa-play"></i> ابدئي لعبة جديدة</button>
+          <button class="gbtn gbtn-secondary" id="bsReshuffleBtn" style="display:none"><i class="fas fa-random"></i> أعيدي توزيع السفن</button>
+          <button class="gbtn gbtn-warning" id="bsRevealBtn"><i class="fas fa-eye"></i> اكشفي السفن</button>
+          <button class="gbtn gbtn-ghost" id="bsGoQBank"><i class="fas fa-book"></i> مكتبة الأسئلة</button>
+        </div>
+      </div>
+
+      <!-- ===== SNAKES & LADDERS - سلّم الأبطال ===== -->
+      <div class="game-panel" id="panel-ladders">
+        <div class="game-panel-title"><span class="gpt-emoji">🪜</span> سلّم الأبطال — من ستصل للقمّة أولاً؟</div>
+        <div class="game-panel-subtitle">ارمي النرد، تسلّقي السلم وتجنّبي الثعابين! كل خلية سؤال تعطيكِ نقاطاً إضافية 🎲</div>
+
+        <div class="lad-toolbar">
+          <div class="lad-turn" id="ladTurn"><i class="fas fa-arrow-right"></i> <span id="ladTurnName">دوري</span></div>
+          <div class="lad-stat"><i class="fas fa-dice"></i> الدور الحالي: <b id="ladRound">1</b></div>
+          <div class="lad-stat"><i class="fas fa-trophy"></i> الفائز: <b id="ladWinner">—</b></div>
+          <div class="lad-stat"><i class="fas fa-question-circle"></i> المصدر: <span class="lad-source-label" id="ladSourceLabel">مكتبة الأسئلة</span></div>
+        </div>
+
+        <div class="lad-main">
+          <div class="lad-board-wrap">
+            <div class="lad-board" id="ladBoard"></div>
+            <svg class="lad-lines" id="ladLines" viewBox="0 0 10 10" preserveAspectRatio="none"></svg>
+            <div class="lad-tokens" id="ladTokens"></div>
+          </div>
+          <div class="lad-side">
+            <div class="lad-section-title"><i class="fas fa-users"></i> اللاعبات <span style="font-size:.7rem;color:#7a5a8a;font-weight:700">(<span id="ladPlayerCount">0</span>/4)</span></div>
+            <div class="lad-players" id="ladPlayers"></div>
+            <button class="lad-add-player" id="ladAddPlayer"><i class="fas fa-user-plus"></i> أضيفي لاعبة</button>
+
+            <div class="lad-dice-wrap">
+              <div class="lad-dice" id="ladDice" data-v="1">
+                <div class="die-dot d1"></div><div class="die-dot d2"></div><div class="die-dot d3"></div>
+                <div class="die-dot d4"></div><div class="die-dot d5"></div><div class="die-dot d6"></div>
+                <div class="die-dot d7"></div><div class="die-dot d8"></div><div class="die-dot d9"></div>
+              </div>
+              <button class="lad-roll-btn" id="ladRollBtn"><i class="fas fa-dice"></i> ارمي النرد</button>
+            </div>
+
+            <div class="lad-status" id="ladStatus">🎲 أضيفي لاعبتين على الأقل وابدئي اللعب</div>
+
+            <div class="lad-actions">
+              <button class="gbtn gbtn-warning" id="ladResetBtn"><i class="fas fa-undo"></i> بداية جديدة</button>
+              <button class="gbtn gbtn-ghost" id="ladGoQBank"><i class="fas fa-book"></i> مكتبة الأسئلة</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== QUESTIONS LIBRARY (بنك أسئلة الألعاب) ===== -->
+      <div class="game-panel" id="panel-questions">
+        <div class="game-panel-title"><span class="gpt-emoji">📚</span> مكتبة الأسئلة - حضّري أسئلتكِ للعب</div>
+        <div class="game-panel-subtitle">أضيفي أسئلة مسبقاً واختاري منها وقت اللعب. كل سؤال يُحفظ تلقائياً 🔒</div>
+
+        <!-- شريط إحصائيات سريع -->
+        <div class="qbank-stats" id="qbankStats">
+          <div class="qbs-card"><div class="qbs-emoji">📚</div><div class="qbs-info"><b id="qbsTotal">0</b><span>إجمالي الأسئلة</span></div></div>
+          <div class="qbs-card"><div class="qbs-emoji">🎯</div><div class="qbs-info"><b id="qbsCategories">0</b><span>فئة</span></div></div>
+          <div class="qbs-card"><div class="qbs-emoji">🔥</div><div class="qbs-info"><b id="qbsMostUsed">—</b><span>الأكثر استخداماً</span></div></div>
+        </div>
+
+        <!-- شريط الأدوات: بحث + فلتر + إضافة + استيراد -->
+        <div class="qbank-toolbar">
+          <div class="qbank-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="qbankSearch" placeholder="ابحث في الأسئلة... (نص السؤال أو الخيارات)" autocomplete="off">
+          </div>
+          <select class="qbank-select" id="qbankFilterCat">
+            <option value="">📁 كل الفئات</option>
+          </select>
+          <select class="qbank-select" id="qbankFilterDiff">
+            <option value="">🎚️ كل المستويات</option>
+            <option value="easy">سهل</option>
+            <option value="medium">متوسط</option>
+            <option value="hard">صعب</option>
+          </select>
+          <select class="qbank-select" id="qbankSortBy">
+            <option value="newest">الأحدث</option>
+            <option value="oldest">الأقدم</option>
+            <option value="most-used">الأكثر استخداماً</option>
+            <option value="least-used">الأقل استخداماً</option>
+            <option value="alpha">أبجدياً</option>
+          </select>
+        </div>
+
+        <div class="qbank-actions">
+          <button class="gbtn gbtn-primary" id="qbankAddBtn"><i class="fas fa-plus"></i> إضافة سؤال</button>
+          <button class="gbtn gbtn-success" id="qbankImportBtn"><i class="fas fa-file-import"></i> استيراد جماعي</button>
+          <button class="gbtn gbtn-warning" id="qbankRandomBtn" title="اختاري سؤالاً عشوائياً ثم اذهبي لتحدي السرعة"><i class="fas fa-random"></i> سؤال عشوائي</button>
+          <button class="gbtn gbtn-ghost" id="qbankExportBtn" title="تنزيل كل الأسئلة كملف JSON"><i class="fas fa-download"></i> تصدير</button>
+          <button class="gbtn gbtn-danger" id="qbankClearAllBtn" style="margin-right:auto"><i class="fas fa-trash"></i> مسح الكل</button>
+        </div>
+
+        <!-- نموذج إضافة/تعديل (مخفي افتراضياً) -->
+        <div class="qbank-form" id="qbankForm" style="display:none">
+          <div class="qbf-head">
+            <span id="qbfTitle">إضافة سؤال جديد</span>
+            <button class="qbf-close" id="qbfClose" type="button"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="qbf-row">
+            <label>نص السؤال <span class="req">*</span></label>
+            <textarea id="qbfText" rows="2" placeholder="مثال: ما هي عاصمة المملكة العربية السعودية؟"></textarea>
+          </div>
+          <div class="qbf-row qbf-row-2">
+            <div>
+              <label>الفئة</label>
+              <div style="display:flex;gap:4px">
+                <select id="qbfCategory" style="flex:1">
+                  <option value="عام">📁 عام</option>
+                  <option value="رياضيات">🔢 رياضيات</option>
+                  <option value="علوم">🔬 علوم</option>
+                  <option value="لغة عربية">📖 لغة عربية</option>
+                  <option value="إسلامية">🕌 إسلامية</option>
+                  <option value="اجتماعيات">🌍 اجتماعيات</option>
+                  <option value="لغة إنجليزية">🌐 لغة إنجليزية</option>
+                </select>
+                <button type="button" class="gbtn gbtn-ghost" id="qbfAddCat" title="أضيفي فئة جديدة" style="padding:6px 10px"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+            <div>
+              <label>المستوى</label>
+              <select id="qbfDifficulty">
+                <option value="easy">🟢 سهل</option>
+                <option value="medium" selected>🟡 متوسط</option>
+                <option value="hard">🔴 صعب</option>
+              </select>
+            </div>
+          </div>
+          <div class="qbf-row">
+            <label>خيارات الإجابة (اختياري — فراغي = سؤال نص حر)</label>
+            <div class="qbf-opts" id="qbfOpts">
+              <div class="qbf-opt-row"><span class="qbf-letter">أ</span><input type="text" class="qbf-opt-input" placeholder="الخيار الأول"></div>
+              <div class="qbf-opt-row"><span class="qbf-letter">ب</span><input type="text" class="qbf-opt-input" placeholder="الخيار الثاني"></div>
+            </div>
+            <button type="button" class="gbtn gbtn-ghost" id="qbfAddOpt" style="margin-top:6px;font-size:.72rem"><i class="fas fa-plus"></i> إضافة خيار</button>
+          </div>
+          <div class="qbf-row">
+            <label>الإجابة الصحيحة (اختياري — للتتبع فقط)</label>
+            <select id="qbfCorrect">
+              <option value="-1">بدون إجابة صحيحة محددة</option>
+            </select>
+          </div>
+          <div class="qbf-foot">
+            <button type="button" class="gbtn gbtn-success" id="qbfSave"><i class="fas fa-check"></i> حفظ السؤال</button>
+            <button type="button" class="gbtn gbtn-ghost" id="qbfCancel">إلغاء</button>
+          </div>
+        </div>
+
+        <!-- نموذج استيراد جماعي -->
+        <div class="qbank-form" id="qbankImport" style="display:none">
+          <div class="qbf-head">
+            <span>📥 استيراد جماعي للأسئلة</span>
+            <button class="qbf-close" id="qbiClose" type="button"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="qbi-help">
+            <b>الصيغة البسيطة:</b> كل سطر = سؤال منفصل<br>
+            <b>الصيغة المتقدمة:</b> استخدم <code>- </code> أو <code>• </code> في بداية السطر للخيارات، و<code>✓</code> أو <code>*</code> للإجابة الصحيحة<br>
+            <b>الفئات والمستويات:</b> في أول سطر اكتب <code>الفئة: رياضيات | المستوى: متوسط</code> ثم سطر فارغ
+          </div>
+          <textarea id="qbiText" rows="10" placeholder="مثال:
+الفئة: علوم | المستوى: متوسط
+
+ما هي أكبر كوكب في المجموعة الشمسية؟
+- عطارد
+- الأرض
+✓ المشتري
+- زحل
+
+ما هو رمز الماء الكيميائي؟
+- H2O ✓
+- CO2
+- O2
+
+ما هو أصلب معدن على وجه الأرض؟"></textarea>
+          <div class="qbf-row qbf-row-2">
+            <div>
+              <label>فئة افتراضية (لو ما تم تحديدها في النص)</label>
+              <select id="qbiDefaultCat">
+                <option value="عام">📁 عام</option>
+                <option value="رياضيات">🔢 رياضيات</option>
+                <option value="علوم">🔬 علوم</option>
+                <option value="لغة عربية">📖 لغة عربية</option>
+                <option value="إسلامية">🕌 إسلامية</option>
+                <option value="اجتماعيات">🌍 اجتماعيات</option>
+              </select>
+            </div>
+            <div>
+              <label>المستوى الافتراضي</label>
+              <select id="qbiDefaultDiff">
+                <option value="easy">🟢 سهل</option>
+                <option value="medium" selected>🟡 متوسط</option>
+                <option value="hard">🔴 صعب</option>
+              </select>
+            </div>
+          </div>
+          <div class="qbf-foot">
+            <button type="button" class="gbtn gbtn-success" id="qbiParse"><i class="fas fa-magic"></i> تحليل واستيراد</button>
+            <button type="button" class="gbtn gbtn-ghost" id="qbiCancel">إلغاء</button>
+          </div>
+          <div class="qbi-preview" id="qbiPreview" style="display:none"></div>
+        </div>
+
+        <!-- قائمة الأسئلة -->
+        <div class="qbank-list" id="qbankList">
+          <div class="qbank-empty" id="qbankEmpty">
+            <div class="qbe-emoji">📚</div>
+            <h3>لا توجد أسئلة بعد</h3>
+            <p>اضغطي على "إضافة سؤال" أو "استيراد جماعي" للبدء</p>
+          </div>
+          <div class="qbank-items" id="qbankItems"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="games-footer">
+      <div class="gf-stats">
+        <div class="gf-stat">🌟 طالبات: <b id="gStatStudents">0</b></div>
+        <div class="gf-stat">🏆 جولات اليوم: <b id="gStatRounds">0</b></div>
+        <div class="gf-stat">⭐ إجمالي النقاط: <b id="gStatPoints">0</b></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="gbtn gbtn-danger" id="gamesResetAll"><i class="fas fa-trash-alt"></i> مسح كل البيانات</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Game Toast -->
+<div class="game-toast" id="gameToast"><span class="gt-icon">🎉</span><span id="gameToastText">—</span></div>
+
+<!-- ===== BATTLESHIP OVERLAYS ===== -->
+<div class="bs-question-overlay" id="bsQuestionOverlay">
+  <div class="bs-q-box">
+    <div class="bs-q-head">
+      <div class="bs-q-head-title"><span id="bsQuestionEmoji">❓</span> <span id="bsQuestionHeadTitle">سؤالك!</span></div>
+      <button class="bs-q-close" id="bsQuestionCloseBtn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="bs-q-body">
+      <div class="bs-q-text" id="bsQuestionText">—</div>
+      <div class="bs-q-opts" id="bsQuestionOpts"></div>
+      <div class="bs-q-result" id="bsQuestionResult"></div>
+      <button class="bs-q-next-btn" id="bsQuestionNextBtn"><i class="fas fa-arrow-left"></i> أكملي اللعب</button>
+    </div>
+  </div>
+</div>
+
+<div class="bs-victory-overlay" id="bsVictoryOverlay">
+  <div class="bs-v-box">
+    <span class="bs-v-emoji">🏆</span>
+    <div class="bs-v-title">انتصار ساحق!</div>
+    <div class="bs-v-sub">غرقتِ أسطول العدو بالعلم والتركيز 🎓</div>
+    <div class="bs-v-stats">
+      <div class="bs-v-stat"><div class="vsv-num" id="bsVictoryShots">0</div><div class="vsv-lbl">إطلاقات</div></div>
+      <div class="bs-v-stat"><div class="vsv-num" id="bsVictoryHits">0</div><div class="vsv-lbl">إصابات</div></div>
+      <div class="bs-v-stat"><div class="vsv-num" id="bsVictoryAccuracy">0%</div><div class="vsv-lbl">الدقة</div></div>
+      <div class="bs-v-stat"><div class="vsv-num" id="bsVictoryPoints">0</div><div class="vsv-lbl">النقاط</div></div>
+    </div>
+    <button class="bs-v-close" id="bsVictoryCloseBtn"><i class="fas fa-redo"></i> لعبة جديدة</button>
+  </div>
+</div>
+
+<!-- ===== SNAKES & LADDERS OVERLAYS ===== -->
+<div class="lad-modal-overlay" id="ladQuestionOverlay">
+  <div class="lad-modal">
+    <div class="lad-modal-head">
+      <div class="lad-modal-title"><span id="ladQuestionEmoji">❓</span> <span id="ladQuestionHeadTitle">سؤالك!</span></div>
+      <button class="lad-modal-close" id="ladQuestionCloseBtn" title="سيتم احتسابها كإجابة خاطئة"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="lad-modal-body">
+      <div class="bs-q-emoji" id="ladQuestionBigEmoji">❓</div>
+      <div class="bs-q-text" id="ladQuestionText">—</div>
+      <div class="bs-q-opts" id="ladQuestionOpts"></div>
+      <div class="bs-q-result" id="ladQuestionResult"></div>
+    </div>
+  </div>
+</div>
+
+<div class="lad-modal-overlay" id="ladPlayersOverlay">
+  <div class="lad-modal">
+    <div class="lad-modal-head">
+      <div class="lad-modal-title"><i class="fas fa-user-plus"></i> اختاري اللاعبات</div>
+      <button class="lad-modal-close" id="ladPlayersCloseBtn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="lad-modal-body">
+      <p style="font-size:.85rem;color:#5f27cd;margin-bottom:8px">انقري على الطالبة لإضافتها كلاعبة (حتى 4 لاعبات)</p>
+      <div class="lad-students-list" id="ladStudentsList"></div>
+    </div>
+    <div class="lad-modal-foot">
+      <button class="gbtn gbtn-ghost" id="ladPlayersCancelBtn">إلغاء</button>
+      <button class="gbtn gbtn-primary" id="ladPlayersOkBtn"><i class="fas fa-check"></i> تم</button>
+    </div>
+  </div>
+</div>
+
+<div class="lad-modal-overlay" id="ladVictoryOverlay">
+  <div class="lad-victory-box">
+    <span class="lad-v-emoji">🏆</span>
+    <div class="lad-v-title">لديهنّ بطلة جديدة!</div>
+    <div class="lad-v-sub" id="ladVictoryName">— فازت بالسباق!</div>
+    <div class="lad-v-stats">
+      <div class="lad-v-stat"><div class="lv-num" id="ladVRounds">0</div><div class="lv-lbl">جولات</div></div>
+      <div class="lad-v-stat"><div class="lv-num" id="ladVCorrect">0</div><div class="lv-lbl">إجابات صحيحة</div></div>
+      <div class="lad-v-stat"><div class="lv-num" id="ladVLadders">0</div><div class="lv-lbl">سلام صعدتها</div></div>
+    </div>
+    <button class="bs-v-close" id="ladVictoryCloseBtn"><i class="fas fa-redo"></i> لعبة جديدة</button>
+  </div>
+</div>
+
+<!-- ⭐⭐⭐ BAAMBOOZLE MODALS ⭐⭐⭐ -->
+<!-- نافذة السؤال -->
+<div class="bam-overlay" id="bamQuestionOverlay" role="dialog" aria-modal="true">
+  <div class="bam-modal">
+    <div class="bam-modal-head">
+      <div class="bam-modal-title">
+        <span id="bamQuestionEmoji">❓</span>
+        <span id="bamQuestionHeadTitle">سؤال بامبوزل</span>
+      </div>
+      <button class="bam-modal-close" id="bamQuestionClose" title="إغلاق"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="bam-modal-body" id="bamQuestionBody">
+      <!-- محتوى السؤال (يُملأ ديناميكياً) -->
+    </div>
+  </div>
+</div>
+
+<!-- نافذة المفاجأة -->
+<div class="bam-overlay" id="bamSurpriseOverlay" role="dialog" aria-modal="true">
+  <div class="bam-modal">
+    <div class="bam-modal-head surprise">
+      <div class="bam-modal-title">
+        <span style="font-size:1.5rem">💥</span>
+        <span>بَـمْ! 💥</span>
+      </div>
+      <button class="bam-modal-close" id="bamSurpriseClose" title="إغلاق"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="bam-modal-body" id="bamSurpriseBody">
+      <!-- محتوى المفاجأة (يُملأ ديناميكياً) -->
+    </div>
+  </div>
+</div>
+
+<!-- نافذة النصر -->
+<div class="bam-overlay" id="bamVictoryOverlay" role="dialog" aria-modal="true">
+  <div class="bam-modal">
+    <div class="bam-modal-head victory">
+      <div class="bam-modal-title">
+        <span style="font-size:1.5rem">🏆</span>
+        <span>انتهت الجولة!</span>
+      </div>
+      <button class="bam-modal-close" id="bamVictoryClose" title="إغلاق"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="bam-modal-body" id="bamVictoryBody">
+      <!-- محتوى النصر (يُملأ ديناميكياً) -->
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ⭐ CSS محسّنات احترافية (animations + UX) -->
+
+  <script src="script.js" defer></script>
+</body>
+</html>
