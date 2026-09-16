@@ -2213,6 +2213,83 @@ input,textarea,select{font-family:inherit;color:inherit}
 .score-board{background:linear-gradient(135deg,var(--accent),#f39c12);color:var(--dark);padding:14px;border-radius:12px;text-align:center;margin-bottom:12px;font-weight:800}
 .score-board .score-num{font-size:2.2rem;font-weight:900}
 
+/* ============ مجموعات التميز - Distinguished Groups ============ */
+.dg-section{background:linear-gradient(135deg,#fef9e7,#fef5e7);border:2px solid #f4d03f;border-radius:14px;padding:12px;margin-bottom:12px}
+.dg-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.dg-header .dg-title{font-size:.95rem;font-weight:900;color:#7d6608;flex:1;display:flex;align-items:center;gap:6px}
+.dg-header .dg-title i{font-size:1.1rem;color:#d4ac0d}
+.dg-podium{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:8px;margin-bottom:12px;align-items:end}
+.dg-podium-card{background:white;border-radius:14px;padding:10px 6px;text-align:center;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.08);border:3px solid transparent;animation:dgFloat 3s ease-in-out infinite}
+.dg-podium-card.first{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#5d4037;border-color:#ff6f00;animation-delay:0s}
+.dg-podium-card.second{background:linear-gradient(135deg,#e8e8e8,#bdc3c7);color:#37474f;border-color:#95a5a6}
+.dg-podium-card.third{background:linear-gradient(135deg,#cd7f32,#a0522d);color:#fff;border-color:#8b4513}
+.dg-podium-rank{font-size:1.8rem;font-weight:900;line-height:1;margin-bottom:4px}
+.dg-podium-name{font-size:.85rem;font-weight:900;margin-bottom:3px;line-height:1.2;word-break:break-word}
+.dg-podium-icon{font-size:1.3rem;margin-bottom:3px}
+.dg-podium-score{background:rgba(255,255,255,.85);color:#5d4037;padding:3px 10px;border-radius:20px;font-weight:900;font-size:.85rem;display:inline-block;margin-top:3px}
+.dg-podium-card.first .dg-podium-score{color:#b8860b}
+.dg-podium-card.second .dg-podium-score{color:#546e7a}
+.dg-podium-card.third .dg-podium-score{color:#6d4c41}
+.dg-podium-crown{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:1.6rem;animation:dgCrownPulse 2s ease-in-out infinite}
+@keyframes dgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes dgCrownPulse{0%,100%{transform:translateX(-50%) scale(1) rotate(-5deg)}50%{transform:translateX(-50%) scale(1.15) rotate(5deg)}}
+.dg-group-card{background:white;border-radius:12px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;border-right:4px solid;box-shadow:0 2px 6px rgba(0,0,0,.06);transition:.25s;cursor:pointer;position:relative;overflow:hidden}
+.dg-group-card:hover{transform:translateX(-4px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.dg-group-card::before{content:'';position:absolute;top:0;right:0;bottom:0;width:4px}
+.dg-group-rank{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;flex-shrink:0;background:linear-gradient(135deg,#3498db,#2980b9);color:white;box-shadow:0 2px 4px rgba(0,0,0,.15)}
+.dg-group-rank.gold{background:linear-gradient(135deg,#ffd700,#f39c12);color:#7d4e00}
+.dg-group-rank.silver{background:linear-gradient(135deg,#bdc3c7,#95a5a6);color:#2c3e50}
+.dg-group-rank.bronze{background:linear-gradient(135deg,#cd7f32,#a0522d);color:#fff}
+.dg-group-info{flex:1;min-width:0}
+.dg-group-name{font-weight:900;color:var(--dark);font-size:.9rem;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.dg-group-name i{font-size:1rem}
+.dg-group-meta{font-size:.7rem;color:#888;margin-top:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dg-danat{font-size:1.3rem;font-weight:900;display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#fff3cd,#ffe082);padding:6px 12px;border-radius:20px;color:#7d6608;border:2px solid #ffd700;flex-shrink:0}
+.dg-danat i{font-size:1.1rem}
+.dg-badge-row{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.dg-badge-icon{background:linear-gradient(135deg,#e74c3c,#c0392b);color:white;padding:3px 8px;border-radius:12px;font-size:.65rem;font-weight:900;display:flex;align-items:center;gap:3px}
+.dg-badge-icon.bronze{background:linear-gradient(135deg,#cd7f32,#a0522d)}
+.dg-badge-icon.silver{background:linear-gradient(135deg,#bdc3c7,#95a5a6);color:#2c3e50}
+.dg-badge-icon.gold{background:linear-gradient(135deg,#ffd700,#f39c12);color:#5d4037}
+.dg-badge-icon.diamond{background:linear-gradient(135deg,#00d4ff,#0091ea);color:white}
+.dg-criteria-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
+.dg-criterion{background:white;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.2s;font-weight:800}
+.dg-criterion:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,.1)}
+.dg-criterion .dgc-icon{font-size:1.4rem;display:block;margin-bottom:3px}
+.dg-criterion .dgc-label{font-size:.7rem;font-weight:700;display:block;line-height:1.2}
+.dg-criterion .dgc-val{font-size:.7rem;opacity:.85;margin-top:2px;display:block}
+.dg-criterion.interaction{border-color:#27ae60;color:#27ae60;background:rgba(39,174,96,.05)}
+.dg-criterion.interaction:hover{background:#27ae60;color:white}
+.dg-criterion.excellence{border-color:#d4ac0d;color:#b8860b;background:rgba(212,172,13,.05)}
+.dg-criterion.excellence:hover{background:linear-gradient(135deg,#ffd700,#f39c12);color:#5d4037}
+.dg-criterion.participation{border-color:#3498db;color:#3498db;background:rgba(52,152,219,.05)}
+.dg-criterion.participation:hover{background:#3498db;color:white}
+.dg-criterion.cooperation{border-color:#9b59b6;color:#9b59b6;background:rgba(155,89,182,.05)}
+.dg-criterion.cooperation:hover{background:#9b59b6;color:white}
+.dg-criterion.preparation{border-color:#e67e22;color:#e67e22;background:rgba(230,126,34,.05)}
+.dg-criterion.preparation:hover{background:#e67e22;color:white}
+.dg-criterion.teaching{border-color:#ffd700;color:#b8860b;background:rgba(255,215,0,.1)}
+.dg-criterion.teaching:hover{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#5d4037}
+.dg-criterion.violation{border-color:#e74c3c;color:#e74c3c;background:rgba(231,76,60,.05)}
+.dg-criterion.violation:hover{background:#e74c3c;color:white}
+.dg-criterion.manual{border-color:#1a5f7a;color:#1a5f7a;background:rgba(26,95,122,.05)}
+.dg-criterion.manual:hover{background:#1a5f7a;color:white}
+.dg-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.dg-stat-cell{background:white;padding:8px 4px;border-radius:10px;text-align:center;border:1px solid #f4d03f}
+.dg-stat-cell .dgs-num{font-size:1.1rem;font-weight:900;color:#b8860b;line-height:1}
+.dg-stat-cell .dgs-lbl{font-size:.6rem;color:#7d6608;font-weight:700;margin-top:3px}
+.dg-history-item{display:flex;justify-content:space-between;align-items:center;background:white;padding:6px 10px;border-radius:8px;margin-bottom:4px;font-size:.75rem;border-right:3px solid}
+.dg-history-item.pos{border-color:#27ae60;color:#27ae60}
+.dg-history-item.neg{border-color:#e74c3c;color:#e74c3c}
+.dg-group-card-winner{background:linear-gradient(135deg,#fff8dc,#ffeaa7);border-color:#ffd700 !important;box-shadow:0 0 16px rgba(255,215,0,.4) !important}
+.dg-winner-ribbon{position:absolute;top:-2px;right:8px;background:linear-gradient(135deg,#e74c3c,#c0392b);color:white;padding:2px 10px;border-radius:0 0 8px 8px;font-size:.6rem;font-weight:900;letter-spacing:.5px}
+.dg-confetti{position:fixed;top:-10px;pointer-events:none;z-index:99999;font-size:1.5rem;animation:dgConfettiFall 3s linear forwards}
+@keyframes dgConfettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.dg-empty-podium{background:linear-gradient(135deg,#f8f9fa,#e9ecef);color:#6c757d;border:2px dashed #ced4da;border-radius:12px;padding:20px;text-align:center;margin-bottom:10px}
+.dg-group-actions{display:flex;gap:4px;margin-top:6px}
+.dg-group-actions .btn{padding:3px 8px;font-size:.7rem}
+.dg-color-dot{width:14px;height:14px;border-radius:50%;display:inline-block;vertical-align:middle;margin-left:6px;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+
 /* BADGES DISPLAY */
 .badges-display{background:white;border-radius:10px;padding:12px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .badge-icon{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;margin:3px;background:linear-gradient(135deg,var(--accent),#f39c12);color:var(--dark);box-shadow:0 2px 4px rgba(0,0,0,.1);position:relative}
@@ -3279,6 +3356,238 @@ input,textarea,select{font-family:inherit;color:inherit}
 .att-filter-row select{flex:1;padding:6px 8px;border:1px solid #e0e0e0;border-radius:8px;font-size:.78rem;font-family:inherit;background:white}
 .att-note{font-size:.7rem;color:#888;background:#f8f9fa;border-radius:6px;padding:5px 8px;margin-top:6px;line-height:1.5;text-align:center}
 @media print{.att-start-btn,.att-filter-row,.att-legend,.att-record-actions{display:none !important}.att-session-detail{display:block !important}}
+
+/* ============== الحضور اليدوي ==============
+   مودال رصد الحضور والغياب يدوياً (بدون بث مباشر) */
+.att-manual-btn{
+  width:100%;background:linear-gradient(135deg,#1a5f7a,#2a7f9a);color:white;border:none;
+  padding:11px;border-radius:10px;font-size:.88rem;font-weight:800;cursor:pointer;
+  margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:7px;
+  font-family:inherit;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 3px 10px rgba(26,95,122,.3);
+}
+.att-manual-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(26,95,122,.45)}
+.att-manual-btn:active{transform:scale(.98)}
+.att-manual-btn i{font-size:1rem}
+
+/* صفوف الطالبات داخل مودال الحضور اليدوي */
+.matt-list{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.matt-row{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;background:#f8fafc;border-radius:10px;
+  border:1.5px solid #e8eef3;transition:.15s;cursor:pointer;
+}
+.matt-row:hover{background:#eef6fb;border-color:#cfe1ea;transform:translateX(-2px)}
+.matt-row.is-absent{background:#fff5f5;border-color:#f5c6c6}
+.matt-row.is-absent .matt-name{color:#c0392b;text-decoration:line-through}
+.matt-row .matt-avatar{
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:900;color:white;background:linear-gradient(135deg,#1a5f7a,#0f3460);font-size:.85rem;flex-shrink:0;
+  transition:.2s;
+}
+.matt-row.is-absent .matt-avatar{background:linear-gradient(135deg,#e74c3c,#c0392b)}
+.matt-row .matt-name{flex:1;font-weight:700;font-size:.88rem;color:#2c3e50;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.matt-row .matt-meta{font-size:.65rem;color:#888;display:flex;align-items:center;gap:4px}
+.matt-row .matt-toggle{
+  width:42px;height:42px;border-radius:12px;border:none;cursor:pointer;
+  font-size:1.1rem;font-weight:900;display:inline-flex;align-items:center;justify-content:center;
+  transition:transform .15s,box-shadow .15s,background .15s;font-family:'Tajawal',sans-serif;
+  flex-shrink:0;
+}
+.matt-row .matt-toggle.is-present{
+  background:linear-gradient(135deg,#27ae60,#1e8449);color:white;
+  box-shadow:0 3px 8px rgba(39,174,96,.35);
+}
+.matt-row .matt-toggle.is-present:hover{transform:scale(1.08);box-shadow:0 4px 12px rgba(39,174,96,.5)}
+.matt-row .matt-toggle.is-absent{
+  background:linear-gradient(135deg,#e74c3c,#c0392b);color:white;
+  box-shadow:0 3px 8px rgba(231,76,60,.35);
+}
+.matt-row .matt-toggle.is-absent:hover{transform:scale(1.08);box-shadow:0 4px 12px rgba(231,76,60,.5)}
+.matt-row .matt-toggle:active{transform:scale(.92)}
+
+/* ملخص سريع في رأس المودال */
+.matt-summary{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;
+}
+.matt-summary .ms-box{
+  background:white;border-radius:10px;padding:7px 6px;text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);border:1px solid #eef2f5;
+}
+.matt-summary .ms-box i{display:block;font-size:1rem;margin-bottom:2px}
+.matt-summary .ms-num{font-size:1.35rem;font-weight:900;font-family:'Amiri',serif;line-height:1}
+.matt-summary .ms-lbl{font-size:.62rem;font-weight:700;color:#666;margin-top:2px}
+.matt-summary .ms-present i{color:#27ae60}
+.matt-summary .ms-present .ms-num{color:#27ae60}
+.matt-summary .ms-absent i{color:#e74c3c}
+.matt-summary .ms-absent .ms-num{color:#e74c3c}
+.matt-summary .ms-total i{color:#1a5f7a}
+.matt-summary .ms-total .ms-num{color:#1a5f7a}
+
+/* أدوات سريعة داخل المودال */
+.matt-tools{display:flex;gap:5px;margin-bottom:8px;flex-wrap:wrap}
+.matt-tools .matt-tb{
+  background:white;border:1px solid #e0e0e0;color:#555;border-radius:8px;
+  padding:5px 9px;font-size:.7rem;font-weight:700;cursor:pointer;
+  display:inline-flex;align-items:center;gap:4px;font-family:'Tajawal',sans-serif;
+  transition:.15s;
+}
+.matt-tools .matt-tb:hover{background:#f0f3f5;border-color:var(--primary);color:var(--primary)}
+.matt-tools .matt-tb-all-present{color:#27ae60;border-color:#c8e6c9}
+.matt-tools .matt-tb-all-present:hover{background:#e8f5e9;border-color:#27ae60;color:#1e8449}
+.matt-tools .matt-tb-search{flex:1;min-width:140px;background:white;border:1px solid #e0e0e0;border-radius:8px;padding:5px 9px;font-size:.78rem;font-family:inherit;color:var(--text)}
+
+/* ملاحظة نوع الجلسة في قائمة الجلسات */
+.att-session-title .att-pill.type-manual{background:#1a5f7a}
+.att-session-title .att-pill.type-live{background:#28a745}
+
+/* ============== سجل الحضور لكل طالبة ==============
+   جدول ملخص يفتح لكل طالبة سجل تفصيلي */
+.att-students-summary{
+  background:white;border-radius:10px;border:1px solid #eef2f5;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);overflow:hidden;
+}
+.att-students-summary-head{
+  display:flex;align-items:center;gap:6px;padding:8px 10px;
+  background:linear-gradient(90deg,#f6f9fc,#eaf2f7);
+  border-bottom:1px solid #eef2f5;
+  font-size:.78rem;font-weight:800;color:var(--dark);
+}
+.att-students-summary-head .ash-title{flex:1;display:flex;align-items:center;gap:5px}
+.att-students-summary-head .ash-filter{
+  padding:4px 7px;border:1px solid #e0e0e0;border-radius:6px;
+  font-size:.72rem;font-family:'Tajawal',sans-serif;background:white;
+  font-weight:700;color:var(--primary);cursor:pointer;
+}
+.att-students-summary-head .ash-filter:focus{outline:none;border-color:var(--primary)}
+
+.att-ss-row{
+  display:grid;grid-template-columns:auto 1fr auto auto auto;
+  gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid #f3f5f7;
+  cursor:pointer;transition:background .12s;
+}
+.att-ss-row:last-child{border-bottom:none}
+.att-ss-row:hover{background:#f6f9fc}
+.att-ss-row .ass-avatar{
+  width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:900;color:white;background:linear-gradient(135deg,var(--primary),var(--dark));
+  font-size:.75rem;flex-shrink:0;
+}
+.att-ss-row .ass-info{min-width:0}
+.att-ss-row .ass-name{font-size:.8rem;font-weight:800;color:var(--dark);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.att-ss-row .ass-meta{font-size:.62rem;color:#888;margin-top:1px}
+.att-ss-row .ass-rate{
+  font-size:.85rem;font-weight:900;font-family:'Amiri',serif;
+  min-width:48px;text-align:center;
+}
+.att-ss-row .ass-rate.high{color:#27ae60}
+.att-ss-row .ass-rate.mid{color:#f39c12}
+.att-ss-row .ass-rate.low{color:#e74c3c}
+.att-ss-row .ass-rate.zero{color:#999}
+.att-ss-row .ass-mini-bar{
+  width:60px;height:6px;background:#f0f3f5;border-radius:3px;overflow:hidden;
+  display:flex;
+}
+.att-ss-row .ass-mini-bar .mb-present{background:linear-gradient(90deg,#27ae60,#1e8449);height:100%}
+.att-ss-row .ass-mini-bar .mb-absent{background:linear-gradient(90deg,#e74c3c,#c0392b);height:100%}
+.att-ss-row .ass-stat{font-size:.68rem;color:#555;min-width:62px;text-align:center;font-weight:700}
+.att-ss-row .ass-stat b{font-weight:900;color:var(--dark)}
+.att-ss-row .ass-arrow{color:#bbb;font-size:.7rem;transition:transform .15s}
+.att-ss-row:hover .ass-arrow{color:var(--primary);transform:translateX(-2px)}
+
+/* مودال تفاصيل حضور طالبة */
+.sh-head{
+  display:flex;align-items:center;gap:10px;padding:14px 16px;
+  background:linear-gradient(135deg,var(--dark),var(--primary));
+  color:white;border-radius:var(--radius) var(--radius) 0 0;
+}
+.sh-head .sh-avatar{
+  width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:1.2rem;
+  border:2px solid rgba(255,255,255,.4);flex-shrink:0;
+}
+.sh-head .sh-info{flex:1;min-width:0}
+.sh-head .sh-info .sh-name{font-size:1rem;font-weight:900;line-height:1.2}
+.sh-head .sh-info .sh-meta{font-size:.7rem;opacity:.9;margin-top:2px}
+.sh-head .sh-close{
+  background:rgba(255,255,255,.18);color:white;border:none;border-radius:50%;
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:.9rem;transition:.2s;
+}
+.sh-head .sh-close:hover{background:#e74c3c;transform:rotate(90deg)}
+
+.sh-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px;
+  background:#f6f9fc;border-bottom:1px solid #eef2f5;
+}
+.sh-stats .sh-stat{
+  background:white;border-radius:10px;padding:8px 4px;text-align:center;
+  box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid #eef2f5;
+}
+.sh-stats .sh-stat i{display:block;font-size:.95rem;margin-bottom:2px}
+.sh-stats .sh-stat .sh-num{font-size:1.15rem;font-weight:900;font-family:'Amiri',serif;line-height:1}
+.sh-stats .sh-stat .sh-lbl{font-size:.58rem;font-weight:700;color:#666;margin-top:2px}
+.sh-stats .sh-stat.present i{color:#27ae60}
+.sh-stats .sh-stat.present .sh-num{color:#27ae60}
+.sh-stats .sh-stat.absent i{color:#e74c3c}
+.sh-stats .sh-stat.absent .sh-num{color:#e74c3c}
+.sh-stats .sh-stat.rate i{color:#1a5f7a}
+.sh-stats .sh-stat.rate .sh-num{color:#1a5f7a}
+.sh-stats .sh-stat.total i{color:#888}
+.sh-stats .sh-stat.total .sh-num{color:#555}
+
+.sh-body{padding:8px 12px;max-height:50vh;overflow-y:auto;background:#fff}
+.sh-timeline{position:relative;padding-right:14px}
+.sh-timeline::before{
+  content:'';position:absolute;right:5px;top:6px;bottom:6px;
+  width:2px;background:linear-gradient(180deg,#cfe1ea,#eef2f5);
+  border-radius:1px;
+}
+.sh-tl-item{
+  position:relative;padding:8px 10px;margin-bottom:6px;
+  background:#f8fafc;border-radius:9px;border:1px solid #eef2f5;
+  display:flex;align-items:center;gap:8px;transition:.15s;
+}
+.sh-tl-item:hover{background:#eef6fb;border-color:#cfe1ea;transform:translateX(-2px)}
+.sh-tl-item::before{
+  content:'';position:absolute;right:-13px;top:50%;transform:translateY(-50%);
+  width:10px;height:10px;border-radius:50%;
+  background:white;border:2.5px solid var(--primary);
+}
+.sh-tl-item.is-present::before{background:#27ae60;border-color:#1e8449}
+.sh-tl-item.is-absent::before{background:#e74c3c;border-color:#c0392b}
+.sh-tl-item .sh-icon{
+  width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;flex-shrink:0;
+}
+.sh-tl-item.is-present .sh-icon{background:linear-gradient(135deg,#d4edda,#c3e6cb);color:#155724}
+.sh-tl-item.is-absent .sh-icon{background:linear-gradient(135deg,#f8d7da,#f5c6cb);color:#721c24}
+.sh-tl-item .sh-info{flex:1;min-width:0}
+.sh-tl-item .sh-title{font-size:.78rem;font-weight:800;color:var(--dark);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.sh-tl-item .sh-date{font-size:.65rem;color:#888;margin-top:1px}
+.sh-tl-item .sh-status{
+  padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:900;
+  flex-shrink:0;
+}
+.sh-tl-item.is-present .sh-status{background:#27ae60;color:white}
+.sh-tl-item.is-absent .sh-status{background:#e74c3c;color:white}
+.sh-empty{
+  text-align:center;padding:24px 12px;color:#999;
+  font-size:.85rem;background:#fafbfc;border-radius:10px;
+  border:1px dashed #e0e0e0;
+}
+.sh-empty i{display:block;font-size:1.8rem;margin-bottom:8px;color:#ccc}
+
+@media (max-width:520px){
+  .att-ss-row{grid-template-columns:auto 1fr auto;gap:5px}
+  .att-ss-row .ass-mini-bar,.att-ss-row .ass-stat{display:none}
+  .sh-stats{grid-template-columns:repeat(2,1fr)}
+}
 
 /* LIVE ACTIVITY FLOATING PANEL — يظهر على السبورة الرئيسية أثناء البث
    يحل مشكلة: "الطالبة تجيب وما في تواصل" — المعلمة تشوف عدد الإجابات
@@ -5370,6 +5679,7 @@ input,textarea,select{font-family:inherit;color:inherit}
   <button class="fab calc" id="fabCalc"><i class="fas fa-calculator"></i><span class="tooltip">الآلة الحاسبة</span></button>
   <button class="fab save" id="fabSave"><i class="fas fa-save"></i><span class="tooltip">احفظي وصدّري</span></button>
   <button class="fab present" id="fabPresent"><i class="fas fa-play"></i><span class="tooltip">ضعي الاعرضي</span></button>
+  <button class="fab attendance" id="fabManualAtt" onclick="openManualAttendance()" style="background:linear-gradient(135deg,#1a5f7a,#0f3460)"><i class="fas fa-user-check"></i><span class="tooltip">حضور يدوي</span></button>
 </div>
 
 <!-- زر FAB عائم لوضع PDF على السبورة (يظهر تلقائياً عند تحميل ملف PDF) -->
@@ -5397,6 +5707,7 @@ input,textarea,select{font-family:inherit;color:inherit}
     <button class="sp-tab" data-tab="plan"><i class="fas fa-clipboard-list"></i> خطة الحصة</button>
     <button class="sp-tab" data-tab="attendance"><i class="fas fa-user-check"></i> الحضور</button>
     <button class="sp-tab" data-tab="analytics"><i class="fas fa-chart-line"></i> التحليلات</button>
+    <button class="sp-tab" data-tab="groups"><i class="fas fa-trophy"></i> مجموعات التميز</button>
   </div>
   <div class="sp-body">
     <div class="sp-section active" id="sec-students">
@@ -5445,6 +5756,7 @@ input,textarea,select{font-family:inherit;color:inherit}
       <div id="lessonList" style="margin-top:14px"></div>
     </div>
     <div class="sp-section" id="sec-attendance">
+      <button class="att-manual-btn" onclick="openManualAttendance()"><i class="fas fa-clipboard-check"></i> رصد الحضور يدوياً</button>
       <div class="att-live-badge" id="attLiveBadge" style="display:none">
         <span class="att-live-dot"></span>
         <span>جلسة نشطة الآن — يتم تسجيل الحضور تلقائياً</span>
@@ -5458,6 +5770,18 @@ input,textarea,select{font-family:inherit;color:inherit}
       <div class="att-sessions" id="attSessions"></div>
       <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:14px 0 8px"><i class="fas fa-chart-bar"></i> رسم بياني للحضور</h4>
       <div class="att-chart-wrap"><canvas id="attChart"></canvas></div>
+
+      <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:18px 0 8px"><i class="fas fa-user-graduate"></i> سجل الحضور لكل طالبة</h4>
+      <div class="att-students-summary">
+        <div class="att-students-summary-head">
+          <span class="ash-title"><i class="fas fa-list-ol"></i> ترتيب الطالبات حسب نسبة الحضور</span>
+          <select class="ash-filter" id="attStudentFilter" onchange="renderStudentAttendanceSummary()" title="تصفية بالفصل">
+            <option value="">كل الفصول</option>
+          </select>
+        </div>
+        <div id="attStudentsSummary"></div>
+      </div>
+
       <h4 style="font-size:.85rem;font-weight:800;color:var(--dark);margin:14px 0 8px"><i class="fas fa-download"></i> صدّري</h4>
       <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">
         <button class="btn btn-primary btn-sm" onclick="exportAttendanceCSV()"><i class="fas fa-file-csv"></i> CSV</button>
@@ -5484,6 +5808,41 @@ input,textarea,select{font-family:inherit;color:inherit}
         <button class="btn btn-warning btn-sm" onclick="exportXLSX('quizzes')"><i class="fas fa-file-excel"></i> الأسئلة</button>
         <button class="btn btn-purple btn-sm" onclick="exportXLSX('behavior')"><i class="fas fa-file-excel"></i> السلوك</button>
         <button class="btn btn-secondary btn-sm" onclick="exportXLSX('all')"><i class="fas fa-file-archive"></i> الكل</button>
+      </div>
+    </div>
+    <div class="sp-section" id="sec-groups">
+      <div class="dg-section">
+        <div class="dg-header">
+          <div class="dg-title"><i class="fas fa-trophy"></i> لوحة الشرف — مجموعات التميز</div>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;align-items:center">
+          <i class="fas fa-filter" style="color:#b8860b"></i>
+          <select class="form-select" id="spGroupsClassFilter" onchange="renderSidePanelGroups()" style="flex:1"></select>
+          <button class="btn btn-primary btn-sm" onclick="openDistinguishedGroupsPanel()" title="افتحي لوحة التحكم الكاملة" style="background:linear-gradient(135deg,#f39c12,#d4ac0d)"><i class="fas fa-expand"></i></button>
+        </div>
+        <div id="sidePanelGroupsContent"></div>
+        <div style="text-align:center;margin-top:10px">
+          <button class="btn btn-success btn-block" onclick="openCreateGroupModal()" style="background:linear-gradient(135deg,#27ae60,#16a085)"><i class="fas fa-plus"></i> أنشئي مجموعة جديدة</button>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#fff8e1,#ffecb3);border-radius:10px;padding:10px;margin-top:10px;border:1px solid #ffd700">
+        <h4 style="font-size:.8rem;font-weight:900;color:#7d6608;margin-bottom:6px"><i class="fas fa-info-circle"></i> المعايير المعتمدة</h4>
+        <div style="font-size:.7rem;color:#5d4037;line-height:1.8">
+          <div>🌟 <b>تفاعل:</b> +1 دانة</div>
+          <div>💎 <b>تميز:</b> +2 دانة</div>
+          <div>🤝 <b>مشاركة:</b> +1 دانة</div>
+          <div>👥 <b>تعاون:</b> +1 دانة</div>
+          <div>📚 <b>تحضير:</b> +1 دانة</div>
+          <div>🎓 <b>شرح الدرس لغيرهم:</b> +3 دانات</div>
+          <div style="color:#c0392b">⚠️ <b>مخالفة سلوكية:</b> -1 دانة (تخصم تلقائياً)</div>
+        </div>
+        <h4 style="font-size:.8rem;font-weight:900;color:#7d6608;margin:8px 0 6px"><i class="fas fa-medal"></i> شارات الإنجاز</h4>
+        <div style="font-size:.7rem;color:#5d4037;line-height:1.8">
+          <div>🥉 <b>برونزي:</b> 10 دانات</div>
+          <div>🥈 <b>فضي:</b> 25 دانة</div>
+          <div>🥇 <b>ذهبي:</b> 50 دانة</div>
+          <div>💎 <b>ماسي:</b> 100 دانة</div>
+        </div>
       </div>
     </div>
   </div>
@@ -5787,6 +6146,72 @@ input,textarea,select{font-family:inherit;color:inherit}
   </div>
 </div></div></div>
 
+<!-- MODAL: MANUAL ATTENDANCE — رصد الحضور يدوياً للتعليم المباشر
+     - الكل يبدأ "حاضر ✓" افتراضياً
+     - المعلمة تقلب الغائبات فقط لـ "✗"
+     - الحفظ يُنشئ جلسة حضور مستقلة تظهر في التقارير والرسوم البيانية -->
+<div class="modal-overlay" id="modalManualAtt">
+  <div class="modal-box" style="max-width:680px">
+    <div class="modal-head">
+      <h2><i class="fas fa-clipboard-check"></i> رصد الحضور يدوياً</h2>
+      <button class="modal-close" onclick="closeManualAttendance(false)"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group" style="margin-bottom:8px">
+        <label class="form-label"><i class="fas fa-book-open"></i> عنوان الحصة (اختياري)</label>
+        <input type="text" class="form-input" id="mattTitle" placeholder="مثال: حصة الرياضيات — الفصل الأول">
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <div style="flex:1">
+          <label class="form-label" style="font-size:.7rem"><i class="fas fa-chalkboard"></i> الفصل</label>
+          <select class="form-select" id="mattClassFilter" onchange="renderManualAttList()"></select>
+        </div>
+      </div>
+
+      <div class="matt-summary">
+        <div class="ms-box ms-present"><i class="fas fa-user-check"></i><div class="ms-num" id="mattNumPresent">0</div><div class="ms-lbl">حاضرة</div></div>
+        <div class="ms-box ms-absent"><i class="fas fa-user-times"></i><div class="ms-num" id="mattNumAbsent">0</div><div class="ms-lbl">غائبة</div></div>
+        <div class="ms-box ms-total"><i class="fas fa-users"></i><div class="ms-num" id="mattNumTotal">0</div><div class="ms-lbl">الإجمالي</div></div>
+      </div>
+
+      <div class="matt-tools">
+        <button class="matt-tb matt-tb-all-present" onclick="setAllManualAtt('present')" title="حدّدي الجميع كحاضرات"><i class="fas fa-check-double"></i> الكل حاضر</button>
+        <button class="matt-tb" onclick="setAllManualAtt('absent')" title="حدّدي الجميع كغائبات"><i class="fas fa-times"></i> الكل غائب</button>
+        <input type="text" class="matt-tb-search" id="mattSearch" placeholder="🔍 بحث بالاسم..." oninput="renderManualAttList()">
+      </div>
+
+      <div id="mattList" class="matt-list" style="max-height:46vh;overflow-y:auto"></div>
+    </div>
+    <div class="modal-foot" style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeManualAttendance(false)"><i class="fas fa-times"></i> إلغاء</button>
+      <button class="btn btn-success" onclick="saveManualAttendance()"><i class="fas fa-save"></i> احفظي الرصد</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: STUDENT ATTENDANCE HISTORY — سجل الحضور التفصيلي لطالبة محددة -->
+<div class="modal-overlay" id="modalStudentAtt">
+  <div class="modal-box" style="max-width:560px;padding:0;overflow:hidden">
+    <div class="sh-head">
+      <div class="sh-avatar" id="shAvatar">—</div>
+      <div class="sh-info">
+        <div class="sh-name" id="shName">—</div>
+        <div class="sh-meta" id="shMeta">—</div>
+      </div>
+      <button class="sh-close" onclick="closeModal('modalStudentAtt')" aria-label="إغلاق"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="sh-stats" id="shStats">
+      <div class="sh-stat total"><i class="fas fa-list"></i><div class="sh-num" id="shNumTotal">0</div><div class="sh-lbl">إجمالي الجلسات</div></div>
+      <div class="sh-stat present"><i class="fas fa-user-check"></i><div class="sh-num" id="shNumPresent">0</div><div class="sh-lbl">حاضرة</div></div>
+      <div class="sh-stat absent"><i class="fas fa-user-times"></i><div class="sh-num" id="shNumAbsent">0</div><div class="sh-lbl">غائبة</div></div>
+      <div class="sh-stat rate"><i class="fas fa-percentage"></i><div class="sh-num" id="shNumRate">0%</div><div class="sh-lbl">نسبة الحضور</div></div>
+    </div>
+    <div class="sh-body">
+      <div class="sh-timeline" id="shTimeline"></div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: GROUPS -->
 <div class="modal-overlay" id="modalGroups"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-users"></i> توزيع المجموعات</h2><button class="modal-close" onclick="closeModal('modalGroups')"><i class="fas fa-times"></i></button></div><div class="modal-body">
   <div class="form-group"><label class="form-label">عدد المجموعات</label><input type="number" class="form-input" id="groupCount" value="4" min="2" max="10"></div>
@@ -5794,11 +6219,99 @@ input,textarea,select{font-family:inherit;color:inherit}
   <div class="group-display" id="groupDisplay"></div>
 </div></div></div>
 
+<!-- MODAL: DISTINGUISHED GROUPS PANEL - لوحة مجموعات التميز -->
+<div class="modal-overlay" id="modalDistinguishedGroupsPanel"><div class="modal-box modal-box-lg" style="max-width:96vw;width:920px"><div class="modal-head" style="background:linear-gradient(135deg,#f39c12,#d4ac0d);color:white"><h2 style="color:white"><i class="fas fa-trophy"></i> مجموعات التميز <small style="opacity:.95;font-size:.7rem;margin-right:6px;color:#fff8e1">| الأكثر تفاعلاً وتميزاً وتعاوناً</small></h2><div style="display:flex;gap:6px;margin-right:auto"><button class="btn btn-sm" onclick="exportGroupsRanking()" style="background:rgba(255,255,255,.2);color:white"><i class="fas fa-file-export"></i> تصدير</button><button class="btn btn-sm" onclick="resetGroupEvents()" style="background:rgba(231,76,60,.85);color:white" title="تصفير كل دانات المجموعات"><i class="fas fa-redo"></i> تصفير</button></div><button class="modal-close" onclick="closeModal('modalDistinguishedGroupsPanel')" style="color:white"><i class="fas fa-times"></i></button></div><div class="modal-body" style="padding:14px">
+  <div style="background:linear-gradient(135deg,#fff8e1,#ffecb3);border:2px solid #ffd700;border-radius:12px;padding:10px;margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <i class="fas fa-filter" style="color:#b8860b"></i>
+      <strong style="color:#7d6608">الفصل:</strong>
+      <select class="form-select" id="dgPanelClass" onchange="renderDistinguishedGroupsPanel()" style="flex:1;min-width:140px"></select>
+      <button class="btn btn-primary btn-sm" onclick="openCreateGroupModal()" style="background:linear-gradient(135deg,#27ae60,#16a085)"><i class="fas fa-plus"></i> مجموعة جديدة</button>
+    </div>
+  </div>
+  <div id="dgPanelContent"></div>
+</div></div></div>
+
+<!-- MODAL: CREATE / EDIT GROUP - إنشاء أو تعديل مجموعة -->
+<div class="modal-overlay" id="modalCreateGroup"><div class="modal-box" style="max-width:96vw;width:680px"><div class="modal-head" style="background:linear-gradient(135deg,#27ae60,#16a085);color:white"><h2 id="createGroupTitle" style="color:white"><i class="fas fa-plus-circle"></i> إنشاء مجموعة جديدة</h2><button class="modal-close" onclick="closeModal('modalCreateGroup')" style="color:white"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div class="form-group"><label class="form-label">اسم المجموعة <span style="color:var(--danger)">*</span></label><input type="text" class="form-input" id="newGroupName" placeholder="مثال: فراشات المجد، نجمات العلم، أسود المعرفة..."></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="form-group"><label class="form-label">الفصل <span style="color:var(--danger)">*</span></label><select class="form-select" id="newGroupClass"></select></div>
+    <div class="form-group"><label class="form-label">أيقونة المجموعة</label>
+      <select class="form-select" id="newGroupIcon">
+        <option value="🌟">🌟 نجمة</option>
+        <option value="🚀">🚀 صاروخ</option>
+        <option value="⚡">⚡ برق</option>
+        <option value="🔥">🔥 نار</option>
+        <option value="💎">💎 ماسة</option>
+        <option value="🌈">🌍 قوس قزح</option>
+        <option value="🎯">🎯 هدف</option>
+        <option value="🏆">🏆 كأس</option>
+        <option value="💪">💪 قوة</option>
+        <option value="🌸">🌸 زهرة</option>
+        <option value="🦋">🦋 فراشة</option>
+        <option value="👑">👑 تاج</option>
+        <option value="🦁">🦁 أسد</option>
+        <option value="🌺">🌺 وردة</option>
+        <option value="✨">✨ بريق</option>
+        <option value="🎨">🎨 فن</option>
+        <option value="📚">📚 كتب</option>
+        <option value="🧠">🧠 عقل</option>
+        <option value="🦅">🦅 نسر</option>
+        <option value="🌹">🌹 وردة حمراء</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group"><label class="form-label">لون المجموعة</label>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;padding:6px;background:#f8f9fa;border-radius:8px">
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#1a5f7a" checked> <span class="dg-color-dot" style="background:#1a5f7a"></span></label>
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#27ae60"> <span class="dg-color-dot" style="background:#27ae60"></span></label>
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#e74c3c"> <span class="dg-color-dot" style="background:#e74c3c"></span></label>
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#f39c12"> <span class="dg-color-dot" style="background:#f39c12"></span></label>
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#8e44ad"> <span class="dg-color-dot" style="background:#8e44ad"></span></label>
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#16a085"> <span class="dg-color-dot" style="background:#16a085"></span></label>
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#c0392b"> <span class="dg-color-dot" style="background:#c0392b"></span></label>
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#2980b9"> <span class="dg-color-dot" style="background:#2980b9"></span></label>
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#d35400"> <span class="dg-color-dot" style="background:#d35400"></span></label>
+      <label style="cursor:pointer"><input type="radio" name="newGroupColor" value="#34495e"> <span class="dg-color-dot" style="background:#34495e"></span></label>
+    </div>
+  </div>
+  <div class="form-group"><label class="form-label">أعضاء المجموعة <span style="color:var(--danger)">*</span></label><div id="newGroupStudents" style="max-height:200px;overflow-y:auto;background:#f8f9fa;border-radius:8px;padding:8px;border:1px solid #e0e0e0"></div><div style="font-size:.7rem;color:#888;margin-top:4px"><i class="fas fa-info-circle"></i> اختاري طالبات الفصل لإضافتهن للمجموعة</div></div>
+  <div style="display:flex;gap:8px;margin-top:14px">
+    <button class="btn btn-success btn-block" onclick="saveGroup()" style="flex:1"><i class="fas fa-save"></i> حفظ المجموعة</button>
+    <button class="btn btn-secondary btn-block" onclick="closeModal('modalCreateGroup')" style="flex:1"><i class="fas fa-times"></i> إلغاء</button>
+  </div>
+</div></div></div>
+
+<!-- MODAL: AWARD DANATS - منح دانات لمجموعة -->
+<div class="modal-overlay" id="modalAwardDanats"><div class="modal-box" style="max-width:96vw;width:640px"><div class="modal-head" style="background:linear-gradient(135deg,#ffd700,#f39c12);color:#5d4037"><h2 id="awardGroupName" style="color:#5d4037"><i class="fas fa-gem"></i> منح دانات</h2><button class="modal-close" onclick="closeModal('modalAwardDanats')"><i class="fas fa-times"></i></button></div><div class="modal-body">
+  <div id="awardGroupCurrentDanats" style="text-align:center;background:linear-gradient(135deg,#fff3cd,#ffe082);padding:12px;border-radius:10px;margin-bottom:14px;border:2px solid #ffd700"></div>
+  <p style="font-size:.85rem;color:#666;margin-bottom:10px;text-align:center"><i class="fas fa-hand-pointer"></i> اضغطي على المعيار لمنح الدانات مباشرة</p>
+  <div class="dg-criteria-grid">
+    <div class="dg-criterion interaction" onclick="awardGroupDanat('interaction','تفاعل','🌟',1)"><span class="dgc-icon">🌟</span><span class="dgc-label">تفاعل</span><span class="dgc-val">+1 دانة</span></div>
+    <div class="dg-criterion excellence" onclick="awardGroupDanat('excellence','تميز','💎',2)"><span class="dgc-icon">💎</span><span class="dgc-label">تميز</span><span class="dgc-val">+2 دانة</span></div>
+    <div class="dg-criterion participation" onclick="awardGroupDanat('participation','مشاركة','🤝',1)"><span class="dgc-icon">🤝</span><span class="dgc-label">مشاركة</span><span class="dgc-val">+1 دانة</span></div>
+    <div class="dg-criterion cooperation" onclick="awardGroupDanat('cooperation','تعاون','👥',1)"><span class="dgc-icon">👥</span><span class="dgc-label">تعاون</span><span class="dgc-val">+1 دانة</span></div>
+    <div class="dg-criterion preparation" onclick="awardGroupDanat('preparation','تحضير','📚',1)"><span class="dgc-icon">📚</span><span class="dgc-label">تحضير</span><span class="dgc-val">+1 دانة</span></div>
+    <div class="dg-criterion teaching" onclick="awardGroupDanat('teaching','شرح الدرس لغيرهم','🎓',3)"><span class="dgc-icon">🎓</span><span class="dgc-label">شرح الدرس</span><span class="dgc-val">+3 دانات</span></div>
+    <div class="dg-criterion violation" onclick="awardGroupDanat('violation','مخالفة سلوكية','⚠️',-1)"><span class="dgc-icon">⚠️</span><span class="dgc-label">مخالفة</span><span class="dgc-val">-1 دانة</span></div>
+    <div class="dg-criterion manual" onclick="awardGroupDanatManual()"><span class="dgc-icon">✏️</span><span class="dgc-label">قيمة يدوية</span><span class="dgc-val">مخصصة</span></div>
+  </div>
+  <div style="border-top:2px dashed #f4d03f;margin-top:14px;padding-top:14px">
+    <h4 style="font-size:.85rem;font-weight:900;color:#7d6608;margin-bottom:8px"><i class="fas fa-history"></i> آخر أحداث هذه المجموعة</h4>
+    <div id="awardGroupHistory" style="max-height:140px;overflow-y:auto"></div>
+  </div>
+</div></div></div>
+
+<!-- MODAL: GROUP DETAILS - تفاصيل المجموعة والسجل -->
+<div class="modal-overlay" id="modalGroupDetails"><div class="modal-box" style="max-width:96vw;width:640px"><div class="modal-head" id="groupDetailsHead" style="background:linear-gradient(135deg,#3498db,#2980b9);color:white"><h2 id="groupDetailsTitle" style="color:white"><i class="fas fa-users"></i> تفاصيل المجموعة</h2><button class="modal-close" onclick="closeModal('modalGroupDetails')" style="color:white"><i class="fas fa-times"></i></button></div><div class="modal-body" id="groupDetailsBody"></div></div></div>
+
 <!-- MODAL: TOOLS -->
 <div class="modal-overlay" id="modalTools"><div class="modal-box"><div class="modal-head"><h2><i class="fas fa-toolbox"></i> مركز الأدوات</h2><button class="modal-close" onclick="closeModal('modalTools')"><i class="fas fa-times"></i></button></div><div class="modal-body">
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
     <button class="btn btn-primary" onclick="openRandomPicker()" style="flex-direction:column;padding:18px 10px"><i class="fas fa-random" style="font-size:1.5rem"></i><br><span>اختاري عشوائي</span></button>
     <button class="btn btn-success" onclick="openGroupMaker()" style="flex-direction:column;padding:18px 10px"><i class="fas fa-users" style="font-size:1.5rem"></i><br><span>توزيع مجموعات</span></button>
+    <button class="btn" onclick="openDistinguishedGroupsPanel()" style="flex-direction:column;padding:18px 10px;background:linear-gradient(135deg,#f39c12,#d4ac0d);color:white;position:relative;overflow:hidden"><i class="fas fa-trophy" style="font-size:1.5rem"></i><br><span>مجموعات التميز</span><span style="position:absolute;top:4px;left:4px;background:#e74c3c;color:white;font-size:.5rem;padding:2px 6px;border-radius:6px;font-weight:900">دانات 🏆</span></button>
     <button class="btn" onclick="openPDFViewer()" style="flex-direction:column;padding:18px 10px;background:#c0392b;color:white"><i class="fas fa-file-pdf" style="font-size:1.5rem"></i><br><span>عارض PDF</span></button>
     <button class="btn" onclick="openVideoPlayer()" style="flex-direction:column;padding:18px 10px;background:#e67e22;color:white"><i class="fas fa-video" style="font-size:1.5rem"></i><br><span>مشغل فيديو</span></button>
     <button class="btn" onclick="openMapModal()" style="flex-direction:column;padding:18px 10px;background:#16a085;color:white"><i class="fas fa-globe-africa" style="font-size:1.5rem"></i><br><span>خرائط العالم</span></button>
@@ -6405,6 +6918,8 @@ const Data = {
   behavior:[],
   polls:[],
   lessonPlans:[],
+  groups:[],                  // مجموعات التميز — [{id,classId,name,icon,color,studentIds:[],createdAt}]
+  groupEvents:[],             // سجل أحداث المجموعات — [{id,groupId,classId,delta,criteria,note,createdAt}]
   teachers:[],                // [{id,name,classes:[ids],createdAt}]
   activeTeacherId:null,       // المعلمة النشطة حالياً
   attendance:[],              // سجل الحضور والغياب — [{id,sessionId,code,sessionName,classId,startedAt,endedAt,records:[{studentKey,name,status,joinedAt,leftAt,note}}], ...]
@@ -13305,7 +13820,7 @@ function launchFullCelebration(){
 /* STUDENTS */
 function openStudentModal(id=null){State.editingStudentId=id;document.getElementById('studentModalTitle').textContent=id?'عدلي':'إضافة';const clsSel=document.getElementById('stuClass');const allowed=classesForActiveTeacher();clsSel.innerHTML=allowed.map(cid=>`<option value="${cid}">${classLabel(cid)}</option>`).join('');if(id){const s=Data.students.find(x=>x.id===id);if(s){document.getElementById('stuName').value=s.name;document.getElementById('stuEmail').value=s.email||'';document.getElementById('stuSeat').value=s.seat;if(allowed.includes(s.class)){clsSel.value=s.class;}else{clsSel.value=allowed[0]||'';}document.getElementById('stuStatus').value=s.status;}}else{document.getElementById('stuName').value='';document.getElementById('stuEmail').value='';document.getElementById('stuSeat').value='';document.getElementById('stuStatus').value='on';clsSel.value=allowed[0]||'';}openModal('modalStudent');}
 function saveStudent(){const n=document.getElementById('stuName').value.trim();if(!n){toast('error','الاسم مطلوب');return;}const em=(document.getElementById('stuEmail').value||'').trim();if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){toast('error','البريد الإلكتروني غير صالح');return;}const s=document.getElementById('stuSeat').value.trim();const c=document.getElementById('stuClass').value;const st=document.getElementById('stuStatus').value;if(State.editingStudentId){const x=Data.students.find(y=>y.id===State.editingStudentId);if(x)Object.assign(x,{name:n,email:em,seat:s,class:c,status:st});toast('success','تم التحديث');}else{Data.students.push({id:Date.now(),name:n,email:em,seat:s,class:c,status:st,teacherId:Data.activeTeacherId,points:0,createdAt:new Date().toISOString()});toast('success','تم الإضافة');}saveData();renderStudents();updateBehaviorSelect();updateAnalytics();closeModal('modalStudent');}
-async function deleteStudent(id){if(!await customConfirm('هل تريدين احذفي هذه الطالبة وكل بياناتها؟',{title:'احذفي طالبة',danger:true,okText:'احذفي'}))return;Data.students=Data.students.filter(s=>s.id!==id);Data.answers=Data.answers.filter(a=>a.studentId!==id);Data.behavior=Data.behavior.filter(b=>b.studentId!==id);saveData();renderStudents();renderAnswers();renderBehavior();updateAnalytics();toast('warning','تم الاحذفي');}
+async function deleteStudent(id){if(!await customConfirm('هل تريدين احذفي هذه الطالبة وكل بياناتها؟',{title:'احذفي طالبة',danger:true,okText:'احذفي'}))return;Data.students=Data.students.filter(s=>s.id!==id);Data.answers=Data.answers.filter(a=>a.studentId!==id);Data.behavior=Data.behavior.filter(b=>b.studentId!==id);if(Array.isArray(Data.groups)){Data.groups.forEach(g=>{if(g.studentIds)g.studentIds=g.studentIds.filter(x=>x!==id);});}saveData();renderStudents();renderAnswers();renderBehavior();updateAnalytics();toast('warning','تم الاحذفي');}
 function renderStudents(filter=''){const list=document.getElementById('studentsList');const allowed=classesForActiveTeacher();let f=Data.students.filter(s=>allowed.includes(s.class));const classFilterEl=document.getElementById('studentClassFilter');if(classFilterEl&&classFilterEl.value){f=f.filter(s=>s.class===classFilterEl.value);}const q=(filter||'').toLowerCase();if(q){f=f.filter(s=>(s.name||'').toLowerCase().includes(q)||(s.seat||'').toLowerCase().includes(q)||(s.email||'').toLowerCase().includes(q));}if(!f.length){list.innerHTML='<div class="empty-state"><i class="fas fa-user-graduate"></i><p>لا توجد طالبات في فصولكِ</p></div>';}else list.innerHTML=f.map(s=>`<div class="s-card"><div class="s-av">${escapeHtml((s.name||'؟').charAt(0))}</div><div class="s-info"><div class="s-name">${escapeHtml(s.name||'')}</div><div class="s-meta">رقم ${s.seat||'—'} • ${classLabel(s.class)} • ${statusText(s.status)} ${s.points?'⭐ '+s.points:''}</div>${s.email?`<div class="s-email"><i class="fas fa-envelope"></i>${escapeHtml(s.email)}</div>`:''}</div><span class="s-dot ${s.status}"></span><button class="btn btn-secondary btn-sm" onclick="openStudentModal(${s.id})" style="padding:4px 8px"><i class="fas fa-edit"></i></button><button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})" style="padding:4px 8px"><i class="fas fa-trash"></i></button></div>`).join('');document.getElementById('studentsBadge').textContent=f.length;}
 function statusText(s){return {on:'حاضرة',away:'متغيبة',off:'غائبة'}[s]||'';}
 
@@ -13608,6 +14123,531 @@ function resetWheel(){document.getElementById('wheel').style.transition='none';d
 /* GROUPS */
 function openGroupMaker(){if(!Data.students.length){toast('error','أضيفي طالبات');return;}openModal('modalGroups');makeGroups();}
 function makeGroups(){const n=parseInt(document.getElementById('groupCount').value)||4;if(!Data.students.length)return;const sh=[...Data.students].sort(()=>Math.random()-.5);const groups=Array.from({length:n},()=>[]);sh.forEach((s,i)=>groups[i%n].push(s));const colors=['#1a5f7a','#27ae60','#e74c3c','#f39c12','#8e44ad','#16a085','#c0392b','#2980b9','#d35400','#34495e'];const icons=['🌟','🚀','⚡','🔥','💎','🌈','🎯','🏆','💪','🌸'];document.getElementById('groupDisplay').innerHTML=groups.map((g,i)=>`<div class="group-card" style="background:linear-gradient(135deg,${colors[i%colors.length]},${colors[(i+1)%colors.length]})"><div class="g-name">${icons[i%icons.length]} المجموعة ${i+1} (${g.length})</div><div class="g-members">${g.map(s=>`<span class="g-member">${escapeHtml(s.name)}</span>`).join('')}</div></div>`).join('');toast('success','تم التوزيع');}
+
+/* ============================================================
+   DISTINGUISHED GROUPS - مجموعات التميز (نظام الدانات)
+   ============================================================ */
+const DG_CRITERIA = {
+  interaction:{label:'تفاعل',icon:'🌟',delta:1,color:'#27ae60'},
+  excellence:{label:'تميز',icon:'💎',delta:2,color:'#b8860d'},
+  participation:{label:'مشاركة',icon:'🤝',delta:1,color:'#3498db'},
+  cooperation:{label:'تعاون',icon:'👥',delta:1,color:'#9b59b6'},
+  preparation:{label:'تحضير',icon:'📚',delta:1,color:'#e67e22'},
+  teaching:{label:'شرح الدرس لغيرهم',icon:'🎓',delta:3,color:'#d4ac0d'},
+  violation:{label:'مخالفة سلوكية',icon:'⚠️',delta:-1,color:'#e74c3c'}
+};
+const DG_BADGES = [
+  {threshold:100,key:'diamond',label:'ماسي',icon:'💎',cls:'diamond'},
+  {threshold:50,key:'gold',label:'ذهبي',icon:'🥇',cls:'gold'},
+  {threshold:25,key:'silver',label:'فضي',icon:'🥈',cls:'silver'},
+  {threshold:10,key:'bronze',label:'برونزي',icon:'🥉',cls:'bronze'}
+];
+let _dgEditingGroupId = null;
+let _dgAwardingGroupId = null;
+
+function ensureGroupArrays(){
+  if(!Array.isArray(Data.groups)) Data.groups = [];
+  if(!Array.isArray(Data.groupEvents)) Data.groupEvents = [];
+}
+
+function getGroupDanats(groupId){
+  return Data.groupEvents.filter(e=>e.groupId===groupId).reduce((a,b)=>a+(b.delta||0),0);
+}
+
+function getGroupsByClass(classId){
+  ensureGroupArrays();
+  return Data.groups.filter(g=>g.classId===classId);
+}
+
+function getSortedGroups(classId){
+  const groups = getGroupsByClass(classId);
+  return groups.map(g=>({...g, danats:getGroupDanats(g.id), members:(g.studentIds||[]).length}))
+    .sort((a,b)=>b.danats-a.danats);
+}
+
+function getBadgesForScore(d){
+  return DG_BADGES.filter(b=>d>=b.threshold);
+}
+
+function getWinnerGroup(classId){
+  const sorted = getSortedGroups(classId);
+  if(!sorted.length || sorted[0].danats<=0) return null;
+  return sorted[0];
+}
+
+function openDistinguishedGroupsPanel(){
+  ensureGroupArrays();
+  const allowed = classesForActiveTeacher();
+  const sel = document.getElementById('dgPanelClass');
+  sel.innerHTML = allowed.map(cid=>`<option value="${cid}">${classLabel(cid)}</option>`).join('');
+  const spSel = document.getElementById('spGroupsClassFilter');
+  if(spSel){
+    spSel.innerHTML = allowed.map(cid=>`<option value="${cid}">${classLabel(cid)}</option>`).join('');
+  }
+  openModal('modalDistinguishedGroupsPanel');
+  renderDistinguishedGroupsPanel();
+  renderSidePanelGroups();
+}
+
+function renderDistinguishedGroupsPanel(){
+  const classId = document.getElementById('dgPanelClass').value;
+  const host = document.getElementById('dgPanelContent');
+  if(!classId){host.innerHTML='<div class="empty-state"><i class="fas fa-school"></i><p>اختاري فصلاً لعرض مجموعاته</p></div>';return;}
+  const sorted = getSortedGroups(classId);
+  const winner = getWinnerGroup(classId);
+  const totalDanats = sorted.reduce((a,b)=>a+b.danats,0);
+  const stats = {
+    groups: sorted.length,
+    students: sorted.reduce((a,b)=>a+b.members,0),
+    total: totalDanats,
+    positives: Data.groupEvents.filter(e=>{const g=Data.groups.find(x=>x.id===e.groupId);return g&&g.classId===classId&&e.delta>0;}).length,
+    negatives: Data.groupEvents.filter(e=>{const g=Data.groups.find(x=>x.id===e.groupId);return g&&g.classId===classId&&e.delta<0;}).length
+  };
+
+  let html = '';
+  html += `<div class="dg-stat-grid">
+    <div class="dg-stat-cell"><div class="dgs-num">${stats.groups}</div><div class="dgs-lbl">مجموعات</div></div>
+    <div class="dg-stat-cell"><div class="dgs-num">${stats.students}</div><div class="dgs-lbl">طالبة</div></div>
+    <div class="dg-stat-cell"><div class="dgs-num">${stats.total}</div><div class="dgs-lbl">إجمالي الدانات</div></div>
+  </div>`;
+
+  if(!sorted.length){
+    html += `<div class="dg-empty-podium"><i class="fas fa-trophy" style="font-size:2.5rem;opacity:.4;display:block;margin-bottom:10px"></i><h3 style="font-weight:900">لا توجد مجموعات بعد</h3><p style="opacity:.8">اضغطي على "مجموعة جديدة" لبدء رحلة التميز</p></div>`;
+    host.innerHTML = html;
+    return;
+  }
+
+  const podium = sorted.filter(g=>g.danats>0).slice(0,3);
+  if(podium.length){
+    html += `<div class="dg-podium">`;
+    const order = [];
+    if(podium[1]) order.push({...podium[1], place:2, cls:'second', medal:'🥈'});
+    if(podium[0]) order.push({...podium[0], place:1, cls:'first', medal:'🥇'});
+    if(podium[2]) order.push({...podium[2], place:3, cls:'third', medal:'🥉'});
+    order.forEach(p=>{
+      const badges = getBadgesForScore(p.danats);
+      const badgeRow = badges.length ? `<div style="font-size:.85rem;margin-top:3px">${badges.map(b=>`<span title="${b.label}">${b.icon}</span>`).join('')}</div>` : '';
+      const isWinner = p.place===1;
+      html += `<div class="dg-podium-card ${p.cls}">
+        ${isWinner?'<div class="dg-podium-crown">👑</div>':''}
+        <div class="dg-podium-rank">${p.medal}</div>
+        <div class="dg-podium-icon">${p.icon||'⭐'}</div>
+        <div class="dg-podium-name">${escapeHtml(p.name)}</div>
+        ${badgeRow}
+        <div class="dg-podium-score">💎 ${p.danats} دانة</div>
+      </div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div class="dg-empty-podium"><i class="fas fa-info-circle"></i> لم تحصل أي مجموعة على دانات بعد. ابدئي بمنح الدانات من زر "دانات" على أي مجموعة.</div>`;
+  }
+
+  html += `<h4 style="font-size:.85rem;font-weight:900;color:#7d6608;margin:12px 0 8px"><i class="fas fa-list-ol"></i> ترتيب جميع المجموعات</h4>`;
+  html += sorted.map((g,i)=>{
+    const rankCls = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const badges = getBadgesForScore(g.danats);
+    const isWinner = winner && winner.id===g.id;
+    const cardCls = isWinner?'dg-group-card dg-group-card-winner':'dg-group-card';
+    return `<div class="${cardCls}" style="border-right-color:${g.color||'#3498db'}">
+      ${isWinner?'<div class="dg-winner-ribbon">🏆 الفائزة</div>':''}
+      <div class="dg-group-rank ${rankCls}">${i+1}</div>
+      <div class="dg-group-info">
+        <div class="dg-group-name"><i style="color:${g.color||'#3498db'}">${g.icon||'⭐'}</i> ${escapeHtml(g.name)}</div>
+        <div class="dg-group-meta">
+          <span><i class="fas fa-user-graduate"></i> ${g.members} طالبة</span>
+          <span><i class="fas fa-${g.danats>0?'arrow-up':'grip-lines'}"></i> ${classLabel(g.classId)}</span>
+        </div>
+        ${badges.length?`<div class="dg-badge-row">${badges.map(b=>`<span class="dg-badge-icon ${b.cls}">${b.icon} ${b.label}</span>`).join('')}</div>`:''}
+      </div>
+      <div class="dg-danat"><i class="fas fa-gem"></i> ${g.danats}</div>
+      <div class="dg-group-actions" style="flex-direction:column">
+        <button class="btn btn-warning btn-sm" onclick="openAwardDanatsModal(${g.id})" title="منح دانات"><i class="fas fa-gem"></i></button>
+        <button class="btn btn-info btn-sm" onclick="openGroupDetails(${g.id})" title="تفاصيل"><i class="fas fa-eye"></i></button>
+        <button class="btn btn-secondary btn-sm" onclick="editGroup(${g.id})" title="تعديل"><i class="fas fa-edit"></i></button>
+        <button class="btn btn-danger btn-sm" onclick="deleteGroup(${g.id})" title="حذف"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`;
+  }).join('');
+
+  const events = Data.groupEvents
+    .filter(e=>{const g=Data.groups.find(x=>x.id===e.groupId);return g&&g.classId===classId;})
+    .sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))
+    .slice(0,10);
+  if(events.length){
+    html += `<h4 style="font-size:.85rem;font-weight:900;color:#7d6608;margin:14px 0 8px"><i class="fas fa-history"></i> آخر أحداث هذا الفصل</h4>`;
+    html += events.map(e=>{
+      const g = Data.groups.find(x=>x.id===e.groupId);
+      const cr = DG_CRITERIA[e.criteria];
+      return `<div class="dg-history-item ${e.delta>0?'pos':'neg'}">
+        <span><b style="color:${g?g.color:'#888'}">${g?g.icon+' '+escapeHtml(g.name):'مجموعة محذوفة'}</b> — ${cr?cr.icon+' '+cr.label:escapeHtml(e.criteria||'')}</span>
+        <span style="font-weight:900">${e.delta>0?'+':''}${e.delta} ${e.delta>0?'💎':'⚠️'}</span>
+      </div>`;
+    }).join('');
+  }
+
+  host.innerHTML = html;
+}
+
+function renderSidePanelGroups(){
+  const spSel = document.getElementById('spGroupsClassFilter');
+  if(!spSel) return;
+  const classId = spSel.value;
+  const host = document.getElementById('sidePanelGroupsContent');
+  if(!classId){host.innerHTML='';return;}
+  const sorted = getSortedGroups(classId);
+  const winner = getWinnerGroup(classId);
+  if(!sorted.length){
+    host.innerHTML = `<div class="empty-state"><i class="fas fa-trophy"></i><p>لا توجد مجموعات في هذا الفصل</p><p style="font-size:.75rem;opacity:.7">اضغطي "أنشئي مجموعة جديدة" للبدء</p></div>`;
+    return;
+  }
+  let html = '';
+  if(winner){
+    html += `<div style="background:linear-gradient(135deg,#fff8dc,#ffeaa7);border:2px solid #ffd700;border-radius:10px;padding:8px;text-align:center;margin-bottom:8px">
+      <div style="font-size:.7rem;color:#b8860b;font-weight:900">🏆 المجموعة الفائزة</div>
+      <div style="font-size:1.3rem;font-weight:900;color:#5d4037;margin:3px 0">${winner.icon||'⭐'} ${escapeHtml(winner.name)}</div>
+      <div style="background:linear-gradient(135deg,#fff3cd,#ffe082);padding:3px 12px;border-radius:15px;display:inline-block;font-weight:900;color:#7d6608">💎 ${winner.danats} دانة</div>
+    </div>`;
+  }
+  html += sorted.map((g,i)=>{
+    const rankCls = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const isWinner = winner && winner.id===g.id;
+    const cardCls = isWinner?'dg-group-card dg-group-card-winner':'dg-group-card';
+    return `<div class="${cardCls}" style="border-right-color:${g.color||'#3498db'};padding:8px">
+      ${isWinner?'<div class="dg-winner-ribbon">🏆</div>':''}
+      <div class="dg-group-rank ${rankCls}" style="width:30px;height:30px;font-size:.8rem">${i+1}</div>
+      <div class="dg-group-info">
+        <div class="dg-group-name" style="font-size:.8rem"><i style="color:${g.color||'#3498db'}">${g.icon||'⭐'}</i> ${escapeHtml(g.name)}</div>
+        <div class="dg-group-meta"><span>${g.members} طالبة</span></div>
+      </div>
+      <div class="dg-danat" style="font-size:1rem;padding:4px 8px"><i class="fas fa-gem"></i> ${g.danats}</div>
+      <button class="btn btn-warning btn-sm" onclick="openAwardDanatsModal(${g.id})" title="منح دانات" style="padding:3px 6px"><i class="fas fa-gem"></i></button>
+    </div>`;
+  }).join('');
+  host.innerHTML = html;
+}
+
+function populateGroupClassSelectors(){
+  const allowed = classesForActiveTeacher();
+  const sel1 = document.getElementById('newGroupClass');
+  const sel2 = document.getElementById('dgPanelClass');
+  const sel3 = document.getElementById('spGroupsClassFilter');
+  const opt = allowed.map(cid=>`<option value="${cid}">${classLabel(cid)}</option>`).join('');
+  if(sel1){sel1.innerHTML=opt;}
+  if(sel2){sel2.innerHTML=opt;}
+  if(sel3){sel3.innerHTML=opt;}
+}
+
+function openCreateGroupModal(){
+  ensureGroupArrays();
+  _dgEditingGroupId = null;
+  document.getElementById('createGroupTitle').innerHTML = '<i class="fas fa-plus-circle"></i> إنشاء مجموعة جديدة';
+  document.getElementById('newGroupName').value = '';
+  populateGroupClassSelectors();
+  buildGroupStudentsPicker('');
+  openModal('modalCreateGroup');
+}
+
+function editGroup(id){
+  const g = Data.groups.find(x=>x.id===id);
+  if(!g) return;
+  _dgEditingGroupId = id;
+  document.getElementById('createGroupTitle').innerHTML = '<i class="fas fa-edit"></i> تعديل المجموعة';
+  document.getElementById('newGroupName').value = g.name||'';
+  populateGroupClassSelectors();
+  document.getElementById('newGroupClass').value = g.classId;
+  document.getElementById('newGroupIcon').value = g.icon||'🌟';
+  const radios = document.querySelectorAll('input[name="newGroupColor"]');
+  radios.forEach(r=>{r.checked = (r.value===(g.color||'#1a5f7a'));});
+  buildGroupStudentsPicker(g.classId, g.studentIds||[]);
+  openModal('modalCreateGroup');
+}
+
+function buildGroupStudentsPicker(classId, selectedIds){
+  const selClass = document.getElementById('newGroupClass');
+  if(!classId && selClass) classId = selClass.value;
+  const host = document.getElementById('newGroupStudents');
+  const allowed = classesForActiveTeacher();
+  const studs = Data.students.filter(s=>allowed.includes(s.class) && (!classId || s.class===classId));
+  if(!studs.length){host.innerHTML='<div style="text-align:center;color:#888;padding:14px;font-size:.8rem">لا توجد طالبات في هذا الفصل</div>';return;}
+  host.innerHTML = studs.map(s=>{
+    const checked = (selectedIds||[]).includes(s.id);
+    return `<label style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;transition:.2s" onmouseover="this.style.background='#e8f4f8'" onmouseout="this.style.background='transparent'">
+      <input type="checkbox" value="${s.id}" ${checked?'checked':''} onchange="updateGroupStudentCount()" style="width:16px;height:16px;cursor:pointer">
+      <span style="flex:1;font-size:.85rem;font-weight:700">${escapeHtml(s.name)}</span>
+      <span style="font-size:.65rem;color:#888">${s.seat?'رقم '+escapeHtml(s.seat):''}</span>
+    </label>`;
+  }).join('');
+  updateGroupStudentCount();
+}
+
+function updateGroupStudentCount(){
+  const cbs = document.querySelectorAll('#newGroupStudents input[type=checkbox]');
+  const checked = Array.from(cbs).filter(c=>c.checked).length;
+  let lbl = document.getElementById('_groupCountLbl');
+  if(lbl){lbl.textContent = `(${checked} طالبة محددة)`;return;}
+  const lblEl = document.querySelector('#modalCreateGroup .form-group:last-of-type .form-label');
+  if(lblEl){
+    const span = document.createElement('span');
+    span.id = '_groupCountLbl';
+    span.style.cssText = 'color:#b8860b;font-weight:900;margin-right:6px';
+    span.textContent = `(${checked} طالبة محددة)`;
+    lblEl.appendChild(span);
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{
+    const sel = document.getElementById('newGroupClass');
+    if(sel) sel.addEventListener('change',()=>buildGroupStudentsPicker(sel.value, []));
+  }, 200);
+});
+
+function saveGroup(){
+  const name = document.getElementById('newGroupName').value.trim();
+  const classId = document.getElementById('newGroupClass').value;
+  const icon = document.getElementById('newGroupIcon').value;
+  const colorRadio = document.querySelector('input[name="newGroupColor"]:checked');
+  const color = colorRadio ? colorRadio.value : '#1a5f7a';
+  const studentIds = Array.from(document.querySelectorAll('#newGroupStudents input[type=checkbox]:checked')).map(c=>parseInt(c.value));
+  if(!name){toast('error','أدخلي اسم المجموعة');return;}
+  if(!classId){toast('error','اختاري الفصل');return;}
+  if(!studentIds.length){toast('error','اختاري طالبة واحدة على الأقل');return;}
+  ensureGroupArrays();
+  if(_dgEditingGroupId){
+    const g = Data.groups.find(x=>x.id===_dgEditingGroupId);
+    if(g){Object.assign(g,{name,classId,icon,color,studentIds});}
+    toast('success','تم تعديل المجموعة');
+  }else{
+    Data.groups.push({id:Date.now(),classId,name,icon,color,studentIds,createdAt:new Date().toISOString()});
+    toast('success','🎉 تم إنشاء المجموعة');
+    dgConfetti();
+  }
+  saveData();
+  _dgEditingGroupId = null;
+  closeModal('modalCreateGroup');
+  renderDistinguishedGroupsPanel();
+  renderSidePanelGroups();
+}
+
+async function deleteGroup(id){
+  const g = Data.groups.find(x=>x.id===id);
+  if(!g) return;
+  if(!await customConfirm(`هل تريدين احذفي "${g.name}" وكل داناتها؟`,{title:'احذفي مجموعة',danger:true,okText:'احذفي'}))return;
+  Data.groups = Data.groups.filter(x=>x.id!==id);
+  Data.groupEvents = Data.groupEvents.filter(e=>e.groupId!==id);
+  saveData();
+  renderDistinguishedGroupsPanel();
+  renderSidePanelGroups();
+  toast('warning','تم الحذف');
+}
+
+function openAwardDanatsModal(groupId){
+  const g = Data.groups.find(x=>x.id===groupId);
+  if(!g) return;
+  _dgAwardingGroupId = groupId;
+  document.getElementById('awardGroupName').innerHTML = `<i class="fas fa-gem"></i> منح دانات لمجموعة: <span style="color:${g.color||'#1a5f7a'}">${g.icon||'⭐'} ${escapeHtml(g.name)}</span>`;
+  updateAwardGroupHeader();
+  renderAwardGroupHistory();
+  openModal('modalAwardDanats');
+}
+
+function updateAwardGroupHeader(){
+  if(!_dgAwardingGroupId) return;
+  const danats = getGroupDanats(_dgAwardingGroupId);
+  const badges = getBadgesForScore(danats);
+  const g = Data.groups.find(x=>x.id===_dgAwardingGroupId);
+  const html = `
+    <div style="font-weight:900;color:#7d6608;font-size:.8rem">الدانات الحالية</div>
+    <div style="font-size:2.4rem;font-weight:900;color:#b8860b;line-height:1;margin:4px 0;text-shadow:0 2px 0 rgba(255,215,0,.4)">💎 ${danats}</div>
+    ${badges.length?`<div style="font-size:.85rem;color:#7d6608;font-weight:800;margin-top:4px">${badges.map(b=>`<span style="margin:0 3px">${b.icon} ${b.label}</span>`).join('')}</div>`:''}
+  `;
+  document.getElementById('awardGroupCurrentDanats').innerHTML = html;
+}
+
+function renderAwardGroupHistory(){
+  if(!_dgAwardingGroupId) return;
+  const events = Data.groupEvents.filter(e=>e.groupId===_dgAwardingGroupId).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,15);
+  const host = document.getElementById('awardGroupHistory');
+  if(!events.length){host.innerHTML='<div style="text-align:center;color:#888;font-size:.75rem;padding:8px">لا توجد أحداث بعد</div>';return;}
+  host.innerHTML = events.map(e=>{
+    const cr = DG_CRITERIA[e.criteria];
+    return `<div class="dg-history-item ${e.delta>0?'pos':'neg'}">
+      <span>${cr?cr.icon+' '+cr.label:escapeHtml(e.criteria||'حدث يدوي')} ${e.note?'— '+escapeHtml(e.note):''}</span>
+      <span style="font-weight:900">${e.delta>0?'+':''}${e.delta} ${e.delta>0?'💎':'⚠️'}</span>
+    </div>`;
+  }).join('');
+}
+
+function awardGroupDanat(criteriaKey, label, icon, delta){
+  if(!_dgAwardingGroupId){toast('error','اختاري مجموعة أولاً');return;}
+  ensureGroupArrays();
+  const g = Data.groups.find(x=>x.id===_dgAwardingGroupId);
+  if(!g) return;
+  Data.groupEvents.push({id:Date.now(),groupId:_dgAwardingGroupId,classId:g.classId,criteria:criteriaKey,delta,note:'',createdAt:new Date().toISOString()});
+  saveData();
+  updateAwardGroupHeader();
+  renderAwardGroupHistory();
+  renderDistinguishedGroupsPanel();
+  renderSidePanelGroups();
+  if(delta>0){
+    toast('success',`✨ ${label} +${delta} ${delta===1?'دانة':'دانات'} لـ ${g.name}`);
+    if(criteriaKey==='teaching') dgConfetti();
+  } else {
+    toast('warning',`⚠️ ${label} -1 دانة من ${g.name}`);
+  }
+}
+
+async function awardGroupDanatManual(){
+  if(!_dgAwardingGroupId){toast('error','اختاري مجموعة أولاً');return;}
+  const valRaw = prompt('أدخلي عدد الدانات (رقم موجب للإضافة أو سالب للخصم، من -10 إلى +10):','1');
+  if(valRaw===null) return;
+  const val = parseInt(valRaw);
+  if(isNaN(val) || val<-10 || val>10){toast('error','قيمة غير صالحة');return;}
+  const note = prompt('ملاحظة (اختياري):','')||'';
+  ensureGroupArrays();
+  const g = Data.groups.find(x=>x.id===_dgAwardingGroupId);
+  if(!g) return;
+  Data.groupEvents.push({id:Date.now(),groupId:_dgAwardingGroupId,classId:g.classId,criteria:'manual',delta:val,note,createdAt:new Date().toISOString()});
+  saveData();
+  updateAwardGroupHeader();
+  renderAwardGroupHistory();
+  renderDistinguishedGroupsPanel();
+  renderSidePanelGroups();
+  toast(val>0?'success':'warning',`${val>0?'+':''}${val} دانة لـ ${g.name}`);
+}
+
+function openGroupDetails(id){
+  const g = Data.groups.find(x=>x.id===id);
+  if(!g) return;
+  const danats = getGroupDanats(id);
+  const badges = getBadgesForScore(danats);
+  const events = Data.groupEvents.filter(e=>e.groupId===id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  const studs = Data.students.filter(s=>(g.studentIds||[]).includes(s.id));
+  const head = document.getElementById('groupDetailsHead');
+  head.style.background = `linear-gradient(135deg,${g.color||'#3498db'},${g.color||'#2980b9'})`;
+  document.getElementById('groupDetailsTitle').innerHTML = `${g.icon||'⭐'} ${escapeHtml(g.name)} <span style="font-size:.8rem;opacity:.9;font-weight:700">(${classLabel(g.classId)})</span>`;
+  let html = `<div style="background:linear-gradient(135deg,#fff3cd,#ffe082);padding:14px;border-radius:12px;text-align:center;margin-bottom:12px;border:2px solid #ffd700">
+    <div style="font-size:2.4rem;font-weight:900;color:#b8860b;text-shadow:0 2px 0 rgba(255,215,0,.4)">💎 ${danats}</div>
+    <div style="font-size:.8rem;color:#7d6608;font-weight:900">إجمالي الدانات</div>
+    ${badges.length?`<div style="margin-top:6px;font-size:.85rem;color:#7d6608;font-weight:900">${badges.map(b=>`<span style="margin:0 3px">${b.icon} ${b.label}</span>`).join('')}</div>`:''}
+  </div>`;
+  html += `<h4 style="font-size:.85rem;font-weight:900;color:#1a5f7a;margin-bottom:6px"><i class="fas fa-user-graduate"></i> الأعضاء (${studs.length})</h4>`;
+  if(studs.length){
+    html += `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">${studs.map(s=>`<span style="background:${g.color||'#3498db'};color:white;padding:3px 10px;border-radius:15px;font-size:.75rem;font-weight:700">${escapeHtml(s.name)}</span>`).join('')}</div>`;
+  } else {
+    html += '<div style="color:#888;font-size:.8rem;margin-bottom:10px">لا توجد أعضاء</div>';
+  }
+  const byCrit = {};
+  events.forEach(e=>{byCrit[e.criteria||'manual']=(byCrit[e.criteria||'manual']||0)+e.delta;});
+  const critKeys = Object.keys(byCrit);
+  if(critKeys.length){
+    html += `<h4 style="font-size:.85rem;font-weight:900;color:#1a5f7a;margin-bottom:6px"><i class="fas fa-chart-pie"></i> تفصيل الدانات</h4>`;
+    html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px">`;
+    Object.entries(byCrit).forEach(([k,v])=>{
+      const cr = DG_CRITERIA[k];
+      html += `<div style="background:white;padding:6px 10px;border-radius:8px;border-right:3px solid ${cr?cr.color:'#888'};font-size:.75rem"><b>${cr?cr.icon+' '+cr.label:k}</b><div style="font-weight:900;color:${v>=0?'#27ae60':'#e74c3c'};font-size:1.05rem">${v>0?'+':''}${v}</div></div>`;
+    });
+    html += `</div>`;
+  }
+  if(events.length){
+    html += `<h4 style="font-size:.85rem;font-weight:900;color:#1a5f7a;margin-bottom:6px"><i class="fas fa-history"></i> السجل الكامل (${events.length})</h4>`;
+    html += `<div style="max-height:240px;overflow-y:auto">${events.map(e=>{
+      const cr = DG_CRITERIA[e.criteria];
+      return `<div class="dg-history-item ${e.delta>0?'pos':'neg'}">
+        <span>${cr?cr.icon+' '+cr.label:escapeHtml(e.criteria||'يدوي')} ${e.note?'— '+escapeHtml(e.note):''} <span style="font-size:.65rem;opacity:.7">${formatTime(e.createdAt)}</span></span>
+        <span style="font-weight:900">${e.delta>0?'+':''}${e.delta} ${e.delta>0?'💎':'⚠️'}</span>
+      </div>`;
+    }).join('')}</div>`;
+  }
+  document.getElementById('groupDetailsBody').innerHTML = html;
+  openModal('modalGroupDetails');
+}
+
+async function resetGroupEvents(){
+  if(!await customConfirm('هل تريدين تصفير كل دانات جميع المجموعات؟ لا يمكن التراجع.',{title:'تصفير الدانات',danger:true,okText:'نعم، صفرّي'}))return;
+  Data.groupEvents = [];
+  saveData();
+  renderDistinguishedGroupsPanel();
+  renderSidePanelGroups();
+  toast('warning','تم تصفير جميع الدانات');
+}
+
+function exportGroupsRanking(){
+  const classId = document.getElementById('dgPanelClass').value;
+  if(!classId){toast('error','اختاري فصلاً أولاً');return;}
+  const sorted = getSortedGroups(classId);
+  if(!sorted.length){toast('error','لا توجد مجموعات لتصديرها');return;}
+  let csv = '\uFEFF';
+  csv += 'الترتيب,اسم المجموعة,الفصل,الأيقونة,عدد الطالبات,إجمالي الدانات,الشارات\n';
+  sorted.forEach((g,i)=>{
+    const badges = getBadgesForScore(g.danats).map(b=>b.label).join(' | ');
+    csv += `${i+1},"${g.name}","${classLabel(g.classId)}","${g.icon||''}",${g.members},${g.danats},"${badges}"\n`;
+  });
+  csv += '\n\n--- سجل الأحداث ---\n';
+  csv += 'المجموعة,المعيار,الدانات,الملاحظة,التاريخ\n';
+  const events = Data.groupEvents.filter(e=>{const g=Data.groups.find(x=>x.id===e.groupId);return g&&g.classId===classId;}).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  events.forEach(e=>{
+    const g = Data.groups.find(x=>x.id===e.groupId);
+    const cr = DG_CRITERIA[e.criteria];
+    csv += `"${g?g.name:'محذوفة'}","${cr?cr.label:e.criteria}",${e.delta},"${e.note||''}","${new Date(e.createdAt).toLocaleString('ar-SA')}"\n`;
+  });
+  const blob = new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `ترتيب-مجموعات-${classLabel(classId)}-${Date.now()}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('success','تم تصدير الترتيب');
+}
+
+function dgConfetti(){
+  const emojis = ['💎','⭐','🌟','✨','🎉','🎊','🥇','👑','🏆','💫'];
+  for(let i=0;i<24;i++){
+    setTimeout(()=>{
+      const el = document.createElement('div');
+      el.className = 'dg-confetti';
+      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.left = Math.random()*100+'vw';
+      el.style.animationDuration = (2+Math.random()*2)+'s';
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), 4000);
+    }, i*60);
+  }
+}
+
+const _origAddBehavior = addBehavior;
+addBehavior = function(pts,cat,label){
+  const sid = parseInt(document.getElementById('behaviorStudent').value);
+  const isNeg = pts<0 && cat==='السلوك والانضباط';
+  _origAddBehavior(pts,cat,label);
+  if(isNeg && sid){
+    ensureGroupArrays();
+    const stud = Data.students.find(x=>x.id===sid);
+    if(stud){
+      const groups = Data.groups.filter(g=>(g.studentIds||[]).includes(sid) && g.classId===stud.class);
+      groups.forEach(g=>{
+        Data.groupEvents.push({id:Date.now()+Math.random(),groupId:g.id,classId:g.classId,criteria:'violation',delta:-1,note:'مخالفة سلوكية: '+label+' ('+stud.name+')',createdAt:new Date().toISOString()});
+      });
+      if(groups.length) saveData();
+    }
+  }
+};
+
+(function(){
+  ensureGroupArrays();
+  setTimeout(()=>{
+    const tab = document.querySelector('.sp-tab[data-tab="groups"]');
+    if(tab){
+      tab.addEventListener('click',()=>{
+        setTimeout(()=>{
+          populateGroupClassSelectors();
+          renderSidePanelGroups();
+        }, 50);
+      });
+    }
+  }, 300);
+})();
 
 /* ============================================================
    NTFY.SH CROSS-DEVICE MESSAGING (FREE, NO REGISTRATION)
@@ -21031,7 +22071,7 @@ function updateAnalytics(){document.getElementById('anStudents').textContent=Dat
 /* SIDE PANEL */
 function openSidePanel(tab='students'){document.getElementById('sidePanel').classList.add('active');switchTab(tab);}
 function closeSidePanel(){document.getElementById('sidePanel').classList.remove('active');}
-function switchTab(tab){document.querySelectorAll('.sp-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.querySelectorAll('.sp-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+tab));const titles={students:'الطالبات',answers:'الإجابات',quiz:'الاختبارات',behavior:'السلوك والمكافآت',words:'جدار المفردات',plan:'خطة الحصة',attendance:'الحضور والغياب',analytics:'التحليلات'};const icons={students:'user-graduate',answers:'comments',quiz:'question-circle',behavior:'star',words:'font',plan:'clipboard-list',attendance:'user-check',analytics:'chart-line'};document.getElementById('spTitle').innerHTML=`<i class="fas fa-${icons[tab]}"></i> ${titles[tab]}`;if(tab==='analytics')updateAnalytics();if(tab==='attendance')renderAttendance();}
+function switchTab(tab){document.querySelectorAll('.sp-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.querySelectorAll('.sp-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+tab));const titles={students:'الطالبات',answers:'الإجابات',quiz:'الاختبارات',behavior:'السلوك والمكافآت',words:'جدار المفردات',plan:'خطة الحصة',attendance:'الحضور والغياب',analytics:'التحليلات',groups:'مجموعات التميز'};const icons={students:'user-graduate',answers:'comments',quiz:'question-circle',behavior:'star',words:'font',plan:'clipboard-list',attendance:'user-check',analytics:'chart-line',groups:'trophy'};document.getElementById('spTitle').innerHTML=`<i class="fas fa-${icons[tab]}"></i> ${titles[tab]}`;if(tab==='analytics')updateAnalytics();if(tab==='attendance')renderAttendance();if(tab==='groups'){populateGroupClassSelectors();renderSidePanelGroups();}}
 
 /* MODAL */
 function openModal(id){
@@ -21824,7 +22864,7 @@ function renderAttendance(){
   sessions = sessions.slice(0, 20);
 
   if(!sessions.length){
-    listEl.innerHTML = `<div class="att-empty"><i class="fas fa-clipboard-list"></i><div>لا توجد جلسات حضور بعد</div><div style="font-size:.7rem;margin-top:4px">ابدئي جلسة مباشرة من نافذة البث وستظهر هنا تلقائياً</div></div>`;
+    listEl.innerHTML = `<div class="att-empty"><i class="fas fa-clipboard-list"></i><div>لا توجد جلسات حضور بعد</div><div style="font-size:.7rem;margin-top:4px">اضغطي «رصد الحضور يدوياً» أعلاه، أو ابدئي جلسة مباشرة من نافذة البث</div></div>`;
   } else {
     listEl.innerHTML = sessions.map(s => _renderAttendanceSessionHTML(s)).join('');
   }
@@ -21834,6 +22874,9 @@ function renderAttendance(){
 
   // الرسم البياني
   renderAttendanceChart();
+
+  // جدول ملخص حضور الطالبات (سجل لكل طالبة)
+  if(typeof renderStudentAttendanceSummary === 'function') renderStudentAttendanceSummary();
 }
 
 function _renderAttendanceSessionHTML(s){
@@ -21843,9 +22886,12 @@ function _renderAttendanceSessionHTML(s){
   const timeStr = date.toLocaleTimeString('ar-SA', { hour:'2-digit', minute:'2-digit' });
   const classes = (s.classIds||[]).map(c => classLabel(c)).join('، ') || '—';
   const isLive = !s.endedAt;
-  const statusPill = isLive
-    ? '<span class="att-pill" style="background:#28a745"><i class="fas fa-circle" style="font-size:.5rem"></i> نشطة</span>'
-    : '<span class="att-pill" style="background:#888">منتهية</span>';
+  const isManual = s.type === 'manual';
+  const statusPill = isManual
+    ? '<span class="att-pill type-manual"><i class="fas fa-clipboard-check" style="font-size:.55rem"></i> يدوي</span>'
+    : isLive
+      ? '<span class="att-pill" style="background:#28a745"><i class="fas fa-circle" style="font-size:.5rem"></i> نشطة</span>'
+      : '<span class="att-pill" style="background:#888">منتهية</span>';
   const presentPct = stats.total ? (stats.present/stats.total*100) : 0;
   const absentPct = 100 - presentPct;
   // تفصيل الطالبات
@@ -22107,6 +23153,406 @@ function printAttendance(){
   <script>window.onload=()=>setTimeout(()=>window.print(),300);<\/script>
   </body></html>`);
   w.document.close();
+}
+
+/* ============================================================
+   MANUAL ATTENDANCE — رصد الحضور يدوياً للتعليم المباشر
+   ============================================================
+   - جلسة حضور مستقلة (لا تحتاج State.currentLiveCode)
+   - تُحفظ في Data.attendance بعلامة type:'manual'
+   - تظهر في التقارير والرسوم البيانية والتصدير
+   ============================================================ */
+let _manualAttState = {
+  roster: [],          // [{studentKey, name, class, status, joinedAt, leftAt, note, studentId}]
+  dirty: false
+};
+
+function openManualAttendance(){
+  Data.students = Data.students || [];
+
+  // فلتر الفصول — قائمة الفصول المسموح بها للمعلمة الحالية
+  const allowed = classesForActiveTeacher();
+  const clsSel = document.getElementById('mattClassFilter');
+  if(clsSel){
+    clsSel.innerHTML = allowed.map((cid, i) => `<option value="${cid}">${escapeHtml(classLabel(cid))}</option>`).join('');
+  }
+
+  // عنوان افتراضي ذكي
+  const titleEl = document.getElementById('mattTitle');
+  if(titleEl && !titleEl.value){
+    const t = Data.settings.teacherName ? `حصة ${Data.settings.boardName || 'تفاعلية'} — ${Data.settings.teacherName}` : (Data.settings.boardName || 'حصة تفاعلية');
+    titleEl.value = t;
+  }
+
+  // إعادة تعيين البحث
+  const searchEl = document.getElementById('mattSearch');
+  if(searchEl) searchEl.value = '';
+
+  // ابدأ بقائمة الطالبات في الفصل المحدد (الافتراضي: الأول) — الكل حاضر ✓
+  _manualAttState.dirty = false;
+  renderManualAttList();
+  openModal('modalManualAtt');
+  setTimeout(()=>{ const s=document.getElementById('mattSearch'); if(s) s.focus(); }, 250);
+}
+
+function renderManualAttList(){
+  const listEl = document.getElementById('mattList');
+  const clsSel = document.getElementById('mattClassFilter');
+  if(!listEl) return;
+
+  const allowed = classesForActiveTeacher();
+  const selectedClass = clsSel ? clsSel.value : (allowed[0] || '');
+  const q = ((document.getElementById('mattSearch')||{}).value || '').toLowerCase().trim();
+
+  Data.students = Data.students || [];
+  let studs = Data.students.filter(s => allowed.includes(s.class) && (!selectedClass || s.class === selectedClass));
+  if(q){ studs = studs.filter(s => (s.name||'').toLowerCase().includes(q) || (s.seat||'').toLowerCase().includes(q)); }
+
+  // ابنِ قائمة الحضور — إذا تغيرت القائمة (فصل/بحث)، ابدأ الكل "حاضر ✓"
+  // نحافظ على الحالة للطالبة إن بقيت في القائمة بنفس المفتاح
+  const prevMap = new Map(_manualAttState.roster.map(r => [r.studentKey, r]));
+  const newRoster = studs.map(s => {
+    const key = String(s.id);
+    const prev = prevMap.get(key);
+    return prev || {
+      studentKey: key,
+      studentId: s.id,
+      name: s.name,
+      seat: s.seat || '',
+      class: s.class,
+      status: 'present',   // الكل يبدأ حاضر ✓
+      joinedAt: null,
+      leftAt: null,
+      note: ''
+    };
+  });
+  _manualAttState.roster = newRoster;
+  _manualAttState.dirty = true;
+
+  if(!studs.length){
+    listEl.innerHTML = `<div class="att-empty" style="margin:14px 6px"><i class="fas fa-user-graduate"></i><div>لا توجد طالبات في هذا الفصل</div><div style="font-size:.7rem;margin-top:4px">أضيفي طالبات أولاً من تبويب الطالبات</div></div>`;
+  } else {
+    listEl.innerHTML = newRoster.map(r => {
+      const isPresent = r.status === 'present';
+      const initial = (r.name || '؟').charAt(0);
+      return `<div class="matt-row ${isPresent?'':'is-absent'}" data-key="${escapeHtml(r.studentKey)}" onclick="toggleManualAttRow('${escapeHtml(r.studentKey)}')">
+        <div class="matt-avatar">${escapeHtml(initial)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="matt-name">${escapeHtml(r.name || '')}</div>
+          <div class="matt-meta">${r.seat ? ('رقم ' + escapeHtml(r.seat) + ' • ') : ''}${escapeHtml(classLabel(r.class))}</div>
+        </div>
+        <button type="button" class="matt-toggle ${isPresent?'is-present':'is-absent'}" title="${isPresent?'حاضرة — اضغطي لوضع علامة غياب':'غائبة — اضغيط لوضع علامة حضور'}">
+          <i class="fas fa-${isPresent?'check':'times'}"></i>
+        </button>
+      </div>`;
+    }).join('');
+  }
+
+  updateManualAttSummary();
+}
+
+function toggleManualAttRow(studentKey){
+  const r = _manualAttState.roster.find(x => x.studentKey === studentKey);
+  if(!r) return;
+  r.status = r.status === 'present' ? 'absent' : 'present';
+  if(r.status === 'present' && !r.joinedAt) r.joinedAt = Date.now();
+  _manualAttState.dirty = true;
+
+  // حدّث الصف فقط بدون إعادة بناء القائمة (يحافظ على تركيز/سحب المستخدم)
+  const row = document.querySelector(`#mattList .matt-row[data-key="${cssEscape(studentKey)}"]`);
+  if(row){
+    const isPresent = r.status === 'present';
+    row.classList.toggle('is-absent', !isPresent);
+    const btn = row.querySelector('.matt-toggle');
+    if(btn){
+      btn.classList.toggle('is-present', isPresent);
+      btn.classList.toggle('is-absent', !isPresent);
+      btn.innerHTML = `<i class="fas fa-${isPresent?'check':'times'}"></i>`;
+      btn.title = isPresent ? 'حاضرة — اضغطي لوضع علامة غياب' : 'غائبة — اضغيط لوضع علامة حضور';
+      // نبضة تأكيد
+      btn.style.transform = 'scale(1.18)';
+      setTimeout(()=>{ btn.style.transform = ''; }, 160);
+    }
+  }
+  updateManualAttSummary();
+}
+
+function setAllManualAtt(status){
+  if(!_manualAttState.roster.length){ toast('info','لا توجد طالبات'); return; }
+  _manualAttState.roster.forEach(r => {
+    r.status = status;
+    if(status === 'present' && !r.joinedAt) r.joinedAt = Date.now();
+  });
+  _manualAttState.dirty = true;
+  renderManualAttList();
+  toast(status === 'present' ? 'success' : 'warning', status === 'present' ? 'الجميع حاضر ✓' : 'الجميع غائب ✗');
+}
+
+function updateManualAttSummary(){
+  const total = _manualAttState.roster.length;
+  const present = _manualAttState.roster.filter(r => r.status === 'present').length;
+  const absent = total - present;
+  const a = document.getElementById('mattNumPresent'); if(a) a.textContent = present;
+  const b = document.getElementById('mattNumAbsent'); if(b) b.textContent = absent;
+  const t = document.getElementById('mattNumTotal'); if(t) t.textContent = total;
+}
+
+/* إغلاق المودال — يتحقق من وجود تغييرات غير محفوظة إذا طُلب */
+function closeManualAttendance(confirmDirty){
+  if(confirmDirty && _manualAttState.dirty && _manualAttState.roster.length){
+    const absent = _manualAttState.roster.filter(r => r.status === 'absent').length;
+    // إغلاق صامت لتفادي إزعاج المستخدم عند الإلغاء العادي
+  }
+  _manualAttState.roster = [];
+  _manualAttState.dirty = false;
+  closeModal('modalManualAtt');
+}
+
+/* حفظ الجلسة اليدوية — تُضاف إلى Data.attendance بنفس بنية الجلسات المباشرة */
+function saveManualAttendance(){
+  if(!_manualAttState.roster.length){
+    toast('error','لا توجد طالبات في القائمة');
+    return;
+  }
+  const allowed = classesForActiveTeacher();
+  const clsSel = document.getElementById('mattClassFilter');
+  const selectedClass = clsSel ? clsSel.value : (allowed[0] || '');
+  const title = (document.getElementById('mattTitle')?.value || '').trim() || (Data.settings.boardName || 'حصة تفاعلية');
+
+  Data.attendance = Data.attendance || [];
+
+  const now = new Date().toISOString();
+  const sess = {
+    id: 'a-' + Date.now() + '-' + Math.random().toString(36).slice(2,7),
+    code: 'MANUAL-' + Date.now().toString().slice(-6),
+    sessionName: title,
+    classIds: selectedClass ? [selectedClass] : allowed.slice(),
+    startedAt: now,
+    endedAt: now,   // جلسة يدوية = منتهية فوراً عند الحفظ
+    type: 'manual', // يميّزها عن جلسات البث المباشر type:'live' أو غير معرّف
+    roster: _manualAttState.roster.map(r => ({
+      studentKey: r.studentKey,
+      studentId: r.studentId,
+      name: r.name,
+      class: r.class,
+      status: r.status,
+      joinedAt: r.joinedAt,
+      leftAt: r.leftAt,
+      note: r.note || ''
+    }))
+  };
+
+  Data.attendance.push(sess);
+  saveData();
+
+  const stats = _attendanceSessionStats(sess);
+  toast('success', `تم حفظ رصد الحضور — ${stats.present} حاضرة، ${stats.absent} غائبة من ${stats.total}`);
+
+  // إعادة ضبط الحالة وإغلاق
+  _manualAttState.roster = [];
+  _manualAttState.dirty = false;
+  closeModal('modalManualAtt');
+
+  // حدّث لوحة الحضور والرسوم البيانية
+  if(typeof renderAttendance === 'function') renderAttendance();
+}
+
+/* ============================================================
+   STUDENT ATTENDANCE SUMMARY — سجل الحضور لكل طالبة
+   ============================================================
+   يعرض جدول مُلخّص لكل طالبة (إجمالي/حاضرة/غائبة/نسبة)
+   + مودال تفصيلي بخط زمني لكل الجلسات
+   ============================================================ */
+
+/* بناء خريطة حضور لكل طالبة عبر كل الجلسات */
+function _buildStudentAttendanceIndex(){
+  Data.attendance = Data.attendance || [];
+  const idx = new Map();  // studentKey -> {studentId, name, class, sessions:[{sessionId,sessionName,startedAt,endedAt,type,status,joinedAt,leftAt}]}
+
+  Data.attendance.forEach(sess => {
+    if(!sess.roster || !sess.roster.length) return;
+    sess.roster.forEach(r => {
+      const key = r.studentKey;
+      if(!idx.has(key)){
+        idx.set(key, {
+          studentKey: key,
+          studentId: r.studentId,
+          name: r.name,
+          class: r.class,
+          sessions: []
+        });
+      }
+      idx.get(key).sessions.push({
+        sessionId: sess.id,
+        sessionName: sess.sessionName || 'حصة',
+        startedAt: sess.startedAt,
+        endedAt: sess.endedAt,
+        type: sess.type || 'live',
+        status: r.status,
+        joinedAt: r.joinedAt,
+        leftAt: r.leftAt
+      });
+    });
+  });
+
+  // ترتيب كل سجل داخلياً حسب التاريخ (الأحدث أولاً)
+  idx.forEach(entry => {
+    entry.sessions.sort((a,b) => new Date(b.startedAt) - new Date(a.startedAt));
+  });
+
+  return idx;
+}
+
+/* عرض جدول ملخص حضور الطالبات — مرتّب تنازلياً حسب نسبة الحضور */
+function renderStudentAttendanceSummary(){
+  const wrap = document.getElementById('attStudentsSummary');
+  const filterEl = document.getElementById('attStudentFilter');
+  if(!wrap) return;
+
+  Data.students = Data.students || [];
+  Data.attendance = Data.attendance || [];
+
+  // تحديث خيارات فلتر الفصل
+  if(filterEl){
+    const allowed = classesForActiveTeacher();
+    const cur = filterEl.value;
+    filterEl.innerHTML = '<option value="">كل الفصول</option>' +
+      allowed.map(cid => `<option value="${escapeHtml(cid)}">${escapeHtml(classLabel(cid))}</option>`).join('');
+    if(cur && allowed.includes(cur)) filterEl.value = cur;
+    const selectedClass = filterEl.value;
+  }
+  const selectedClass = filterEl ? filterEl.value : '';
+
+  // ابنِ الفهرس ثم صفّي حسب الفصل المختار
+  const idx = _buildStudentAttendanceIndex();
+
+  // لو فيه فصل محدد، صفّي الطالبات
+  let rows = [];
+  idx.forEach(entry => {
+    if(selectedClass && entry.class !== selectedClass) return;
+    const total = entry.sessions.length;
+    const present = entry.sessions.filter(s => s.status === 'present').length;
+    const absent = total - present;
+    const rate = total ? Math.round((present/total)*100) : 0;
+    rows.push({
+      studentKey: entry.studentKey,
+      studentId: entry.studentId,
+      name: entry.name,
+      class: entry.class,
+      total, present, absent, rate
+    });
+  });
+
+  // أضف الطالبات التي لم تحضر أي جلسة (لتعطي المعلمة تصور كامل)
+  const idxKeys = new Set(rows.map(r => r.studentKey));
+  const allowed = classesForActiveTeacher();
+  Data.students.forEach(s => {
+    const key = String(s.id);
+    if(idxKeys.has(key)) return;
+    if(selectedClass && s.class !== selectedClass) return;
+    if(!allowed.includes(s.class)) return;
+    rows.push({
+      studentKey: key,
+      studentId: s.id,
+      name: s.name,
+      class: s.class,
+      total: 0, present: 0, absent: 0, rate: 0
+    });
+  });
+
+  // ترتيب: الحاضرات أولاً ثم تنازلياً بالنسبة، ثم أبجدياً
+  rows.sort((a,b) => {
+    if(b.rate !== a.rate) return b.rate - a.rate;
+    return (a.name||'').localeCompare(b.name||'', 'ar');
+  });
+
+  if(!rows.length){
+    wrap.innerHTML = `<div class="att-empty" style="margin:14px 6px"><i class="fas fa-user-graduate"></i><div>لا توجد طالبات في هذا الفصل</div></div>`;
+    return;
+  }
+
+  wrap.innerHTML = rows.map(r => {
+    const rateCls = r.rate === 0 ? 'zero' : (r.rate >= 85 ? 'high' : (r.rate >= 60 ? 'mid' : 'low'));
+    const initial = (r.name || '؟').charAt(0);
+    return `<div class="att-ss-row" onclick="openStudentAttendanceHistory('${cssEscape(r.studentKey)}')" title="اضغطي لعرض سجل ${escapeHtml(r.name)} التفصيلي">
+      <div class="ass-avatar">${escapeHtml(initial)}</div>
+      <div class="ass-info">
+        <div class="ass-name">${escapeHtml(r.name)}</div>
+        <div class="ass-meta">${escapeHtml(classLabel(r.class))}</div>
+      </div>
+      <div class="ass-mini-bar" title="${r.present} حاضرة / ${r.absent} غائبة">
+        <div class="mb-present" style="width:${r.total ? (r.present/r.total*100) : 0}%"></div>
+        <div class="mb-absent" style="width:${r.total ? (r.absent/r.total*100) : 0}%"></div>
+      </div>
+      <div class="ass-stat"><b>${r.present}</b>/${r.total || 0}</div>
+      <div class="ass-rate ${rateCls}">${r.rate}%</div>
+      <i class="fas fa-chevron-left ass-arrow"></i>
+    </div>`;
+  }).join('');
+}
+
+/* فتح مودال السجل التفصيلي لطالبة محددة */
+function openStudentAttendanceHistory(studentKey){
+  const idx = _buildStudentAttendanceIndex();
+  const entry = idx.get(studentKey);
+
+  // ابحث في Data.students حتى لو ما حضرت أي جلسة
+  const stu = Data.students.find(s => String(s.id) === studentKey);
+  const name = (entry && entry.name) || (stu && stu.name) || 'طالبة';
+  const cls = (entry && entry.class) || (stu && stu.class) || '';
+
+  document.getElementById('shName').textContent = name;
+  document.getElementById('shAvatar').textContent = (name || '؟').charAt(0);
+  document.getElementById('shMeta').innerHTML =
+    `<i class="fas fa-chalkboard"></i> ${escapeHtml(classLabel(cls))}` +
+    (stu && stu.seat ? ` • <i class="fas fa-chair"></i> رقم ${escapeHtml(stu.seat)}` : '');
+
+  const sessions = entry ? entry.sessions : [];
+  const total = sessions.length;
+  const present = sessions.filter(s => s.status === 'present').length;
+  const absent = total - present;
+  const rate = total ? Math.round((present/total)*100) : 0;
+
+  document.getElementById('shNumTotal').textContent = total;
+  document.getElementById('shNumPresent').textContent = present;
+  document.getElementById('shNumAbsent').textContent = absent;
+  document.getElementById('shNumRate').textContent = rate + '%';
+
+  const tlEl = document.getElementById('shTimeline');
+  if(!total){
+    tlEl.innerHTML = `<div class="sh-empty"><i class="fas fa-calendar-times"></i><div>لا توجد جلسات حضور مسجلة لهذه الطالبة بعد</div><div style="font-size:.7rem;margin-top:4px">ابدئي جلسة حضور (يدوي أو مباشر) وستظهر هنا تلقائياً</div></div>`;
+  } else {
+    tlEl.innerHTML = sessions.map(s => {
+      const d = new Date(s.startedAt);
+      const dateStr = d.toLocaleDateString('ar-SA', { day:'numeric', month:'short', year:'numeric' });
+      const timeStr = d.toLocaleTimeString('ar-SA', { hour:'2-digit', minute:'2-digit' });
+      const isPresent = s.status === 'present';
+      const typeLabel = s.type === 'manual' ? ' • يدوي' : '';
+      const statusLabel = isPresent ? 'حاضرة' : 'غائبة';
+      const statusIcon = isPresent ? 'check' : 'times';
+      const timesInfo = s.joinedAt
+        ? `<i class="fas fa-clock"></i> ${timeStr}` +
+          (s.leftAt ? ` → ${new Date(s.leftAt).toLocaleTimeString('ar-SA', { hour:'2-digit', minute:'2-digit' })}` : '')
+        : `<i class="fas fa-calendar"></i> ${dateStr}`;
+
+      return `<div class="sh-tl-item ${isPresent?'is-present':'is-absent'}" title="${escapeHtml(s.sessionName)}${typeLabel}">
+        <div class="sh-icon"><i class="fas fa-${statusIcon}"></i></div>
+        <div class="sh-info">
+          <div class="sh-title">${escapeHtml(s.sessionName || 'حصة')}${typeLabel}</div>
+          <div class="sh-date">${timesInfo}</div>
+        </div>
+        <div class="sh-status">${statusLabel}</div>
+      </div>`;
+    }).join('');
+  }
+
+  openModal('modalStudentAtt');
+}
+
+/* أداة هروب آمن لـ querySelector عند وجود رموز خاصة في المفتاح */
+function cssEscape(s){
+  if(window.CSS && CSS.escape) return CSS.escape(s);
+  return String(s).replace(/["\\]/g, '\\$&');
 }
 
 /* CLOCK */
